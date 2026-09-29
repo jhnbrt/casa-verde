@@ -1029,5 +1029,232 @@ HomeContent::create([
     } 
 }
 
+/*
+|--------------------------------------------------------------------------
+| WELLNESS PAGE INTRO
+|--------------------------------------------------------------------------
+*/
 
+HomeContent::create([
+    'section' => 'wellness_page_intro',
+
+    'subtitle' => 'WELLNESS',
+
+    'title' => 'Relax. Rejuvenate.
+Reconnect with yourself.',
+
+    'description' =>
+        "At Casa Verde Cliff Resort & Spa, wellness is more than a treatment - it's a way of life. Let our spa experiences restore your body, calm your mind and uplift your spirit.",
+
+    'image' => 'images/wellness-page.jpg',
+
+    'sort_order' => 1,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS SERVICE 1
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_services',
+
+    'title' => 'Banana Scanning Signature Massage',
+
+    'description' =>
+        'Our signature blend of massage designed to release tension and promote deep relaxation.',
+
+    'image' => 'images/banana-scanning.jpg',
+
+    'icon' => '♡',
+
+    'sort_order' => 1,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS SERVICE 2
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_services',
+
+    'title' => 'Hot Stone Massage',
+
+    'description' =>
+        'Warm volcanic stones melt away stress and improve circulation and balance.',
+
+    'image' => 'images/hot-stone.jpg',
+
+    'icon' => '≋',
+
+    'sort_order' => 2,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS SERVICE 3
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_services',
+
+    'title' => 'Therapeutic Massage',
+
+    'description' =>
+        'Essential oils combined with soothing touch to calm your mind and restore harmony.',
+
+    'image' => 'images/therapeutic-massage.jpg',
+
+    'icon' => '◇',
+
+    'sort_order' => 3,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS SERVICE 4
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_services',
+
+    'title' => 'Foot Massage',
+
+    'description' =>
+        'Relieve tired feet and improve circulation with a relaxing reflexology massage.',
+
+    'image' => 'images/foot-massage.jpg',
+
+    'icon' => '♧',
+
+    'sort_order' => 4,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS SERVICE 5
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_services',
+
+    'title' => 'Wellness Package',
+
+    'description' =>
+        'Choose from carefully curated package for the ultimate wellness journey.',
+
+    'image' => 'images/wellness-package.jpg',
+
+    'icon' => '✧',
+
+    'sort_order' => 5,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS PAGE FEATURE 1
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_page_features',
+
+    'title' => 'Peaceful Sanctuary',
+
+    'description' =>
+        'A serene spa environment designed for total relaxation.',
+
+    'icon' => '✧',
+
+    'sort_order' => 1,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS PAGE FEATURE 2
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_page_features',
+
+    'title' => 'Natural Ingredients',
+
+    'description' =>
+        'We use high-quality, natural products for your well-being.',
+
+    'icon' => '♧',
+
+    'sort_order' => 2,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS PAGE SPA MENU BUTTON
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_page_action',
+
+    'button_text' => 'EXPLORE SPA MENU',
+
+    'button_url' => '#',
+
+    'sort_order' => 1,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS PAGE FEATURE 3
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_page_features',
+
+    'title' => 'Advance Booking',
+
+    'description' =>
+        'We recommend booking your spa treatment in advance.',
+
+    'icon' => '▦',
+
+    'sort_order' => 3,
+]);
+
+
+/*
+|--------------------------------------------------------------------------
+| WELLNESS PAGE FEATURE 4
+|--------------------------------------------------------------------------
+*/
+
+HomeContent::create([
+    'section' => 'wellness_page_features',
+
+    'title' => 'Your Well-being Matters',
+
+    'description' =>
+        'Our therapists are dedicated to your comfort and care.',
+
+    'icon' => '♢',
+
+    'sort_order' => 4,
+]);
 

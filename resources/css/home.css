@@ -32,141 +32,6 @@ body {
 }
 
 
-/* =========================================
-   NAVBAR
-========================================= */
-
-.navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 74px;
-    display: flex;
-    align-items: center;
-    background: var(--dark-green);
-    z-index: 100;
-    padding-left: 22px;
-}
-
-
-/* LOGO */
-
-.logo-area {
-    height: 74px;
-    display: flex;
-    align-items: center;
-    min-width: 260px;
-    border-right: 1px solid rgba(207, 161, 93, 0.25);
-    padding-right: 25px;
-}
-
-.logo-area img {
-    width: 42px;
-    height: 42px;
-
-    object-fit: contain;
-
-    margin-right: 10px;
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-text span {
-    font-family: Georgia, serif;
-
-    font-size: 11px;
-
-    letter-spacing: 1.5px;
-
-    color: var(--gold);
-
-    white-space: nowrap;
-}
-
-.logo-text small {
-    margin-top: 5px;
-
-    font-size: 6px;
-
-    letter-spacing: 1px;
-
-    color: #d9c9a7;
-}
-
-
-/* NAVIGATION LINKS */
-
-.nav-links {
-    display: flex;
-    align-items: center;
-
-    gap: 30px;
-
-    margin-left: 45px;
-
-    flex: 1;
-}
-
-.nav-links a {
-    color: var(--gold);
-
-    text-decoration: none;
-
-    font-size: 12px;
-
-    font-weight: 500;
-
-    transition: 0.3s;
-}
-
-.nav-links a:hover {
-    color: white;
-}
-
-
-/* BOOK BUTTON */
-
-.book-button {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    background: var(--light-gold);
-
-    color: #092c25;
-
-    text-decoration: none;
-
-    padding: 9px 18px;
-
-    border-radius: 30px;
-
-    margin-right: 10px;
-
-    font-size: 12px;
-
-    font-weight: bold;
-}
-
-.book-icon {
-    width: 30px;
-    height: 30px;
-
-    border-radius: 50%;
-
-    background: var(--dark-green);
-
-    color: var(--gold);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 
 /* =========================================
@@ -593,7 +458,7 @@ body {
     background: #f5f1e8;
     color: #062d27;
     padding: 30px 5% 45px;
-    min-height: 700px;
+    min-height: 650px;
 }
 
 
@@ -606,38 +471,27 @@ body {
 
     max-width: 700px;
 
-    margin: 0 auto 30px;
+    margin: 0 auto 20px;
 }
 
 .section-label {
     color: #cfa15d;
-
     font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 13px;
-
+    font-size: 15px;
     letter-spacing: 1px;
-
-    margin-bottom: 3px;
 }
 
 .villas-header h2 {
     font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 36px;
-
-    font-weight: normal;
-
+    font-size: 40px;
+    font-weight: 500;
     color: #062d27;
-
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .section-subtitle {
-    font-size: 14px;
-
+    font-size: 16px;
     color: #173b35;
-
     line-height: 1.5;
 }
 
@@ -668,9 +522,9 @@ body {
 }
 
 .villa-image {
-    width: 100%;
+    width: 85%;
 
-    height: 205px;
+    height: 235px;
 
     object-fit: cover;
 
@@ -690,21 +544,14 @@ body {
 
 .villa-content h3 {
     display: flex;
-
+    font-weight: bold;
     align-items: center;
-
     gap: 10px;
-
     margin-top: 4px;
-
     margin-bottom: 3px;
-
     font-family: Georgia, "Times New Roman", serif;
-
     font-size: 22px;
-
-    font-weight: normal;
-
+    font-weight: 500;
     color: #092d27;
 }
 
@@ -716,23 +563,18 @@ body {
 
 .villa-tagline {
     color: #d7a361;
-
+    margin-left: 30px;
     font-family: Georgia, "Times New Roman", serif;
-
     font-size: 12px;
-
     margin-bottom: 5px;
 }
 
 .villa-price {
     color: #102f2a;
-
+    margin-left: 30px;
     font-family: Georgia, "Times New Roman", serif;
-
     font-size: 12px;
-
     font-weight: bold;
-
     margin-bottom: 15px;
 }
 
@@ -755,16 +597,12 @@ body {
 
 .villa-features li {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
     color: #29423d;
-
-    font-size: 11px;
-
-    margin-bottom: 10px;
+    font-size: 13px;
+    margin-bottom: 5px;
+    
 }
 
 .villa-features li span {
@@ -784,43 +622,27 @@ body {
 
 .villa-button {
     display: inline-flex;
-
     align-items: center;
-
     gap: 7px;
-
     background: #dda866;
-
     color: #092d27;
-
     text-decoration: none;
-
-    font-size: 10px;
-
+    font-size: 13px;
     font-weight: bold;
-
     padding: 7px 12px;
-
     border-radius: 20px;
-
     transition: 0.3s;
+    margin-left: 30px;
 }
 
 .villa-button span {
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    width: 22px;
-
-    height: 22px;
-
+    width: 27px;
+    height: 27px;
     border-radius: 50%;
-
     background: #00352c;
-
     color: #ddb06e;
 }
 
@@ -886,6 +708,7 @@ body {
 
     .villa-content h3 {
         font-size: 20px;
+        
     }
 
 }
@@ -896,7 +719,7 @@ body {
 
 .experiences-section {
     width: 100%;
-    min-height: 700px;
+    min-height: 650px;
     padding: 55px 4% 50px;
     background: #002c25;
     color: #ffffff;
@@ -1158,7 +981,7 @@ body {
 
 .wellness-section {
     width: 100%;
-    height: 110vh;
+    min-height: 600px;
     box-sizing: border-box;
     background: #f5f1e8;
     color: #0b3029;
@@ -1177,10 +1000,10 @@ body {
 .wellness-main {
     width: 100%;
     max-width: 1250px;
-    margin-bottom: 80px;
+    margin-bottom: 30px;
     display: grid;
-    grid-template-columns: 190px 1fr;
-    gap: 30px;
+    grid-template-columns: 350px 1fr;
+    gap: 40px;
     align-items: center;
 }
 
@@ -1195,40 +1018,42 @@ body {
 
 .wellness-label {
     margin: 0 0 10px;
-
     color: #c79555;
-
     font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 12px;
-
+    font-size: 15px;
     letter-spacing: 1.5px;
 }
 
 .wellness-intro h2 {
     margin: 0 0 18px;
-
     color: #0b3029;
-
     font-family: Georgia, "Times New Roman", serif;
-
-    font-size: 38px;
-
+    font-size: 50px;
     line-height: 1.02;
-
-    font-weight: normal;
+    font-weight: 500;
+}
+.wellness-intro h2::after {
+    content: "";
+    display: block;
+    width: 200px;
+    height: 2px;
+    margin-top: 10px;
+    margin-left: 40px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        #d7b079 20%,
+        #d7b079 80%,
+        transparent 100%
+    );
 }
 
 .wellness-description {
-    margin: 0 0 20px;
-
+    margin: 0 0 18px;
     color: #334842;
-
-    font-size: 10px;
-
+    font-size: 13px;
     line-height: 1.5;
-
-    max-width: 180px;
+    max-width: 380px;
 }
 
 
@@ -1238,43 +1063,27 @@ body {
 
 .wellness-button {
     display: inline-flex;
-
     align-items: center;
-
     gap: 7px;
-
     padding: 9px 13px;
-
     border-radius: 20px;
-
     background: #dda866;
-
     color: #12332d;
-
     text-decoration: none;
-
-    font-size: 9px;
-
+    font-size: 13px;
     font-weight: bold;
-
     transition: 0.3s ease;
 }
 
 .wellness-button span {
-    width: 20px;
-    height: 20px;
-
+    width: 25px;
+    height: 25px;
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: #00352c;
-
     color: #dda866;
-
     font-size: 11px;
 }
 
@@ -1291,23 +1100,17 @@ body {
 
 .wellness-main-image {
     width: 100%;
-
     height: 45vh;
-
     min-height: 300px;
-    max-height: 470px;
-
+    max-height: 400px;
     overflow: hidden;
-
     border-radius: 10px;
 }
 
 .wellness-main-image img {
     display: block;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
 }
 
@@ -1318,14 +1121,11 @@ body {
 
 .wellness-cards {
     width: 100%;
-    max-width: 1250px;
-
+    max-width: 1700px;
     margin: 0 auto;
 
     display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 40px;
 
     flex-shrink: 0;
@@ -1335,13 +1135,13 @@ body {
 .wellness-card {
     display: grid;
 
-    grid-template-columns: 85px 35px 1fr;
+    grid-template-columns: 180px 180px;
 
-    gap: 12px;
+    column-gap: 5px;
 
-    align-items: center;
+    align-items: start;
 
-    min-height: 85px;
+    min-width: 0;
 }
 
 
@@ -1350,21 +1150,24 @@ body {
 ========================================= */
 
 .wellness-card-image {
-    width: 200px;
-    height: 50px;
+    grid-column: 1;
+    grid-row: 1 / 3;
+
+    width: 160px;
+    height: 160px;
 
     overflow: hidden;
 
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
 .wellness-card-image img {
+    display: block;
+
     width: 100%;
     height: 100%;
 
     object-fit: cover;
-
-    display: block;
 }
 
 
@@ -1373,11 +1176,20 @@ body {
 ========================================= */
 
 .wellness-card-icon {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 40%;
+
+    padding-bottom: 8px;
+
     color: #dcae6c;
 
-    font-size: 25px;
+    font-size: 40px;
 
-    text-align: center;
+    text-align: left;
+
+    border-bottom: 1px solid #d7b079;
 }
 
 
@@ -1385,16 +1197,25 @@ body {
    CARD CONTENT
 ========================================= */
 
+.wellness-card-content {
+    grid-column: 2;
+    grid-row: 2;
+
+    padding-top: 3px;
+}
+
 .wellness-card-content h3 {
-    margin: 0 0 6px;
+    margin: 0 0 14px;
 
     color: #183b34;
 
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 14px;
+    font-size: 15px;
 
-    font-weight: normal;
+    line-height: 1.05;
+
+    font-weight: 600;
 }
 
 .wellness-card-content p {
@@ -1402,10 +1223,11 @@ body {
 
     color: #53615d;
 
-    font-size: 8px;
+    font-size: 14px;
 
-    line-height: 1.45;
+    line-height: 1.35;
 }
+
 
 
 /* =========================================
@@ -1427,25 +1249,21 @@ body {
 
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 12px;
+    font-size: 15px;
 
     font-style: italic;
 }
 
 .wellness-quote-decoration {
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     gap: 10px;
 }
 
 .wellness-quote-decoration span {
-    width: 55px;
+    width: 80px;
     height: 1px;
-
     background: #d7b079;
 }
 
@@ -1555,16 +1373,19 @@ body {
 .dining-section {
     position: relative;
     width: 100%;
-    min-height: 650px;
+    min-height: 100vh;
     box-sizing: border-box;
+
     background: #f5f1e8;
     color: #0b3029;
-    padding: 50px 4% 25px;
+
+    padding: 25px 4% 20px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     overflow: hidden;
-    
 }
 
 
@@ -1574,19 +1395,17 @@ body {
 
 .dining-main {
     width: 100%;
-    max-width: 1250px;
-    margin-top: 0px;
-    margin: 0 auto 25px;
+    max-width: none;
+
+    margin: 0 auto 10px;
 
     display: grid;
 
-    grid-template-columns: 210px 1fr;
+    grid-template-columns: 520px minmax(0, 1fr);
 
-    gap: 30px;
+    gap: 0;
 
     align-items: center;
-
-    flex: 1;
 }
 
 
@@ -1598,6 +1417,9 @@ body {
     padding-top: 0;
 }
 
+
+/* DINING LABEL */
+
 .dining-label {
     margin: 0 0 10px;
 
@@ -1605,33 +1427,40 @@ body {
 
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 12px;
+    font-size: 16px;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
+
+
+/* SMALL GOLD LINE */
 
 .dining-label::after {
     content: "";
 
     display: block;
 
-    width: 48px;
+    width: 68px;
     height: 2px;
 
-    margin-top: 10px;
+    margin-top: 12px;
 
     background: #d2a166;
 }
 
 
+/* =========================================
+   MAIN HEADING
+========================================= */
+
 .dining-intro h2 {
-    margin: 0 0 18px;
+    margin: 18px 0 25px;
 
     color: #12382f;
 
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 36px;
+    font-size: 35px;
 
     line-height: 1.08;
 
@@ -1639,16 +1468,20 @@ body {
 }
 
 
-.dining-description {
-    max-width: 200px;
+/* =========================================
+   DESCRIPTION
+========================================= */
 
-    margin: 0 0 20px;
+.dining-description {
+    max-width: 295px;
+
+    margin: 0 0 30px;
 
     color: #4d5b56;
 
-    font-size: 10px;
+    font-size: 14px;
 
-    line-height: 1.5;
+    line-height: 1.45;
 }
 
 
@@ -1659,9 +1492,9 @@ body {
 .dining-button {
     display: inline-block;
 
-    padding: 10px 16px;
+    padding: 16px 24px;
 
-    border-radius: 18px;
+    border-radius: 30px;
 
     background: #123d35;
 
@@ -1671,7 +1504,7 @@ body {
 
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 10px;
+    font-size: 14px;
 
     transition: 0.3s ease;
 }
@@ -1688,16 +1521,13 @@ body {
 ========================================= */
 
 .dining-main-image {
-    width: 100%;
+    width: calc(100% + 100px);
+    height: 300px;
 
-    height: 45vh;
-
-    min-height: 300px;
-    max-height: 470px;
+    margin-left: -100px;
 
     overflow: hidden;
-
-    border-radius: 10px;
+    border-radius: 14px;
 }
 
 .dining-main-image img {
@@ -1707,6 +1537,7 @@ body {
     display: block;
 
     object-fit: cover;
+    object-position: center;
 }
 
 
@@ -1716,7 +1547,7 @@ body {
 
 .dining-cards {
     width: 100%;
-    max-width: 1250px;
+    max-width: 1500px;
 
     margin: 0 auto;
 
@@ -1724,11 +1555,15 @@ body {
 
     grid-template-columns: repeat(3, 1fr);
 
-    gap: 25px;
+    gap: 35px;
 
     flex-shrink: 0;
 }
 
+
+/* =========================================
+   CARD
+========================================= */
 
 .dining-card {
     text-align: center;
@@ -1742,11 +1577,11 @@ body {
 .dining-card-image {
     width: 100%;
 
-    height: 110px;
+    height: 150px;
 
     overflow: hidden;
 
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .dining-card-image img {
@@ -1766,27 +1601,34 @@ body {
 
 
 /* =========================================
-   CARD CONTENT
+   CARD TITLE
 ========================================= */
 
 .dining-card-content h3 {
-    margin: 8px 0 4px;
+    margin: 10px 0 7px;
 
     color: #173b33;
 
     font-family: Georgia, "Times New Roman", serif;
 
-    font-size: 15px;
+    font-size: 17px;
+
+    line-height: 1.1;
 
     font-weight: normal;
 }
+
+
+/* =========================================
+   CARD DESCRIPTION
+========================================= */
 
 .dining-card-content p {
     margin: 0;
 
     color: #56635e;
 
-    font-size: 8px;
+    font-size: 14px;
 
     line-height: 1.45;
 }
@@ -1797,47 +1639,67 @@ body {
 ========================================= */
 
 .dining-decoration {
+    width: 92%;
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
-    gap: 12px;
-
-    margin-top: 15px;
-
-    flex-shrink: 0;
+    gap: 25px;
+    margin: 0 auto 10px;
 }
 
 .dining-decoration span {
-    width: 55px;
+    flex: 1;
     height: 1px;
-
     background: #d6b07a;
 }
 
 .dining-decoration b {
     color: #d09b59;
-
-    font-size: 17px;
-
+    font-size: 28px;
     font-weight: normal;
+    line-height: 1;
 }
 
 
 /* =========================================
-   BOTTOM TEXT
+   DINING BOTTOM DECORATION
 ========================================= */
 
-.dining-bottom-text {
-    margin-bottom: 50px;
-    text-align: center;
-    color: #5c6863;
-    font-size: 8px;
+.dining-decoration-2 {
+    width: 92%;
+    margin: 10px auto 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
     flex-shrink: 0;
 }
 
+.dining-decoration-2 span {
+    flex: 1;
+    height: 1px;
+
+    background: #d6b07a;
+}
+
+.dining-bottom-text {
+    margin: 0;
+
+    color: #5c6863;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 12px;
+
+    line-height: 1.2;
+
+    text-align: center;
+
+    white-space: nowrap;
+}
 
 /* =========================================
    TABLET
@@ -1937,11 +1799,9 @@ body {
 
 .long-stay-section {
     position: relative;
-
     width: 100%;
-    height: 67vh;
+    height: 69vh;
     min-height: 0;
-
     box-sizing: border-box;
 
     background: #f7f2e9;
@@ -1972,25 +1832,15 @@ body {
 
 .long-stay-text {
     position: absolute;
-
     top: 0;
     left: 0;
-
-    z-index: 5;
-
     width: 48%;
     height: 100%;
-
     box-sizing: border-box;
-
     padding: 35px 40px 30px 6%;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
     background: #f7f2e9;
 }
 
@@ -2777,16 +2627,12 @@ body {
 
 .about-hero-description {
     max-width: 390px;
-
     margin: 0;
-
     color: #fff;
-
     font-family: Arial, Helvetica, sans-serif;
-
     font-size: 14px;
-
     line-height: 1.45;
+    font-weight: 100;
 }
 
 
@@ -2798,7 +2644,7 @@ body {
     width: 100%;
     height: 51%;
     box-sizing: border-box;
-    padding: 23px 2.7% 18px;
+    padding: 15px 2.7% 18px;
     display: grid;
     grid-template-columns:
         minmax(0, 1.55fr)
@@ -2900,16 +2746,11 @@ body {
 ========================================================= */
 
 .about-values {
-    width: 100%;
-
+    width: 90%;
     flex: 1;
-
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     grid-template-rows: 1fr 1fr;
-
     margin-top: 2px;
 }
 

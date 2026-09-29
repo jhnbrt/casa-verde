@@ -1,0 +1,308 @@
+/* =========================================
+   DINING PAGE
+========================================= */
+
+.dining-page {
+    width: 100%;
+    overflow: hidden;
+    background: #f7f2e9;
+    color: #062c25;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.dining-hero {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 39% 61%;
+    min-height: 350px;
+}
+
+.dining-hero-content {
+    padding: 35px 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #f7f2e9;
+}
+
+.dining-label {
+    font-family: Georgia, serif;
+    font-size: 17px;
+    letter-spacing: 1px;
+    color: #d79b5c;
+    margin-bottom: 5px;
+}
+
+.dining-label::after {
+    content: "";
+    display: block;
+    width: 58px;
+    height: 2px;
+    background: #d79b5c;
+    margin-top: 5px;
+}
+
+.dining-hero h1 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: clamp(35px, 3.2vw, 54px);
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #062c25;
+}
+
+.dining-hero h2 {
+    margin: 2px 0 20px;
+    font-family: "Brush Script MT", "Segoe Script", cursive;
+    font-size: clamp(30px, 3vw, 43px);
+    font-weight: 400;
+    color: #dda062;
+}
+
+.dining-hero p {
+    max-width: 500px;
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #30413c;
+}
+
+.dining-hero-image {
+    width: 100%;
+    height: 100%;
+    min-height: 350px;
+}
+
+.dining-hero-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+
+/* =========================================
+   FEATURE SECTION
+========================================= */
+
+.dining-features {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    padding: 14px 3.5% 25px;
+    background: #f7f2e9;
+}
+
+.dining-feature {
+    text-align: center;
+}
+
+.feature-icon {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #dfa261;
+    border-radius: 50%;
+
+    font-size: 25px;
+}
+
+.dining-feature h3 {
+    margin: 0 0 5px;
+
+    font-family: Georgia, serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #062c25;
+}
+
+.feature-description {
+    min-height: 43px;
+
+    margin: 0 auto 10px;
+
+    font-family: Georgia, serif;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #3e4743;
+}
+
+.dining-feature img {
+    width: 100%;
+    height: 172px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+}
+
+
+/* =========================================
+   BOTTOM SECTION
+========================================= */
+
+.dining-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr 1fr;
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 5px 4% 15px;
+
+    background: #f7f2e9;
+}
+
+.bottom-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.bottom-icon {
+    min-width: 55px;
+    font-size: 35px;
+    text-align: center;
+}
+
+.bottom-info h3 {
+    margin: 0 0 5px;
+
+    font-family: Georgia, serif;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.bottom-info p {
+    margin: 0;
+
+    font-family: Georgia, serif;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #3d4541;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.dining-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+}
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 215px;
+    padding: 17px 28px;
+
+    border-radius: 40px;
+
+    background: #062c25;
+    color: #dda062;
+
+    text-decoration: none;
+
+    font-family: Georgia, serif;
+    font-size: 15px;
+    letter-spacing: .3px;
+
+    transition: all .25s ease;
+}
+
+.menu-button:hover {
+    transform: translateY(-2px);
+    background: #0a3b31;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+    .dining-hero {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dining-features {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .dining-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .dining-buttons {
+        margin: 15px 0;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+    .dining-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .dining-hero-content {
+        padding: 45px 25px;
+    }
+
+    .dining-hero-image {
+        min-height: 280px;
+    }
+
+    .dining-features {
+        grid-template-columns: 1fr;
+        padding: 30px 25px;
+    }
+
+    .dining-feature {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .dining-feature img {
+        height: 220px;
+    }
+
+    .dining-bottom {
+        padding: 30px 25px;
+    }
+
+    .dining-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .menu-button {
+        width: 100%;
+        max-width: 320px;
+    }
+
+}

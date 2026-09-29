@@ -21,6 +21,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        // Create the default admin account used to sign in to /admin
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@casaverde.test',
+            'password' => bcrypt('password'),
+            'is_admin' => true,
+        ]);
+
         // Create Casa Verde homepage content
         $this->call([
             HomeContentSeeder::class,

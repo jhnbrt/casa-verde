@@ -1,0 +1,620 @@
+/* =========================================================
+   CASA VERDE VILLAS
+========================================================= */
+
+:root {
+    --green: #003d35;
+    --dark-green: #002d28;
+    --cream: #f7f4ec;
+    --gold: #dca65d;
+    --dark-gold: #bd8644;
+    --text: #16322d;
+    --muted: #707771;
+    --white: #ffffff;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background: var(--cream);
+
+    color: var(--text);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================================
+   VILLAS SECTION
+========================================================= */
+
+.villas-section {
+
+    padding: 70px 6% 75px;
+
+    min-height: calc(100vh - 82px);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.villas-header {
+
+    max-width: 700px;
+
+    margin: 0 auto 55px;
+
+    text-align: center;
+}
+
+
+.section-label {
+
+    color: var(--gold);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 12px;
+}
+
+
+.villas-header h1 {
+
+    color: var(--green);
+
+    font-size: clamp(38px, 5vw, 58px);
+
+    font-weight: 400;
+
+    line-height: 1.1;
+
+    margin-bottom: 15px;
+}
+
+
+.section-description {
+
+    max-width: 540px;
+
+    margin: auto;
+
+    color: var(--muted);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   VILLA GRID
+========================================================= */
+
+.villa-container {
+
+    max-width: 1080px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 70px;
+}
+
+
+/* =========================================================
+   VILLA CARD
+========================================================= */
+
+.villa-card {
+
+    text-align: center;
+}
+
+
+.villa-image-wrapper {
+
+    width: 100%;
+
+    height: 320px;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    margin-bottom: 25px;
+
+    background: #ddd;
+}
+
+
+.villa-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform .5s ease;
+}
+
+
+.villa-card:hover .villa-image {
+
+    transform: scale(1.035);
+}
+
+
+/* =========================================================
+   VILLA CONTENT
+========================================================= */
+
+.villa-content h2 {
+
+    color: var(--green);
+
+    font-size: 24px;
+
+    font-weight: 400;
+
+    margin-bottom: 7px;
+}
+
+
+.villa-symbol {
+
+    color: var(--gold);
+
+    font-size: 19px;
+
+    margin-right: 5px;
+}
+
+
+.villa-tagline {
+
+    color: var(--dark-gold);
+
+    font-size: 14px;
+
+    font-style: italic;
+
+    margin-bottom: 9px;
+}
+
+
+.villa-price {
+
+    color: #53605b;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    margin-bottom: 20px;
+}
+
+
+.villa-price strong {
+
+    color: var(--green);
+
+    font-size: 17px;
+}
+
+
+.villa-price span {
+
+    color: #8b918c;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.villa-features {
+
+    list-style: none;
+
+    max-width: 390px;
+
+    margin: 0 auto 25px;
+
+    text-align: left;
+}
+
+
+.villa-features li {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+
+    color: #4f5a55;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+}
+
+
+.feature-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 25px;
+
+    color: var(--gold);
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   VILLA BUTTON
+========================================================= */
+
+.villa-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 12px 23px;
+
+    border-radius: 30px;
+
+    background: var(--green);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    transition: .25s ease;
+}
+
+
+.villa-button span {
+
+    color: var(--gold);
+
+    font-size: 16px;
+}
+
+
+.villa-button:hover {
+
+    background: #00564a;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   BOTTOM SECTION
+========================================================= */
+
+.villa-bottom {
+
+    background: var(--dark-green);
+
+    color: white;
+
+    padding: 28px 6%;
+}
+
+
+.villa-bottom-content {
+
+    max-width: 1250px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 28px;
+}
+
+
+.bottom-intro {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-width: 260px;
+}
+
+
+.bottom-intro h3 {
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.4;
+
+    color: white;
+}
+
+
+.bottom-intro p {
+
+    margin-top: 4px;
+
+    font-family: Arial, sans-serif;
+
+    color: #c8cec9;
+
+    font-size: 10px;
+}
+
+
+.bottom-icon {
+
+    color: var(--gold);
+
+    font-size: 27px;
+}
+
+
+.bottom-divider {
+
+    width: 1px;
+
+    height: 45px;
+
+    background: rgba(220, 166, 93, .3);
+}
+
+
+.bottom-feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex: 1;
+}
+
+
+.bottom-feature p {
+
+    color: #d0d5d0;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+}
+
+
+.bottom-book-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 13px 19px;
+
+    border-radius: 30px;
+
+    background: var(--gold);
+
+    color: var(--green);
+
+    text-decoration: none;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+.bottom-book-button span {
+
+    width: 24px;
+
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    color: var(--gold);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .logo-area {
+        min-width: 250px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-links a {
+        font-size: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .navbar {
+
+        padding: 15px 20px;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .logo-area {
+
+        min-width: auto;
+
+        width: 100%;
+    }
+
+
+    .nav-links {
+
+        width: 100%;
+
+        order: 3;
+
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        gap: 22px;
+    }
+
+
+    .nav-links a {
+
+        padding: 10px 0;
+
+    }
+
+
+    .nav-links a.active::after {
+
+        bottom: 3px;
+
+    }
+
+
+    .book-button {
+
+        margin-left: auto;
+
+    }
+
+
+    .villas-section {
+
+        padding: 50px 20px;
+
+    }
+
+
+    .villa-container {
+
+        grid-template-columns: 1fr;
+
+        gap: 55px;
+
+    }
+
+
+    .villa-image-wrapper {
+
+        height: 260px;
+
+    }
+
+
+    .villa-bottom-content {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .bottom-divider {
+
+        width: 100%;
+
+        height: 1px;
+
+    }
+
+
+    .bottom-feature {
+
+        padding: 10px 0;
+
+    }
+
+
+    .bottom-book-button {
+
+        justify-content: center;
+
+    }
+
+}

@@ -1,0 +1,189 @@
+/* =========================================================
+   GALLERY – overview mosaic + category sections
+========================================================= */
+.gal { --gal-gold: #d9a366; --gal-line: #e2b98a; --gal-forest: #06211b; --gal-gap: clamp(8px, 1.1vw, 14px); padding-top: 76px; }
+.gal [hidden] { display: none !important; }
+
+/* ---------- Overview heading ---------- */
+.gal-overview { padding: clamp(36px, 5vw, 64px) clamp(16px, 3.4vw, 48px) clamp(40px, 5vw, 64px); }
+.gal-head { text-align: center; max-width: 760px; margin: 0 auto 26px; }
+.gal-eyebrow { display: block; color: var(--gal-gold); font-family: var(--cv-serif, serif); font-size: 1.15rem; letter-spacing: .08em; }
+.gal-head h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); color: var(--gal-forest); font-weight: 500; margin: 6px 0 10px; }
+.gal-head p { color: #4d5b56; font-size: 1.02rem; }
+
+/* ---------- Filter chips ---------- */
+.gal-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0 auto 30px; }
+.gal-chip {
+    padding: 8px 26px; border: 1px solid var(--gal-line); border-radius: 999px;
+    color: var(--gal-forest); text-decoration: none; font-family: var(--cv-serif, serif); font-size: 1.1rem;
+    transition: background .25s, color .25s, border-color .25s;
+}
+.gal-chip:hover { border-color: var(--gal-gold); background: rgba(217, 163, 102, .14); }
+.gal-chip.is-on { background: #374b46; border-color: #374b46; color: #f0d2a8; }
+
+/* ---------- Overview mosaic ---------- */
+.gal-mosaic {
+    max-width: 1320px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: clamp(120px, 15.5vw, 215px);
+    gap: var(--gal-gap);
+}
+.gal-tile { position: relative; display: block; overflow: hidden; border-radius: 22px; background: #d9cdb9; box-shadow: var(--cv-shadow); isolation: isolate; }
+.gal-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.gal-tile::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(6, 33, 27, 0) 55%, rgba(6, 33, 27, .55) 100%);
+    opacity: .75; transition: opacity .4s;
+}
+.gal-tile:hover img { transform: scale(1.05); }
+.gal-tile:hover::after { opacity: 1; }
+.gal-pill {
+    position: absolute; left: 14px; bottom: 14px; z-index: 2;
+    padding: 5px 18px; border-radius: 999px;
+    background: rgba(6, 33, 27, .78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(226, 185, 138, .55);
+    color: #fff; font-family: var(--cv-serif, serif); font-size: 1.05rem; letter-spacing: .03em;
+}
+.gal-tile:focus-visible { outline: 3px solid var(--gal-gold); outline-offset: 3px; }
+
+.gal-tile--1 { grid-column: 1 / span 6; grid-row: 1 / span 2; }
+.gal-tile--2 { grid-column: 7 / span 6; grid-row: 1; }
+.gal-tile--3 { grid-column: 7 / span 6; grid-row: 2; }
+.gal-tile--4 { grid-column: 1 / span 3; grid-row: 3; }
+.gal-tile--5 { grid-column: 4 / span 3; grid-row: 3; }
+.gal-tile--6 { grid-column: 7 / span 3; grid-row: 3; }
+.gal-tile--7 { grid-column: 10 / span 3; grid-row: 3; }
+
+/* ---------- CTA bar ---------- */
+.gal-cta {
+    background: var(--gal-forest); color: #e2b98a;
+    display: flex; align-items: center; justify-content: center; gap: clamp(18px, 4vw, 56px); flex-wrap: wrap;
+    padding: 26px clamp(16px, 4vw, 48px);
+}
+.gal-cta p { font-family: var(--cv-serif, serif); font-size: clamp(1.25rem, 2.4vw, 1.9rem); letter-spacing: .12em; margin: 0; text-align: center; }
+.gal-cta-leaf { color: var(--gal-gold); flex: none; }
+
+/* ---------- Category section ---------- */
+.gal-section { max-width: 1180px; margin: 0 auto; padding: clamp(24px, 4vw, 44px) clamp(14px, 3vw, 32px) clamp(40px, 6vw, 72px); }
+.gal-back {
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px;
+    color: var(--gal-forest); text-decoration: none; text-transform: uppercase; letter-spacing: .16em; font-size: .78rem; font-weight: 500;
+    padding: 8px 0; border-bottom: 1px solid transparent; transition: color .25s, border-color .25s;
+}
+.gal-back:hover { color: var(--cv-gold-deep, #b98b55); border-color: var(--gal-line); }
+.gal-back-icon { transform: rotate(180deg); }
+
+.gal-frame {
+    border: 1px solid var(--gal-line); border-radius: 30px; background: #faf6ef;
+    padding: clamp(18px, 3vw, 34px); box-shadow: var(--cv-shadow);
+}
+.gal-frame-head { text-align: center; margin-bottom: 22px; }
+.gal-frame-head h2 { font-size: clamp(2rem, 3.6vw, 2.9rem); color: var(--gal-forest); font-weight: 500; }
+.gal-frame-head p { color: #4d5b56; margin-top: 6px; }
+
+.gal-grid { display: grid; gap: var(--gal-gap); }
+.gal-item { position: relative; margin: 0; border-radius: 18px; overflow: hidden; background: #d9cdb9; min-height: 0; }
+.gal-open { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.gal-open img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.gal-item:hover .gal-open img { transform: scale(1.04); }
+.gal-open:focus-visible { outline: 3px solid var(--gal-gold); outline-offset: -3px; }
+
+/* Resort: wide hero + 4 tiles */
+.gal-grid--resort { grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(150px, 20vw, 250px); }
+.gal-grid--resort .gal-item--1 { grid-column: 1 / -1; grid-row: span 2; }
+
+/* Villas: 2 large + 4 tiles */
+.gal-grid--villas { grid-template-columns: repeat(12, 1fr); grid-auto-rows: clamp(150px, 19vw, 240px); }
+.gal-grid--villas .gal-item--1,
+.gal-grid--villas .gal-item--2 { grid-column: span 6; }
+.gal-grid--villas .gal-item--3,
+.gal-grid--villas .gal-item--4,
+.gal-grid--villas .gal-item--5,
+.gal-grid--villas .gal-item--6 { grid-column: span 3; }
+
+/* Dining: hero + 3 + strip */
+.gal-grid--dining { grid-template-columns: repeat(3, 1fr); grid-auto-rows: clamp(120px, 15vw, 190px); }
+.gal-grid--dining .gal-item--1 { grid-column: 1 / -1; grid-row: span 2; }
+.gal-grid--dining .gal-item--5 { grid-column: 1 / -1; }
+
+/* Wellness: tall left + two stacked right */
+.gal-grid--wellness { grid-template-columns: 5fr 7fr; grid-auto-rows: clamp(150px, 19vw, 250px); }
+.gal-grid--wellness .gal-item--1 { grid-row: span 2; }
+
+/* Experiences: 4 cards + banner */
+.gal-grid--experiences { grid-template-columns: repeat(4, 1fr); grid-auto-rows: auto; }
+.gal-grid--experiences .gal-item { display: flex; flex-direction: column; background: #fffaf1; border: 1px solid var(--gal-line); }
+.gal-grid--experiences .gal-item .gal-open { aspect-ratio: 4 / 3; height: auto; }
+.gal-grid--experiences .gal-item--5 { grid-column: 1 / -1; border: 0; }
+.gal-grid--experiences .gal-item--5 .gal-open { aspect-ratio: auto; height: clamp(130px, 17vw, 220px); }
+.gal-item figcaption {
+    position: relative; text-align: center; padding: 34px 10px 16px;
+    font-family: var(--cv-serif, serif); font-size: 1.2rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gal-forest); line-height: 1.25;
+}
+.gal-badge {
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+    background: #fffaf1; border: 1px solid var(--gal-line); color: var(--cv-gold-deep, #b98b55);
+}
+
+/* Sunsets: hero + 3 */
+.gal-grid--sunsets { grid-template-columns: repeat(3, 1fr); grid-auto-rows: clamp(120px, 16vw, 210px); }
+.gal-grid--sunsets .gal-item--1 { grid-column: 1 / -1; }
+.gal-grid--sunsets .gal-item:not(.gal-item--1) { grid-row: span 2; }
+
+.gal-next {
+    display: flex; width: fit-content; margin: 22px 0 0 auto; align-items: center; gap: 10px;
+    color: var(--gal-forest); text-decoration: none; font-family: var(--cv-serif, serif); font-size: 1.2rem;
+    padding: 8px 4px; border-bottom: 1px solid var(--gal-line); transition: gap .25s, color .25s;
+}
+.gal-next:hover { gap: 16px; color: var(--cv-gold-deep, #b98b55); }
+
+/* ---------- Progressive enhancement: sections stack when JS is off ---------- */
+.gal:not(.is-enhanced) .gal-back,
+.gal:not(.is-enhanced) .gal-next,
+.gal:not(.is-enhanced) .gal-chips { display: none; }
+
+/* ---------- Lightbox ---------- */
+.gal-lb { position: fixed; inset: 0; z-index: 200; background: rgba(4, 18, 14, .92); display: grid; place-items: center; padding: 56px 64px; }
+.gal-lb img { max-width: 100%; max-height: 100%; border-radius: 14px; box-shadow: 0 30px 80px -20px #000; }
+.gal-lb-close, .gal-lb-nav {
+    position: absolute; border: 1px solid rgba(226, 185, 138, .6); background: rgba(6, 33, 27, .8); color: #f0d2a8;
+    width: 46px; height: 46px; border-radius: 50%; font-size: 1.8rem; line-height: 1; cursor: pointer; transition: background .2s, color .2s;
+}
+.gal-lb-close:hover, .gal-lb-nav:hover { background: var(--gal-gold); color: var(--gal-forest); }
+.gal-lb-close { top: 18px; right: 18px; }
+.gal-lb-nav { top: 50%; transform: translateY(-50%); }
+.gal-lb-prev { left: 12px; }
+.gal-lb-next { right: 12px; }
+body.gal-lock { overflow: hidden; }
+
+/* ---------- Tablet / phone ---------- */
+@media (max-width: 900px) {
+    .gal-mosaic { grid-template-columns: repeat(6, 1fr); grid-auto-rows: clamp(110px, 24vw, 190px); }
+    .gal-tile--1 { grid-column: 1 / -1; grid-row: span 2; }
+    .gal-tile--2, .gal-tile--3 { grid-column: span 3; grid-row: auto; }
+    .gal-tile--4, .gal-tile--5, .gal-tile--6, .gal-tile--7 { grid-column: span 3; grid-row: auto; }
+
+    .gal-grid--resort { grid-template-columns: repeat(2, 1fr); }
+    .gal-grid--villas .gal-item--3, .gal-grid--villas .gal-item--4,
+    .gal-grid--villas .gal-item--5, .gal-grid--villas .gal-item--6 { grid-column: span 6; }
+    .gal-grid--experiences { grid-template-columns: repeat(2, 1fr); }
+    .gal-grid--wellness { grid-template-columns: 1fr 1fr; }
+    .gal-lb { padding: 64px 12px; }
+}
+@media (max-width: 560px) {
+    .gal-mosaic { grid-template-columns: repeat(2, 1fr); }
+    .gal-tile--1 { grid-column: 1 / -1; }
+    .gal-tile--2, .gal-tile--3 { grid-column: 1 / -1; }
+    .gal-tile--4, .gal-tile--5, .gal-tile--6, .gal-tile--7 { grid-column: span 1; }
+    .gal-grid--villas .gal-item { grid-column: 1 / -1 !important; }
+    .gal-grid--dining, .gal-grid--sunsets { grid-template-columns: 1fr 1fr; }
+    .gal-grid--dining .gal-item--2, .gal-grid--dining .gal-item--3, .gal-grid--dining .gal-item--4 { grid-column: span 1; }
+    .gal-grid--wellness { grid-template-columns: 1fr; }
+    .gal-grid--wellness .gal-item--1 { grid-row: auto; }
+    .gal-grid--experiences { grid-template-columns: 1fr 1fr; }
+    .gal-item figcaption { font-size: 1rem; letter-spacing: .06em; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .gal-tile img, .gal-open img { transition: none; }
+}

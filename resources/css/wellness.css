@@ -1,0 +1,705 @@
+/* =========================================================
+   CASA VERDE
+   WELLNESS PAGE
+========================================================= */
+
+:root {
+
+    --dark-green: #002d26;
+    --dark-green-light: #063b33;
+
+    --cream: #f7f2e9;
+
+    --gold: #dfa15e;
+    --gold-light: #e7b476;
+
+    --dark-text: #092d28;
+
+    --white: #ffffff;
+
+}
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    background: var(--cream);
+
+    color: var(--dark-text);
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+img {
+
+    display: block;
+
+    width: 100%;
+
+}
+
+
+a {
+
+    color: inherit;
+
+}
+
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.wellness-hero {
+
+    display: grid;
+
+    grid-template-columns: 28% 72%;
+
+    min-height: 289px;
+
+    background: var(--cream);
+
+}
+
+
+/* LEFT */
+
+.wellness-introduction {
+
+    padding:
+
+        29px
+
+        30px
+
+        25px
+
+        47px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+}
+
+
+.wellness-label {
+
+    margin: 0 0 13px;
+
+    color: var(--gold);
+
+    font-size: 17px;
+
+    font-weight: 500;
+
+}
+
+
+.wellness-introduction h1 {
+
+    margin: 0;
+
+    font-size: 40px;
+
+    line-height: 1.08;
+
+    font-weight: 500;
+
+    color: var(--dark-text);
+
+}
+
+
+.wellness-description {
+
+    margin-top: 25px;
+
+    max-width: 390px;
+
+    font-size: 16px;
+
+    line-height: 1.48;
+
+    color: #31443f;
+
+}
+
+
+/* HERO IMAGE */
+
+.wellness-hero-image {
+
+    height: 289px;
+
+    overflow: hidden;
+
+}
+
+
+.wellness-hero-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+/* =========================================================
+   WELLNESS CARDS
+========================================================= */
+
+.wellness-services {
+
+    padding:
+
+        20px
+
+        28px
+
+        25px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 12px;
+
+    background: var(--cream);
+
+}
+
+
+.wellness-card {
+
+    text-align: center;
+
+    position: relative;
+
+}
+
+
+/* IMAGE */
+
+.wellness-card-image {
+
+    position: relative;
+
+    height: 145px;
+
+    overflow: hidden;
+
+    border-radius: 15px;
+
+}
+
+
+.wellness-card-image img {
+
+    height: 100%;
+
+    width: 100%;
+
+    object-fit: cover;
+
+    transition: transform .4s ease;
+
+}
+
+
+.wellness-card:hover
+.wellness-card-image img {
+
+    transform: scale(1.05);
+
+}
+
+
+/* ICON */
+
+.service-icon {
+
+    position: absolute;
+
+    top: 8px;
+
+    left: 8px;
+
+    width: 43px;
+
+    height: 43px;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--gold);
+
+    background: rgba(0, 45, 38, .75);
+
+    color: var(--gold);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
+
+}
+
+
+/* CARD CONTENT */
+
+.wellness-card-content {
+
+    padding:
+
+        17px
+
+        8px
+
+        0;
+
+}
+
+
+.wellness-card-content h2 {
+
+    margin: 0 0 4px;
+
+    font-size: 15px;
+
+    line-height: 1.25;
+
+    font-weight: bold;
+
+    color: var(--dark-text);
+
+}
+
+
+.wellness-card-content p {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.35;
+
+    color: #45504c;
+
+}
+
+
+/* =========================================================
+   BOTTOM FEATURES
+========================================================= */
+
+.wellness-features {
+
+    margin:
+
+        0
+
+        30px;
+
+    padding:
+
+        19px
+
+        0
+
+        15px;
+
+    border-top:
+
+        1px solid
+
+        #c8c3b9;
+
+    display: grid;
+
+    grid-template-columns:
+
+        1.2fr
+
+        1.2fr
+
+        1fr
+
+        1.2fr
+
+        1.2fr;
+
+    gap: 20px;
+
+    align-items: center;
+
+}
+
+
+/* FEATURE */
+
+.feature-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+
+.feature-icon {
+
+    flex-shrink: 0;
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--gold);
+
+    font-size: 29px;
+
+}
+
+
+.feature-item h3 {
+
+    margin: 0 0 4px;
+
+    font-size: 15px;
+
+    color: var(--dark-text);
+
+}
+
+
+.feature-item p {
+
+    margin: 0;
+
+    font-size: 13px;
+
+    line-height: 1.35;
+
+    color: #3e4b47;
+
+}
+
+
+/* =========================================================
+   SPA BUTTON
+========================================================= */
+
+.feature-action {
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+
+.spa-menu-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--dark-green);
+
+    color: var(--gold);
+
+    text-decoration: none;
+
+    border-radius: 35px;
+
+    padding:
+
+        17px
+
+        26px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    transition:
+
+        background .3s ease,
+
+        transform .3s ease;
+
+}
+
+
+.spa-menu-button:hover {
+
+    background: var(--dark-green-light);
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .wellness-logo {
+
+        min-width: 230px;
+
+    }
+
+
+    .logo-text span {
+
+        font-size: 11px;
+
+    }
+
+
+    .wellness-nav {
+
+        gap: 15px;
+
+    }
+
+
+    .wellness-nav a {
+
+        font-size: 12px;
+
+    }
+
+
+    .wellness-hero {
+
+        grid-template-columns: 35% 65%;
+
+    }
+
+
+    .wellness-introduction {
+
+        padding-left: 30px;
+
+    }
+
+
+    .wellness-introduction h1 {
+
+        font-size: 34px;
+
+    }
+
+
+    .wellness-services {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+
+    .wellness-features {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .wellness-navbar {
+
+        height: auto;
+
+        padding: 15px;
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .wellness-logo {
+
+        min-width: 0;
+
+        width: 100%;
+
+    }
+
+
+    .wellness-nav {
+
+        order: 3;
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        justify-content: flex-start;
+
+        gap: 25px;
+
+    }
+
+
+    .wellness-nav a {
+
+        padding: 10px 0;
+
+    }
+
+
+    .wellness-nav a::after {
+
+        bottom: 2px;
+
+    }
+
+
+    .book-stay {
+
+        margin-left: auto;
+
+    }
+
+
+    .wellness-hero {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .wellness-introduction {
+
+        padding:
+
+            35px
+
+            25px;
+
+    }
+
+
+    .wellness-introduction h1 {
+
+        font-size: 35px;
+
+    }
+
+
+    .wellness-hero-image {
+
+        height: 250px;
+
+    }
+
+
+    .wellness-services {
+
+        grid-template-columns:
+            1fr;
+
+        padding:
+
+            20px;
+
+    }
+
+
+    .wellness-card-image {
+
+        height: 220px;
+
+    }
+
+
+    .wellness-features {
+
+        margin: 0 20px;
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .feature-action {
+
+        padding: 10px 0 15px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .wellness-introduction h1 {
+
+        font-size: 30px;
+
+    }
+
+
+    .wellness-card-image {
+
+        height: 200px;
+
+    }
+
+}

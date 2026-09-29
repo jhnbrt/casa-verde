@@ -12,7 +12,10 @@
     <title>Casa Verde Cliff Resort & Spa</title>
 
     @vite([
+        'resources/css/header.css',
         'resources/css/home.css',
+        'resources/css/theme.css',
+        'resources/css/footer.css',
         'resources/js/app.js'
     ])
 </head>
@@ -97,60 +100,8 @@ $contactFooter = $contents
 @endphp
 
 
-<!-- =========================================================
-     NAVIGATION
-========================================================= -->
+@include('layouts.header')
 
-<header class="navbar">
-
-    <div class="logo-area">
-
-        @if($site)
-
-            <img
-                src="{{ asset($site->image) }}"
-                alt="{{ $site->title }}"
-            >
-
-            <div class="logo-text">
-
-                <span>
-                    {{ $site->title }}
-                </span>
-
-                <small>
-                    {{ $site->subtitle }}
-                </small>
-
-            </div>
-
-        @endif
-
-    </div>
-
-
-    <nav class="nav-links">
-
-        @foreach($contents->get('navigation', collect()) as $nav)
-
-            <a href="{{ $nav->button_url }}">
-                {{ $nav->title }}
-            </a>
-
-        @endforeach
-
-    </nav>
-
-
-    <a href="#booking" class="book-button">
-
-        <span class="book-icon">✧</span>
-
-        BOOK YOUR STAY
-
-    </a>
-
-</header>
 
 
 
@@ -207,7 +158,7 @@ $contactFooter = $contents
         <div class="hero-buttons">
 
             <a
-                href="{{ $hero->button_url }}"
+                href="{{ $hero->button_url === '#booking' ? '#contact' : $hero->button_url }}"
                 class="primary-button"
             >
 
@@ -401,7 +352,7 @@ $contactFooter = $contents
 @endif
 
                     <a
-                        href="{{ $villa->button_url ?? '#' }}"
+                        href="{{ ($villa->button_url ?? '#') === '#' ? route('villas.index') : $villa->button_url }}"
                         class="villa-button"
                     >
 
@@ -548,7 +499,7 @@ $contactFooter = $contents
 
 
         <a
-            href="{{ $experienceBottom->button_url ?? '#' }}"
+            href="{{ ($experienceBottom->button_url ?? '#') === '#' ? route('experiences.index') : $experienceBottom->button_url }}"
             class="discover-button"
         >
 
@@ -603,7 +554,7 @@ $contactFooter = $contents
 
 
                 <a
-                    href="{{ $wellnessIntro->button_url ?? '#' }}"
+                    href="{{ ($wellnessIntro->button_url ?? '#') === '#' ? route('wellness.index') : $wellnessIntro->button_url }}"
                     class="wellness-button"
                 >
 
@@ -771,7 +722,7 @@ $contactFooter = $contents
 
 
                 <a
-                    href="{{ $diningIntro->button_url ?? '#' }}"
+                    href="{{ ($diningIntro->button_url ?? '#') === '#' ? route('dining.index') : $diningIntro->button_url }}"
                     class="dining-button"
                 >
 
@@ -798,7 +749,11 @@ $contactFooter = $contents
 
     @endif
 
-
+ <div class="dining-decoration">
+        <span></span>
+        <b>♧</b>
+        <span></span>
+    </div>
 
     <div class="dining-cards">
 
@@ -850,36 +805,27 @@ $contactFooter = $contents
 
 
 
-    <div class="dining-decoration">
+   @php
+    $diningBottom = $contents
+        ->get('dining_bottom', collect())
+        ->first();
+@endphp
+
+@if($diningBottom)
+
+    <div class="dining-decoration-2">
 
         <span></span>
 
-        <b>✧</b>
+        <p class="dining-bottom-text">
+            {{ $diningBottom->description }}
+        </p>
 
         <span></span>
 
     </div>
 
-
-
-    @php
-
-        $diningBottom = $contents
-            ->get('dining_bottom', collect())
-            ->first();
-
-    @endphp
-
-
-    @if($diningBottom)
-
-        <p class="dining-bottom-text">
-
-            {{ $diningBottom->description }}
-
-        </p>
-
-    @endif
+@endif
 </section>
 
     <!-- =========================
@@ -900,7 +846,7 @@ $contactFooter = $contents
     @if($longStayBooking)
 
         <a
-            href="{{ $longStayBooking->button_url ?? '#' }}"
+            href="{{ in_array($longStayBooking->button_url ?? '#', ['#','#booking']) ? '#contact' : $longStayBooking->button_url }}"
             class="long-stay-booking"
         >
 
@@ -1374,11 +1320,15 @@ $contactFooter = $contents
                 <div class="contact-info-list">
 
                     @foreach($contactInfo as $info)
+                        @php
+                            $t = strtolower($info->title);
+                            $infoIcon = str_contains($t, 'location') ? 'pin' : (str_contains($t, 'phone') || str_contains($t, 'whatsapp') ? 'phone' : (str_contains($t, 'mail') ? 'mail' : 'clock'));
+                        @endphp
 
                         <div class="contact-info-item">
 
                             <div class="contact-info-icon">
-                                {{ $info->icon }}
+                                <x-icon :name="$infoIcon" :size="24" />
                             </div>
 
 
@@ -1421,25 +1371,32 @@ $contactFooter = $contents
 
                 <form
                     class="contact-form"
-                    action="{{ $contactForm->button_url ?? '#' }}"
+                    action="{{ route('contact.store') }}#contact"
                     method="POST"
                 >
 
                     @csrf
+
+                    @if(session('contact_status'))
+                        <p class="form-alert form-alert--ok" role="status">{{ session('contact_status') }}</p>
+                    @endif
+                    @if($errors->any())
+                        <p class="form-alert form-alert--error" role="alert">{{ $errors->first() }}</p>
+                    @endif
 
 
                     <div class="contact-form-row">
 
                         <input
                             type="text"
-                            name="name"
+                            name="name" value="{{ old('name') }}"
                             placeholder="Full Name"
                         >
 
 
                         <input
                             type="email"
-                            name="email"
+                            name="email" value="{{ old('email') }}"
                             placeholder="Email Address"
                         >
 
@@ -1448,7 +1405,7 @@ $contactFooter = $contents
 
                     <input
                         type="text"
-                        name="subject"
+                        name="subject" value="{{ old('subject') }}"
                         placeholder="Subject"
                     >
 
@@ -1456,7 +1413,7 @@ $contactFooter = $contents
                     <textarea
                         name="message"
                         placeholder="Your Message"
-                    ></textarea>
+                    >{{ old('message') }}</textarea>
 
 
                     <button type="submit">
@@ -1503,7 +1460,7 @@ $contactFooter = $contents
                     {{-- MAP MARKER --}}
 
                     <div class="contact-map-marker">
-                        ◈
+                        <x-icon name="pin" :size="18" />
                     </div>
 
                 </div>
@@ -1515,69 +1472,10 @@ $contactFooter = $contents
     </div>
 
 
-    {{-- =====================================================
-         FOOTER
-    ====================================================== --}}
-
-    @if($contactFooter)
-
-        <div class="contact-footer">
-
-
-            {{-- LOGO --}}
-
-            <div class="contact-footer-logo">
-
-                @if($contactFooter->image)
-
-                    <img
-                        src="{{ asset($contactFooter->image) }}"
-                        alt="Casa Verde Cliff Resort & Spa"
-                    >
-
-                @endif
-
-            </div>
-
-
-            {{-- CENTER TEXT --}}
-
-            <div class="contact-footer-title">
-
-                <span></span>
-
-                <p>
-                    {{ $contactFooter->title }}
-                </p>
-
-                <span></span>
-
-            </div>
-
-
-            {{-- SOCIAL MEDIA --}}
-
-            <div class="contact-socials">
-
-                <a href="#" aria-label="Facebook">
-                    f
-                </a>
-
-                <a href="#" aria-label="Instagram">
-                    ◎
-                </a>
-
-                <a href="#" aria-label="YouTube">
-                    ▶
-                </a>
-
-            </div>
-
-        </div>
-
-    @endif
-
 </section>
 </main>
+
+@include('layouts.footer', ['hideCta' => true])
+
 </body>
 </html>
