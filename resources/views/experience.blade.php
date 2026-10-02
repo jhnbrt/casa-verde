@@ -139,10 +139,11 @@
         }
         .experience-page .plan-button .plan-logo {
             width: 48px; height: 48px;
-            border: 1px solid rgba(255,255,255,.3);
+            border: 0;
             background: #06211b;
+            overflow: hidden;
         }
-        .experience-page .plan-logo img { width: 30px; height: 30px; object-fit: contain; }
+        .experience-page .plan-logo img { width: 100%; height: 100%; object-fit: cover; }
 
         @media (max-width: 1100px) {
             .experience-page .more-grid { grid-template-columns: repeat(4, 1fr); }

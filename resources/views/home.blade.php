@@ -329,7 +329,7 @@ $contactFooter = $contents
                     <h3>
                         <img
                             class="villa-icon"
-                            src="{{ asset('images/logo.png') }}"
+                            src="{{ asset('images/icons/ico-lotus.png') }}"
                             alt=""
                             width="38"
                             height="38"
@@ -355,7 +355,12 @@ $contactFooter = $contents
                         <ul class="villa-features">
                             @foreach($villaFeatures as $i => $feature)
                                 <li>
-                                    <x-icon :name="$cardIcons[$i] ?? 'lotus'" :size="30" />
+                                    @php $iconFile = 'images/icons/ico-' . ($cardIcons[$i] ?? 'lotus') . '.png'; @endphp
+                                    @if(file_exists(public_path($iconFile)))
+                                        <img class="villa-feature-icon" src="{{ asset($iconFile) }}" alt="" width="30" height="30">
+                                    @else
+                                        <x-icon :name="$cardIcons[$i] ?? 'lotus'" :size="30" />
+                                    @endif
                                     <span>{{ $feature }}</span>
                                 </li>
                             @endforeach

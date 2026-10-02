@@ -23,8 +23,9 @@ $amenitiesShared = [
 return [
 
     'standard-villa' => [
-        // Icons for the feature rows on the home-page villa card (same order as the DB features)
-        'card_icons' => ['bed', 'leaf', 'villa'],
+        // Icons for the feature rows on the home-page villa card (same order as the DB features).
+        // Each name maps to public/images/icons/ico-{name}.png
+        'card_icons' => ['bed', 'leaf', 'house'],
         // Used on the home/villas cards only when the admin has no features saved for this villa
         'card_features' => [
             'Ideal for couples and longer stays',
@@ -69,7 +70,7 @@ return [
     ],
 
     'premium-villa' => [
-        'card_icons' => ['sunset', 'pavilion', 'star'],
+        'card_icons' => ['sunset', 'balcony', 'star'],
         'card_features' => [
             'More space and privacy',
             'Ocean views and cliffside atmosphere',
