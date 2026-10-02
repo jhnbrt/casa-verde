@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         // Create Casa Verde homepage content
         $this->call([
             HomeContentSeeder::class,
+            EventContentSeeder::class,
         ]);
     }
 }

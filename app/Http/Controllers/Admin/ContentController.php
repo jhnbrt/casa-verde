@@ -132,18 +132,29 @@ class ContentController extends Controller
             'image' => ['nullable', 'image', 'max:5120'],
         ]);
 
-        // "features" is submitted as one item per line in a textarea and
-        // stored as a JSON array on the model.
-        $data['features'] = $request->filled('features')
-            ? collect(preg_split('/\r\n|\r|\n/', $request->input('features')))
+        // "features" is submitted as one item per line in a textarea; the model
+        // stores it as a JSON array. Only touch it when the field was actually
+        // submitted, so a partial save can never wipe it.
+        if ($request->has('features')) {
+            $data['features'] = collect(preg_split('/\r\n|\r|\n/', (string) $request->input('features')))
                 ->map(fn ($line) => trim($line))
                 ->filter()
                 ->values()
-                ->all()
-            : null;
+                ->all();
+        } else {
+            unset($data['features']);
+        }
 
-        $data['active'] = $request->boolean('active');
-        $data['sort_order'] = $data['sort_order'] ?? 0;
+        // Same rule for visibility and ordering: never reset them silently.
+        if ($request->has('active')) {
+            $data['active'] = $request->boolean('active');
+        }
+
+        if ($request->filled('sort_order')) {
+            $data['sort_order'] = (int) $request->input('sort_order');
+        } else {
+            unset($data['sort_order']);
+        }
 
         unset($data['image']);
 

@@ -1,0 +1,225 @@
+/* =========================================================
+   HOME PAGE: "CHOOSE YOUR VILLA" SECTION
+   Loaded after theme.css and scoped to .home-villas, so the
+   /villas page (which shares some class names) is untouched.
+========================================================= */
+
+.home-villas {
+    --hv-forest: #06211b;
+    --hv-gold: #d9a566;
+    --hv-gold-soft: #dcae78;
+    --hv-ink: #0c2a24;
+
+    padding: 18px 5% 40px;
+    min-height: 0;
+    background: var(--cv-sand, #f7f2ea);
+}
+
+
+/* ---------- Heading ---------- */
+
+.home-villas .villas-header {
+    max-width: 760px;
+    margin: 0 auto 26px;
+    text-align: center;
+}
+
+.home-villas .section-label {
+    font-family: var(--cv-serif, Georgia, serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--hv-gold);
+    line-height: 1.2;
+    margin: 0;
+}
+
+.home-villas .villas-header h2 {
+    font-family: var(--cv-serif, Georgia, serif);
+    font-size: clamp(2.6rem, 4.3vw, 3.7rem);
+    font-weight: 600;
+    line-height: 1.05;
+    color: var(--hv-forest);
+    margin: 0;
+}
+
+.home-villas .villas-rule {
+    display: block;
+    width: min(210px, 50%);
+    height: 2px;
+    margin: 10px auto 12px;
+    background: linear-gradient(to right, transparent, var(--hv-gold), transparent);
+}
+
+.home-villas .villas-header .section-subtitle {
+    font-family: var(--cv-sans, system-ui, sans-serif);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    line-height: 1.5;
+    color: var(--hv-ink);
+    margin: 0;
+}
+
+
+/* ---------- Cards ---------- */
+
+.home-villas .villa-container {
+    max-width: 1085px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(48px, 10.9vw, 149px);
+    row-gap: 56px;
+}
+
+.home-villas .villa-card { min-width: 0; }
+
+.home-villas .villa-image {
+    width: 100%;
+    height: clamp(210px, 19.3vw, 263px);
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: none;
+}
+
+.home-villas .villa-content {
+    --indent: clamp(58px, 4.5vw, 62px);
+    padding: 0;
+}
+
+
+/* ---------- Title row ---------- */
+
+.home-villas .villa-content h3 {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 4px 0 6px;
+    font-family: var(--cv-serif, Georgia, serif);
+    font-size: clamp(1.9rem, 2.4vw, 2.2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--hv-forest);
+}
+
+.home-villas .villa-icon {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    margin: 0 calc(var(--indent) - 54px) 0 14px;
+    object-fit: contain;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.home-villas .villa-tagline,
+.home-villas .villa-price {
+    margin-left: var(--indent);
+}
+
+.home-villas .villa-tagline {
+    font-family: var(--cv-serif, Georgia, serif);
+    font-style: normal;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--hv-gold);
+    margin-bottom: 4px;
+}
+
+.home-villas .villa-price {
+    font-family: var(--cv-serif, Georgia, serif);
+    font-size: 1.28rem;
+    font-weight: 700;
+    color: var(--hv-forest);
+    margin-bottom: 18px;
+}
+
+
+/* ---------- Feature rows ---------- */
+
+.home-villas .villa-features {
+    list-style: none;
+    margin: 0 0 22px;
+    padding: 0;
+}
+
+.home-villas .villa-features li {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 0 0 6px;
+    min-height: 30px;
+    font-family: var(--cv-sans, system-ui, sans-serif);
+    font-size: clamp(.95rem, 1.2vw, 1.05rem);
+    color: var(--hv-ink);
+}
+
+.home-villas .villa-features .cv-icon {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    margin: 0 calc(var(--indent) - 34px) 0 4px;
+    color: var(--hv-gold-soft);
+    stroke-width: 1.1;
+}
+
+.home-villas .villa-features li span {
+    width: auto;
+    font-size: inherit;
+    color: inherit;
+    text-align: left;
+}
+
+
+/* ---------- Button: gold pill with logo circle ---------- */
+
+.home-villas .villa-button {
+    margin: 0 0 0 var(--indent);
+    min-height: 0;
+    padding: 3px 18px 3px 3px;
+    gap: 8px;
+    border: 0;
+    background: var(--hv-gold);
+    color: var(--hv-forest);
+    font-family: var(--cv-sans, system-ui, sans-serif);
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.home-villas .villa-button:hover {
+    background: #c99556;
+    color: var(--hv-forest);
+    border-color: transparent;
+}
+
+.home-villas .villa-button > span {
+    width: 36px;
+    height: 36px;
+    border: 0;
+}
+
+
+/* ---------- Divider ---------- */
+
+.home-villas .section-divider {
+    max-width: 1212px;
+    margin: 30px auto 0;
+    background: rgba(6, 33, 27, .5);
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+    .home-villas { padding: 40px 20px 32px; }
+
+    .home-villas .villa-container {
+        grid-template-columns: 1fr;
+        max-width: 560px;
+        row-gap: 52px;
+    }
+
+    .home-villas .villa-image { height: clamp(200px, 52vw, 290px); }
+}

@@ -44,7 +44,7 @@
 
                 if (isset($routeFor[$slug])) {
                     $href   = route($routeFor[$slug]);
-                    $active = request()->routeIs($routeFor[$slug]);
+                    $active = request()->routeIs($routeFor[$slug], str_replace('.index', '.*', $routeFor[$slug]));
                 } else {
                     // Section anchors (#about, #contact...) live on the home page,
                     // so they must work from every other page too.

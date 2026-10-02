@@ -20,13 +20,131 @@
         'resources/js/app.js'
     ])
 
+    <style>
+/* =========================================================
+   HERO – photo blended into the text, kept inside the container
+   (scoped to .wellness-page so it wins over theme.css)
+========================================================= */
+
+.wellness-page .wellness-hero {
+    position: relative;
+    display: block;
+    max-width: 1440px;
+    margin: 0 auto;
+    min-height: 365px;
+    padding-top: 96px;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--cream);
+}
+
+.wellness-page .wellness-hero-image {
+    position: absolute;
+    top: 96px;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    width: 64%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, rgba(0, 0, 0, .5) 18%, #000 46%);
+            mask-image: linear-gradient(to right, transparent 0, rgba(0, 0, 0, .5) 18%, #000 46%);
+}
+
+.wellness-page .wellness-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 40%;
+}
+
+.wellness-page .wellness-introduction {
+    position: relative;
+    z-index: 1;
+    width: min(56%, 640px);
+    min-height: 269px;
+    padding: 24px 30px 24px clamp(24px, 3.4vw, 47px);
+}
+
+.wellness-page .wellness-label {
+    font-family: var(--cv-serif, serif);
+    font-size: 1.1rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.wellness-page .wellness-introduction h1 {
+    font-family: var(--cv-serif, serif);
+    font-size: clamp(2rem, 3.2vw, 3rem);
+    font-weight: 600;
+    line-height: 1.04;
+    color: var(--cv-forest, #06211b);
+}
+
+.wellness-page .wellness-description {
+    font-family: var(--cv-serif, serif);
+    font-size: 1.15rem;
+    line-height: 1.45;
+    max-width: 430px;
+    color: #31443f;
+}
+
+/* Cards + feature strip: serif type like the design */
+.wellness-page .wellness-card-content h2,
+.wellness-page .feature-item h3 {
+    font-family: var(--cv-serif, serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.wellness-page .wellness-card-content p,
+.wellness-page .feature-item p {
+    font-family: var(--cv-serif, serif);
+    font-size: .98rem;
+    line-height: 1.35;
+}
+
+.wellness-page .spa-menu-button {
+    font-family: var(--cv-serif, serif);
+    font-size: 1rem;
+    letter-spacing: .04em;
+}
+
+@media (max-width: 1100px) {
+    .wellness-page .wellness-introduction { width: min(60%, 640px); }
+    .wellness-page .wellness-hero-image { width: 60%; }
+}
+
+@media (max-width: 768px) {
+    .wellness-page .wellness-hero { min-height: 0; padding-top: 76px; }
+    .wellness-page .wellness-introduction { width: 100%; min-height: 0; padding: 28px 24px 150px; }
+    .wellness-page .wellness-hero-image {
+        top: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 320px;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, .55) 14%, #000 42%);
+                mask-image: linear-gradient(to bottom, transparent 0, rgba(0, 0, 0, .55) 14%, #000 42%);
+    }
+}
+
+
+/* Line icons (replace the text glyphs) */
+.wellness-page .feature-icon svg { stroke-width: 1.2; }
+
+    </style>
+
 </head>
 
 <body>
 
 @include('layouts.header')
 
-<main>
+<main class="wellness-page">
 
 
 <!-- =========================================================
@@ -97,10 +215,6 @@
                 alt="Banana Scanning Signature Massage"
             >
 
-            <div class="service-icon">
-                ♡
-            </div>
-
         </div>
 
 
@@ -133,10 +247,6 @@
                 src="{{ asset('images/wellness/hot-stone.jpg') }}"
                 alt="Hot Stone Massage"
             >
-
-            <div class="service-icon">
-                ≋
-            </div>
 
         </div>
 
@@ -171,10 +281,6 @@
                 alt="Therapeutic Massage"
             >
 
-            <div class="service-icon">
-                ◇
-            </div>
-
         </div>
 
 
@@ -208,10 +314,6 @@
                 alt="Foot Massage"
             >
 
-            <div class="service-icon">
-                ♧
-            </div>
-
         </div>
 
 
@@ -244,10 +346,6 @@
                 src="{{ asset('images/wellness/package.jpg') }}"
                 alt="Wellness Package"
             >
-
-            <div class="service-icon">
-                ✧
-            </div>
 
         </div>
 
@@ -284,7 +382,7 @@
     <div class="feature-item">
 
         <div class="feature-icon">
-            ✧
+            <x-icon name="lotus" :size="34" />
         </div>
 
         <div>
@@ -309,7 +407,7 @@
     <div class="feature-item">
 
         <div class="feature-icon">
-            ♧
+            <x-icon name="leaf" :size="34" />
         </div>
 
         <div>
@@ -351,7 +449,7 @@
     <div class="feature-item">
 
         <div class="feature-icon">
-            ▦
+            <x-icon name="calendar" :size="34" />
         </div>
 
         <div>
@@ -376,7 +474,7 @@
     <div class="feature-item">
 
         <div class="feature-icon">
-            ♢
+            <x-icon name="shield" :size="34" />
         </div>
 
         <div>

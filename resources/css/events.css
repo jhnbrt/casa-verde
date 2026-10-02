@@ -1,0 +1,56 @@
+/* Events page – layout refinements on top of pages.css (scoped to .ev) */
+
+.ev .cv-rule svg{flex:none}
+
+/* Hero */
+.ev-hero{min-height:min(72vh,670px);padding-block:56px}
+.ev-hero::before{background:linear-gradient(90deg,rgba(6,33,27,.55),rgba(6,33,27,0) 70%)}
+.ev-hero>*{max-width:600px}
+.ev-hero__eyebrow{position:relative;padding-bottom:14px;font-size:1rem}
+.ev-hero__eyebrow::after{content:"";position:absolute;left:0;bottom:0;width:88px;height:1px;background:var(--cv-gold,#c9a06a)}
+.ev-hero h1{font-size:clamp(2.8rem,6vw,4.8rem);line-height:1.02;margin-top:6px}
+.ev-hero p{font-size:1.1rem;max-width:420px}
+
+/* Hero button with logo medallion */
+.ev-pill{display:inline-flex;align-items:center;gap:16px;padding:6px 36px 6px 6px;border-radius:999px;background:#e0a96d;color:#06211b;font-family:var(--cv-sans,sans-serif);font-weight:500;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:.25s}
+.ev-pill:hover{background:#fff}
+.ev-pill__logo{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:#06211b;border:1px solid rgba(255,255,255,.35)}
+.ev-pill__logo img{width:30px;height:30px;object-fit:contain}
+
+/* Intro + cards */
+.ev-intro{padding-bottom:56px}
+.ev-intro .cv-eyebrow{font-size:1.1rem}
+.ev .cv-title{letter-spacing:.14em;line-height:1.15;max-width:900px;margin-inline:auto}
+.ev-grid{gap:clamp(16px,2.4vw,32px)}
+.ev-card{border-radius:34px;padding:8px 8px 28px;gap:10px}
+.ev-card>img{aspect-ratio:1.6;border-radius:28px 28px 20px 20px}
+.ev-ico{margin-top:10px}
+.ev-card h3{font-size:1.7rem}
+.ev-card p{font-size:1.05rem;line-height:1.5}
+.ev-card .cv-link{font-size:.95rem;margin-top:4px}
+
+/* Dark features band */
+.ev-features{padding-block:34px 42px}
+.ev-features .cv-rule{max-width:900px;margin:10px auto 26px}
+.ev-feats{margin-top:0}
+.ev-feat-ico{display:block;color:var(--cv-gold,#c9a06a);margin-bottom:4px}
+.ev-feat-ico svg{stroke-width:1.1}
+.ev-feats h3{font-size:1.3rem}
+.ev-feats p{font-size:1rem;line-height:1.45;max-width:230px;margin-inline:auto}
+
+/* Split + banner */
+.ev-split>div{padding:clamp(28px,5vw,64px)}
+.ev-split>div p{max-width:420px;font-family:var(--cv-serif,serif);font-size:1.05rem}
+.ev-split .cv-rule{max-width:420px}
+.ev-banner{min-height:340px;justify-content:space-between;padding-block:40px}
+.ev-banner::before{background:linear-gradient(180deg,rgba(6,33,27,.55),rgba(6,33,27,0) 55%)}
+.ev-banner .cv-btn{border-radius:18px;padding:12px 30px;font-size:.95rem}
+
+@media(max-width:1000px){
+    .ev-hero{min-height:520px}
+    .ev-card>img{aspect-ratio:1.8}
+}
+@media(max-width:560px){
+    .ev .cv-title{letter-spacing:.06em}
+    .ev-banner{min-height:300px}
+}

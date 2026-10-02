@@ -15,6 +15,7 @@
         'resources/css/header.css',
         'resources/css/home.css',
         'resources/css/theme.css',
+        'resources/css/home-villas.css',
         'resources/css/footer.css',
         'resources/js/app.js'
     ])
@@ -214,9 +215,30 @@ $contactFooter = $contents
 
             <div class="feature">
 
+                @php
+                    $featureIcons = [
+                        1 => 'images/icons/cliff.png',
+                        2 => 'images/icons/sunset.png',
+                        3 => 'images/icons/villa.png',
+                        4 => 'images/icons/ocean.png',
+                        5 => 'images/icons/spa.png',
+                        6 => 'images/icons/dining.png',
+                    ];
+                    $featureIcon = $featureIcons[$loop->iteration] ?? null;
+                @endphp
+
                 <div class="feature-icon">
 
-                    {{ $feature->icon }}
+                    @if($featureIcon)
+                        <img
+                            src="{{ asset($featureIcon) }}"
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                        >
+                    @else
+                        {{ $feature->icon }}
+                    @endif
 
                 </div>
 
@@ -250,7 +272,7 @@ $contactFooter = $contents
 ========================================================= -->
 
 <section
-    class="villas-section"
+    class="villas-section home-villas"
     id="villas"
 >
 
@@ -258,39 +280,43 @@ $contactFooter = $contents
 
         <div class="villas-header">
 
-            <p class="section-label">
+            <p class="section-label">{{ $villasHeader->subtitle }}</p>
 
-                {{ $villasHeader->subtitle }}
+            <h2>{{ $villasHeader->title }}</h2>
 
-            </p>
+            <span class="villas-rule" aria-hidden="true"></span>
 
-
-            <h2>
-
-                {{ $villasHeader->title }}
-
-            </h2>
-
-
-            <p class="section-subtitle">
-
-                {{ $villasHeader->description }}
-
-            </p>
+            <p class="section-subtitle">{{ $villasHeader->description }}</p>
 
         </div>
 
     @endif
 
 
-
     <div class="villa-container">
-
 
         @foreach($contents->get('villas', collect()) as $villa)
 
-            <div class="villa-card">
+            @php
+                $villaSlug   = \Illuminate\Support\Str::slug($villa->title);
+                $villaDetail = config("villas.{$villaSlug}", []);
+                $villaUsd    = $villaDetail['usd'] ?? null;
+                $cardIcons   = $villaDetail['card_icons'] ?? [];
 
+                $villaFeatures = is_string($villa->features)
+                    ? json_decode($villa->features, true)
+                    : $villa->features;
+
+                if (empty($villaFeatures)) {
+                    $villaFeatures = $villaDetail['card_features'] ?? [];
+                }
+
+                $villaUrl = filled($villa->button_url) && $villa->button_url !== '#'
+                    ? $villa->button_url
+                    : route('villas.show', $villaSlug);
+            @endphp
+
+            <div class="villa-card">
 
                 <img
                     src="{{ asset($villa->image) }}"
@@ -298,70 +324,48 @@ $contactFooter = $contents
                     class="villa-image"
                 >
 
-
                 <div class="villa-content">
 
-
                     <h3>
-
-                        <span class="villa-icon">✧</span>
-
-                        {{ $villa->title }}
-
+                        <img
+                            class="villa-icon"
+                            src="{{ asset('images/logo.png') }}"
+                            alt=""
+                            width="38"
+                            height="38"
+                        >
+                        <span>{{ $villa->title }}</span>
                     </h3>
 
+                    @if($villa->subtitle)
+                        <p class="villa-tagline">{{ $villa->subtitle }}</p>
+                    @endif
 
-                    <p class="villa-tagline">
+                    @if($villa->price)
+                        <p class="villa-price">
+                            From PHP {{ number_format($villa->price) }}
+                            @if($villaUsd)
+                                | approx. USD {{ $villaUsd }}
+                            @endif
+                            per night
+                        </p>
+                    @endif
 
-                        {{ $villa->subtitle }}
+                    @if(!empty($villaFeatures))
+                        <ul class="villa-features">
+                            @foreach($villaFeatures as $i => $feature)
+                                <li>
+                                    <x-icon :name="$cardIcons[$i] ?? 'lotus'" :size="30" />
+                                    <span>{{ $feature }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
 
-                    </p>
-
-
-                    <p class="villa-price">
-
-                        From PHP
-                        {{ number_format($villa->price) }}
-
-                    </p>
-
-                  @if($villa->features)
-
-    @php
-        $villaFeatures = is_string($villa->features)
-            ? json_decode($villa->features, true)
-            : $villa->features;
-    @endphp
-
-    <ul class="villa-features">
-
-        @foreach($villaFeatures ?? [] as $feature)
-
-            <li>
-
-                <span>♧</span>
-
-                {{ $feature }}
-
-            </li>
-
-        @endforeach
-
-    </ul>
-
-@endif
-
-                    <a
-                        href="{{ ($villa->button_url ?? '#') === '#' ? route('villas.index') : $villa->button_url }}"
-                        class="villa-button"
-                    >
-
-                        <span>✧</span>
-
-                        {{ $villa->button_text }}
-
+                    <a href="{{ $villaUrl }}" class="villa-button">
+                        <span aria-hidden="true"></span>
+                        {{ $villa->button_text ?: 'View ' . $villa->title }}
                     </a>
-
 
                 </div>
 
@@ -369,9 +373,7 @@ $contactFooter = $contents
 
         @endforeach
 
-
     </div>
-
 
     <div class="section-divider"></div>
 
@@ -605,9 +607,48 @@ $contactFooter = $contents
 
 
 
-                <div class="wellness-card-icon">
+                <div class="wellness-card-icon" aria-hidden="true">
 
-                    {{ $item->icon }}
+                    @switch($loop->iteration)
+
+                        @case(1)
+                            {{-- hands + flower --}}
+                            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="34" cy="14" r="5"/>
+                                <circle cx="25" cy="20" r="3.5"/>
+                                <path d="M34 19v6M25 23.5V28"/>
+                                <path d="M6 40c6-2 10 0 16 6 6 4 14 4 20 0 6-6 10-8 16-6"/>
+                                <path d="M10 48c10 8 34 8 44 0"/>
+                            </svg>
+                            @break
+
+                        @case(2)
+                            {{-- lotus --}}
+                            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M32 12c-7 8-7 20 0 28 7-8 7-20 0-28z"/>
+                                <path d="M32 40C22 38 16 30 15 22c8 2 14 8 17 18z"/>
+                                <path d="M32 40c10-2 16-10 17-18-8 2-14 8-17 18z"/>
+                                <path d="M32 40C20 42 10 38 5 30c8-2 19 1 27 10z"/>
+                                <path d="M32 40c12 2 22-2 27-10-8-2-19 1-27 10z"/>
+                                <path d="M18 47c8 4 20 4 28 0"/>
+                            </svg>
+                            @break
+
+                        @case(3)
+                            {{-- meditating figure --}}
+                            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="32" cy="22" r="5"/>
+                                <path d="M32 27v13"/>
+                                <path d="M32 30c-8 2-12 8-10 14M32 30c8 2 12 8 10 14"/>
+                                <path d="M16 48c8-5 24-5 32 0-8 5-24 5-32 0z"/>
+                                <path d="M32 6v5M20 10l3 4M44 10l-3 4M14 20h5M45 20h5"/>
+                            </svg>
+                            @break
+
+                        @default
+                            {{ $item->icon }}
+
+                    @endswitch
 
                 </div>
 
@@ -666,7 +707,13 @@ $contactFooter = $contents
 
                 <span></span>
 
-                <b>✧</b>
+                <svg class="wellness-quote-lotus" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M32 8c-7 9-7 24 0 34 7-10 7-25 0-34z"/>
+                    <path d="M32 42C21 40 14 31 13 21c9 2 16 9 19 21z"/>
+                    <path d="M32 42c11-2 18-11 19-21-9 2-16 9-19 21z"/>
+                    <path d="M32 42c-12 3-22-1-28-9 9-3 21 0 28 9z"/>
+                    <path d="M32 42c12 3 22-1 28-9-9-3-21 0-28 9z"/>
+                </svg>
 
                 <span></span>
 

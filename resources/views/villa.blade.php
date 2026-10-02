@@ -158,20 +158,24 @@
 
                         {{-- FEATURES --}}
 
-                        @if($villa->features)
+                        @php
+                            $villaFeatures = is_string($villa->features)
+                                ? json_decode($villa->features, true)
+                                : $villa->features;
 
-                            @php
+                            if (empty($villaFeatures)) {
+                                $villaFeatures = config(
+                                    'villas.' . \Illuminate\Support\Str::slug($villa->title) . '.card_features',
+                                    []
+                                );
+                            }
+                        @endphp
 
-                                $villaFeatures = is_string($villa->features)
-                                    ? json_decode($villa->features, true)
-                                    : $villa->features;
-
-                            @endphp
-
+                        @if(!empty($villaFeatures))
 
                             <ul class="villa-features">
 
-                                @foreach($villaFeatures ?? [] as $feature)
+                                @foreach($villaFeatures as $feature)
 
                                     <li>
 
@@ -195,7 +199,7 @@
                         {{-- BUTTON --}}
 
                         <a
-                            href="{{ $villa->button_url ?? '#' }}"
+                            href="{{ filled($villa->button_url) && $villa->button_url !== '#' ? $villa->button_url : route('villas.show', \Illuminate\Support\Str::slug($villa->title)) }}"
                             class="villa-button"
                         >
 

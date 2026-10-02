@@ -331,7 +331,7 @@ img { max-width: 100%; }
     .nav-links a:not(.book-button) { font-size: .72rem; letter-spacing: .1em; }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1180px) {
     .navbar { justify-content: space-between; }
     .nav-book-desktop { display: none; }
 
@@ -614,4 +614,34 @@ html { scroll-padding-top: 88px; }
 }
 @media (max-width: 560px) {
     .contact-form-row { grid-template-columns: 1fr; }
+}
+
+
+/* =========================================================
+   HEADER FIT FIX
+   The logo, 7 links and the Book button were wider than the
+   window on laptops (~1200-1500px), pushing "Book your stay"
+   off the right edge. Everything now shrinks to fit, and the
+   mobile menu takes over below 1180px.
+========================================================= */
+
+html, body { overflow-x: clip; }
+
+.navbar { gap: clamp(8px, 1.2vw, 24px); }
+.logo-area { flex: 0 1 auto; }
+.nav-links { min-width: 0; }
+.nav-book-desktop { flex: none; white-space: nowrap; }
+
+@media (max-width: 1500px) {
+    .logo-area { padding-right: 16px; }
+    .logo-text span { font-size: .72rem; letter-spacing: .14em; }
+    .nav-links { gap: clamp(12px, 1.4vw, 20px); }
+    .nav-links a:not(.book-button) { font-size: .72rem; letter-spacing: .1em; }
+    .nav-book-desktop { min-height: 42px; padding-right: 16px; }
+}
+
+@media (min-width: 1181px) and (max-width: 1320px) {
+    .logo-text span { font-size: .68rem; letter-spacing: .1em; }
+    .nav-links { gap: 12px; }
+    .nav-links a:not(.book-button) { font-size: .68rem; letter-spacing: .06em; }
 }
