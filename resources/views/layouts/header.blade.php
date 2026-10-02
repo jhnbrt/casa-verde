@@ -1,4 +1,7 @@
-<style>:root { --cv-logo: url('{{ asset('images/logo.png') }}'); }</style>
+@php
+    $cvVer = fn ($p) => file_exists(public_path($p)) ? filemtime(public_path($p)) : 1;
+@endphp
+<style>:root { --cv-logo: url('{{ asset('images/logo.png') }}?v={{ $cvVer('images/logo.png') }}'); }</style>
 
 @php
     $routeFor = [
@@ -15,7 +18,7 @@
     <a href="{{ url('/') }}" class="logo-area" aria-label="Casa Verde Cliff Resort & Spa – home">
 
         @if($site)
-            <img src="{{ asset($site->image) }}" alt="" width="42" height="42">
+            <img src="{{ asset($site->image) }}?v={{ $cvVer($site->image) }}" alt="" width="42" height="42">
 
             <span class="logo-text">
                 <span>{{ $site->title }}</span>

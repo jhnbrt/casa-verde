@@ -70,7 +70,7 @@ img { max-width: 100%; }
     text-align: center;
 }
 
-.logo-area img { width: 30px; height: 30px; margin: 0; }
+.logo-area img { width: 46px; height: 46px; margin: 0; }
 .logo-text { align-items: center; line-height: 1.15; }
 .logo-text span { font-family: var(--cv-serif); font-size: .82rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cv-gold); white-space: nowrap; }
 .logo-text small { font-family: var(--cv-sans); font-size: .5rem; letter-spacing: .26em; color: rgba(201, 160, 106, .8); white-space: nowrap; }
@@ -644,4 +644,123 @@ html, body { overflow-x: clip; }
     .logo-text span { font-size: .68rem; letter-spacing: .1em; }
     .nav-links { gap: 12px; }
     .nav-links a:not(.book-button) { font-size: .68rem; letter-spacing: .06em; }
+}
+
+/* =========================================================
+   HEADER LOGO LOCKUP (left side)
+   Same stacked, centred layout and same header height.
+   Refined finish only: engraved emblem ring, gilded name,
+   subtitle set between hairlines, fading divider.
+   Loaded last on purpose so it wins over the page CSS above.
+========================================================= */
+
+.logo-area {
+    position: relative;
+    gap: 5px;
+    border-right: 0; /* replaced by the fading hairline below */
+}
+
+/* Divider: a hairline that fades out at both ends */
+.logo-area::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    right: 0;
+    width: 1px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(201, 160, 106, .55) 25%,
+        rgba(201, 160, 106, .55) 75%,
+        transparent
+    );
+    pointer-events: none;
+}
+
+/* Emblem: thin gold ring engraved just inside the badge edge */
+.logo-area img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    outline: 1px solid rgba(201, 160, 106, .65);
+    outline-offset: -3px;
+    transition: outline-color .3s ease, transform .5s ease;
+}
+
+.logo-area:hover img {
+    outline-color: var(--cv-gold);
+    transform: rotate(8deg);
+}
+
+/* Name: heavier serif so it holds up at small sizes, soft gold sheen */
+.logo-text { gap: 4px; line-height: 1.1; }
+
+.logo-text span {
+    font-weight: 600;
+    color: var(--cv-gold);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .logo-text span {
+        background: linear-gradient(180deg, #efd8ae 0%, #d3ab72 55%, #bf9660 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: filter .3s ease;
+    }
+    .logo-area:hover .logo-text span { filter: brightness(1.12); }
+}
+
+/* Subtitle: spans the width of the name, flanked by fading hairlines */
+.logo-text small {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    font-size: .56rem;
+    font-weight: 500;
+    letter-spacing: .22em;
+    line-height: 1;
+    color: rgba(226, 198, 154, .85);
+}
+
+.logo-text small::before,
+.logo-text small::after {
+    content: '';
+    flex: 1 1 0;
+    min-width: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201, 160, 106, .6));
+}
+
+.logo-text small::after {
+    background: linear-gradient(to left, transparent, rgba(201, 160, 106, .6));
+}
+
+.logo-area:focus-visible { outline-offset: -4px; border-radius: 8px; }
+
+/* Narrower desktops: the name shrinks, so tighten the subtitle to keep the hairlines visible */
+@media (max-width: 1500px) {
+    .logo-text small { letter-spacing: .16em; gap: 6px; }
+}
+
+@media (min-width: 1181px) and (max-width: 1320px) {
+    .logo-text small { font-size: .52rem; letter-spacing: .12em; }
+}
+
+/* Mobile menu mode: nothing sits beside the logo, so no divider;
+   subtitle stays hidden on phones exactly as before. */
+@media (max-width: 1180px) {
+    .logo-area::after { display: none; }
+}
+
+@media (max-width: 560px) {
+    .logo-text small { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logo-area:hover img { transform: none; }
 }
