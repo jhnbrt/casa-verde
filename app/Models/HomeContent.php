@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class HomeContent extends Model
 {
@@ -26,6 +28,94 @@ class HomeContent extends Model
         'price' => 'decimal:2',
         'active' => 'boolean',
     ];
+
+    /**
+     * Human-friendly name for a section slug: "long_stay_options" => "Long stay options".
+     */
+    public static function sectionLabel(string $section): string
+    {
+        return Str::of($section)->replace('_', ' ')->ucfirst()->toString();
+    }
+
+    /**
+     * Key of the admin group (see config/admin.php) a section belongs to, or "other".
+     */
+    public static function groupKeyFor(string $section): string
+    {
+        foreach (config('admin.content_groups', []) as $key => $group) {
+            foreach ($group['match'] as $prefix) {
+                if ($section === $prefix || str_starts_with($section, $prefix.'_')) {
+                    return $key;
+                }
+            }
+        }
+
+        return 'other';
+    }
+
+    /**
+     * Every admin group that has entries, keyed by group key, with the counts,
+     * sections and cover photo the dashboard and content list need.
+     */
+    public static function pageGroups(): Collection
+    {
+        $labels = collect(config('admin.content_groups', []))
+            ->map(fn (array $group) => $group['label'])
+            ->put('other', 'Other');
+
+        $rowsByGroup = static::query()
+            ->orderBy('section')
+            ->orderBy('sort_order')
+            ->get(['section', 'image', 'active'])
+            ->groupBy(fn (self $row) => static::groupKeyFor($row->section));
+
+        return $labels
+            ->filter(fn (string $label, string $key) => $rowsByGroup->has($key))
+            ->map(function (string $label, string $key) use ($rowsByGroup) {
+                $rows = $rowsByGroup->get($key);
+
+                return [
+                    'key' => $key,
+                    'label' => $label,
+                    'total' => $rows->count(),
+                    'hidden_total' => $rows->where('active', false)->count(),
+                    'sections' => $rows->pluck('section')->unique()->values()
+                        ->map(fn (string $name) => ['name' => $name, 'label' => static::sectionLabel($name)])
+                        ->all(),
+                    // Logos make poor cover photos, so skip them.
+                    'cover' => $rows->pluck('image')
+                        ->first(fn ($image) => filled($image) && ! str_contains($image, 'logo')),
+                ];
+            });
+    }
+
+    /**
+     * Title on one line, for lists. Falls back so a row is never blank.
+     */
+    protected function displayTitle(): Attribute
+    {
+        return Attribute::get(function () {
+            $title = Str::of((string) $this->title)->squish()->toString();
+
+            return $title !== '' ? $title : 'Untitled entry';
+        });
+    }
+
+    /**
+     * Short one-line preview of the entry's text, for lists.
+     */
+    protected function excerpt(): Attribute
+    {
+        return Attribute::get(fn () => Str::limit(
+            Str::of((string) ($this->subtitle ?: $this->description))->squish()->toString(),
+            90
+        ));
+    }
+
+    protected function sectionName(): Attribute
+    {
+        return Attribute::get(fn () => static::sectionLabel((string) $this->section));
+    }
 
     /**
      * Features are a list of strings stored as JSON.

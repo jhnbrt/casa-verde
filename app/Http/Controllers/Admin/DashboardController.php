@@ -10,20 +10,13 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        $sections = HomeContent::query()
-            ->selectRaw('section, count(*) as total, sum(case when active then 1 else 0 end) as active_total')
-            ->groupBy('section')
-            ->orderBy('section')
-            ->get();
-
-        $totalEntries = HomeContent::count();
-        $totalImages = HomeContent::whereNotNull('image')->where('image', '!=', '')->count();
+        $groups = HomeContent::pageGroups();
 
         return view('admin.dashboard', [
-            'sections' => $sections,
-            'totalEntries' => $totalEntries,
-            'totalSections' => $sections->count(),
-            'totalImages' => $totalImages,
+            'groups' => $groups,
+            'totalEntries' => $groups->sum('total'),
+            'totalHidden' => $groups->sum('hidden_total'),
+            'recent' => HomeContent::query()->latest('updated_at')->limit(6)->get(),
         ]);
     }
 }

@@ -32,3 +32,24 @@ document.addEventListener('DOMContentLoaded', () => {
     update();
     window.addEventListener('scroll', update, { passive: true });
 });
+
+
+// Admin: show a preview of the chosen photo before the entry is saved
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.querySelector('[data-image-input]');
+    if (!input) return;
+
+    const preview = document.querySelector('[data-image-preview]');
+    const empty = document.querySelector('[data-image-empty]');
+    const name = document.querySelector('[data-image-name]');
+
+    input.addEventListener('change', () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
+        empty.classList.add('hidden');
+        name.textContent = 'Selected: ' + file.name + '. Save changes to publish it.';
+    });
+});

@@ -12,28 +12,43 @@ use Illuminate\View\View;
 class ContentController extends Controller
 {
     /**
-     * List content entries, optionally filtered by section.
+     * List content entries, filtered by area of the site (group) and/or section.
      */
     public function index(Request $request): View
     {
         $section = $request->query('section');
 
-        $sections = HomeContent::query()
-            ->select('section')
-            ->distinct()
-            ->orderBy('section')
-            ->pluck('section');
+        $groups = HomeContent::pageGroups();
+
+        // A ?section= link carries its own group so the tabs stay in sync.
+        $currentGroup = $groups->get((string) $request->query('group', ''))
+            ?? ($section ? $groups->get(HomeContent::groupKeyFor($section)) : null);
 
         $items = HomeContent::query()
             ->when($section, fn ($query) => $query->where('section', $section))
+            ->when(! $section && $currentGroup, fn ($query) => $query->whereIn(
+                'section',
+                collect($currentGroup['sections'])->pluck('name')
+            ))
             ->orderBy('section')
             ->orderBy('sort_order')
             ->get();
 
+        $blocks = $items
+            ->groupBy('section')
+            ->map(fn ($entries, $name) => [
+                'name' => $name,
+                'label' => HomeContent::sectionLabel($name),
+                'items' => $entries,
+            ])
+            ->values();
+
         return view('admin.content.index', [
-            'items' => $items,
-            'sections' => $sections,
+            'blocks' => $blocks,
+            'groups' => $groups,
+            'currentGroup' => $currentGroup,
             'currentSection' => $section,
+            'totalEntries' => $groups->sum('total'),
         ]);
     }
 

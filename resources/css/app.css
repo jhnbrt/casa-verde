@@ -1,5 +1,82 @@
 @import "tailwindcss";
 
+/*
+ * Admin design tokens. This stylesheet is only loaded by the admin screens and
+ * borrows the public site's palette (forest, gold, sand) and type pairing
+ * (Cormorant Garamond for titles, Jost for everything else).
+ */
 @theme {
-    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+    --color-forest-50: #eef4f0;
+    --color-forest-100: #dbe8e1;
+    --color-forest-200: #bcd3c7;
+    --color-forest-700: #1c5646;
+    --color-forest-800: #0e3a2f;
+    --color-forest-900: #06211b;
+    --color-forest-950: #041812;
+
+    --color-gold-300: #dfc294;
+    --color-gold-400: #c9a06a;
+    --color-gold-600: #94692f;
+    --color-gold-700: #765024;
+
+    --color-sand-50: #fcfaf6;
+    --color-sand-100: #f7f2ea;
+    --color-sand-200: #ece4d6;
+    --color-sand-300: #dcd0bc;
+
+    --color-ink: #12241f;
+    --color-ink-soft: #52625c;
+
+    --color-danger-50: #fbefec;
+    --color-danger-200: #f0c6bf;
+    --color-danger-600: #a63d2f;
+    --color-danger-700: #8a2f23;
+}
+
+@layer base {
+    :focus-visible {
+        outline: 2px solid var(--color-gold-600);
+        outline-offset: 2px;
+    }
+}
+
+@layer components {
+    .page-title {
+        @apply font-display text-4xl font-semibold leading-none tracking-tight text-forest-900 sm:text-[2.75rem];
+    }
+
+    .section-title {
+        @apply font-display text-2xl font-semibold leading-tight text-forest-900;
+    }
+
+    .panel {
+        @apply rounded-xl border border-sand-300 bg-white p-6;
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg bg-forest-900 px-4 py-2.5 text-sm font-medium text-sand-50 transition-colors hover:bg-forest-700;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border border-sand-300 bg-white px-4 py-2.5 text-sm font-medium text-forest-900 transition-colors hover:border-forest-700 hover:bg-forest-50;
+    }
+
+    .btn-quiet-danger {
+        @apply inline-flex items-center justify-center rounded-lg px-3 py-1.5 text-sm font-medium text-danger-600 transition-colors hover:bg-danger-50;
+    }
+
+    .field-label {
+        @apply block text-sm font-medium text-forest-900;
+    }
+
+    .field-input {
+        @apply mt-1.5 block w-full rounded-lg border border-sand-300 bg-white px-3.5 py-2.5 text-[0.9375rem] text-ink placeholder:text-ink-soft/60 focus:border-forest-700 focus:outline-none focus:ring-4 focus:ring-gold-400/25;
+    }
+
+    .field-hint {
+        @apply mt-1.5 text-sm text-ink-soft;
+    }
 }
