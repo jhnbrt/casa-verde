@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/header.css',
                 'resources/css/home.css',
+                'resources/css/home-villas.css',
                 'resources/css/villa.css',
                 'resources/css/villa-show.css',
                 'resources/css/experience.css',
