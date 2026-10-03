@@ -548,7 +548,7 @@ $contactFooter = $contents
 
                 <h2>
 
-                    {!! nl2br(e($wellnessIntro->title)) !!}
+                    {{ $wellnessIntro->title_html }}
 
                 </h2>
 
@@ -603,10 +603,12 @@ $contactFooter = $contents
 
                 <div class="wellness-card-image">
 
-                    <img
-                        src="{{ asset($item->image) }}"
-                        alt="{{ $item->title }}"
-                    >
+                    @if($item->image)
+                        <img
+                            src="{{ asset($item->image) }}"
+                            alt="{{ $item->display_title }}"
+                        >
+                    @endif
 
                 </div>
 
@@ -614,7 +616,7 @@ $contactFooter = $contents
 
                 <div class="wellness-card-icon" aria-hidden="true">
 
-                    @switch($loop->iteration)
+                    @switch((($loop->iteration - 1) % 3) + 1)
 
                         @case(1)
                             {{-- hands + flower --}}
@@ -761,7 +763,7 @@ $contactFooter = $contents
 
                 <h2>
 
-                    {!! nl2br(e($diningIntro->title)) !!}
+                    {{ $diningIntro->title_html }}
 
                 </h2>
 
@@ -941,7 +943,7 @@ $contactFooter = $contents
                 @if($longStay->title)
 
                     <h2>
-                        {!! nl2br(e($longStay->title)) !!}
+                        {{ $longStay->title_html }}
                     </h2>
 
                 @endif
@@ -1018,7 +1020,7 @@ $contactFooter = $contents
                     {{-- TITLE --}}
 
                     <div class="long-stay-feature-title">
-                        {!! nl2br(e($feature->title)) !!}
+                        {{ $feature->title_html }}
                     </div>
 
                 </div>
@@ -1088,7 +1090,7 @@ $contactFooter = $contents
                     {{-- TITLE --}}
 
                     <h3>
-                        {!! nl2br(e($option->title)) !!}
+                        {{ $option->title_html }}
                     </h3>
 
                 </div>
@@ -1148,7 +1150,7 @@ $contactFooter = $contents
                 @if($aboutHero->title)
 
                     <h2>
-                        {!! nl2br(e($aboutHero->title)) !!}
+                        {{ $aboutHero->title_html }}
                     </h2>
 
                 @endif
@@ -1328,7 +1330,7 @@ $contactFooter = $contents
                 @if($contactHero->title)
 
                     <h2>
-                        {!! nl2br(e($contactHero->title)) !!}
+                        {{ $contactHero->title_html }}
                     </h2>
 
                 @endif

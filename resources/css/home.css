@@ -1014,6 +1014,7 @@ body {
 
 .wellness-intro {
     padding-top: 0;
+    min-width: 0;
 }
 
 .wellness-label {

@@ -28,9 +28,9 @@
         {{-- OVERVIEW: heading, filters, mosaic --}}
         <section class="gal-overview" data-panel="all" aria-labelledby="gal-title">
             <header class="gal-head">
-                <span class="gal-eyebrow">Gallery</span>
-                <h1 id="gal-title">A visual journey through Casa Verde.</h1>
-                <p>Discover the villas, sunsets, flavors and quiet island moments that shape every stay.</p>
+                <span class="gal-eyebrow">{{ $header['eyebrow'] }}</span>
+                <h1 id="gal-title">{{ $header['title'] }}</h1>
+                <p>{{ $header['text'] }}</p>
             </header>
 
             <nav class="gal-chips" aria-label="Gallery categories">

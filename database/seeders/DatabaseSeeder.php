@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             HomeContentSeeder::class,
             EventContentSeeder::class,
+            PageContentSeeder::class,
         ]);
     }
 }

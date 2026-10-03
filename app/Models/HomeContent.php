@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
 class HomeContent extends Model
@@ -34,7 +35,19 @@ class HomeContent extends Model
      */
     public static function sectionLabel(string $section): string
     {
-        return Str::of($section)->replace('_', ' ')->ucfirst()->toString();
+        return config("admin.sections.{$section}.title")
+            ?? Str::of($section)->replace('_', ' ')->ucfirst()->toString();
+    }
+
+    /**
+     * Admin form settings for a section (friendly labels, help, hidden fields).
+     * See "sections" in config/admin.php. Empty for sections without settings.
+     *
+     * @return array<string, mixed>
+     */
+    public static function sectionMeta(?string $section): array
+    {
+        return $section ? (array) config("admin.sections.{$section}", []) : [];
     }
 
     /**
@@ -77,6 +90,7 @@ class HomeContent extends Model
                 return [
                     'key' => $key,
                     'label' => $label,
+                    'url' => config("admin.content_groups.{$key}.url"),
                     'total' => $rows->count(),
                     'hidden_total' => $rows->where('active', false)->count(),
                     'sections' => $rows->pluck('section')->unique()->values()
@@ -98,6 +112,27 @@ class HomeContent extends Model
             $title = Str::of((string) $this->title)->squish()->toString();
 
             return $title !== '' ? $title : 'Untitled entry';
+        });
+    }
+
+    /**
+     * Title as safe HTML with its line breaks, for the big display headings.
+     *
+     * Headings such as "Restore. Renew. Rebalance." are designed to sit on
+     * separate lines. If an editor types them on a single line (or the line
+     * breaks were lost), each sentence is still placed on its own line so a
+     * replaced or newly added entry always matches the design.
+     */
+    protected function titleHtml(): Attribute
+    {
+        return Attribute::get(function () {
+            $title = str_replace(["\r\n", "\r"], "\n", trim((string) $this->title));
+
+            if (! str_contains($title, "\n")) {
+                $title = preg_replace('/(?<=[.!?])\s*(?=\p{Lu})/u', "\n", $title);
+            }
+
+            return new HtmlString(nl2br(e($title)));
         });
     }
 

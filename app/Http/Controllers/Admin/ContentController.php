@@ -41,6 +41,11 @@ class ContentController extends Controller
                 'label' => HomeContent::sectionLabel($name),
                 'items' => $entries,
             ])
+            // Sections described in config/admin.php follow that order (the order
+            // they appear on the site); the rest keep their alphabetical order.
+            ->sortBy(fn (array $block): int => ($position = array_search($block['name'], array_keys(config('admin.sections', [])), true)) === false
+                ? PHP_INT_MAX
+                : $position)
             ->values();
 
         return view('admin.content.index', [
@@ -146,6 +151,15 @@ class ContentController extends Controller
             'sort_order' => ['nullable', 'integer'],
             'image' => ['nullable', 'image', 'max:5120'],
         ]);
+
+        // Titles and text can contain deliberate line breaks (the site renders
+        // them with nl2br). Textareas submit Windows line endings, so store
+        // plain "\n" like the rest of the content.
+        foreach (['title', 'subtitle', 'description'] as $field) {
+            if (isset($data[$field])) {
+                $data[$field] = str_replace(["\r\n", "\r"], "\n", $data[$field]);
+            }
+        }
 
         // "features" is submitted as one item per line in a textarea; the model
         // stores it as a JSON array. Only touch it when the field was actually

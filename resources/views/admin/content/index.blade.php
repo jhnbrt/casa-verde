@@ -11,11 +11,19 @@
                 Every photo and block of text on the public site. Entries are listed in the order they appear.
             </p>
         </div>
-        <a href="{{ route('admin.content.create', $currentSection ? ['section' => $currentSection] : []) }}"
-           class="btn-primary self-start whitespace-nowrap sm:self-auto">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-            New entry
-        </a>
+        <div class="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+            @if ($currentGroup && ! empty($currentGroup['url']))
+                <a href="{{ url($currentGroup['url']) }}" target="_blank" rel="noopener" class="btn-secondary whitespace-nowrap">
+                    View page
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H18v4.5M18 6l-7.5 7.5M10 6H6.75A1.75 1.75 0 005 7.75v9.5C5 18.22 5.78 19 6.75 19h9.5c.97 0 1.75-.78 1.75-1.75V14"/></svg>
+                </a>
+            @endif
+            <a href="{{ route('admin.content.create', $currentSection ? ['section' => $currentSection] : []) }}"
+               class="btn-primary whitespace-nowrap">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                New entry
+            </a>
+        </div>
     </div>
 
     {{-- Area of the site --}}
@@ -63,6 +71,10 @@
                     <a href="{{ route('admin.content.create', ['section' => $block['name']]) }}"
                        class="text-sm font-medium text-forest-700 hover:text-forest-900 hover:underline">Add entry</a>
                 </div>
+
+                @if (! empty(config('admin.sections.'.$block['name'].'.help')))
+                    <p class="-mt-1 mb-3 max-w-2xl text-sm text-ink-soft">{{ config('admin.sections.'.$block['name'].'.help') }}</p>
+                @endif
 
                 <ul role="list" class="divide-y divide-sand-200 overflow-hidden rounded-xl border border-sand-300 bg-white">
                     @foreach ($block['items'] as $item)
