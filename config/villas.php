@@ -83,7 +83,8 @@ return [
 
         'highlights' => [
             ['icon' => 'villa',   'label' => 'Private Villa'],
-            ['icon' => 'beds',    'label' => 'Queen Bed & Twin Beds'],
+            // One highlight showing two icons side by side (icon2 is optional).
+            ['icon' => 'queen-bed', 'icon2' => 'beds', 'label' => 'Queen Bed & Twin Beds'],
             ['icon' => 'jacuzzi', 'label' => 'Spacious Bathroom & Jacuzzi'],
             ['icon' => 'terrace', 'label' => 'Private Terrace'],
             ['icon' => 'wifi',    'label' => 'High-Speed Wi-Fi'],

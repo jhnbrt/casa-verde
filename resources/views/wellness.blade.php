@@ -196,7 +196,7 @@
             <div class="feature-item">
                 @if(filled($item->icon))
                     <div class="feature-icon">
-                        <x-icon :name="$item->icon" :size="34" />
+                        <x-icon :name="$item->icon" :size="48" />
                     </div>
                 @endif
                 <div>

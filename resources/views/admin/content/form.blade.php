@@ -110,6 +110,57 @@
             </section>
             @endif
 
+            @if (! empty($meta['gallery']))
+            @php
+                $galleryPhotos = array_values(array_filter((array) old('gallery', $item->gallery ?? []), 'is_string'));
+            @endphp
+            <section class="panel" aria-labelledby="gallery-heading" data-gallery-box>
+                <h2 id="gallery-heading" class="section-title">Gallery photos</h2>
+                <p class="field-hint">These photos slide open, one after another, when a visitor clicks the picture of this villa. The first photo opens in the middle. Add as many as you like (8 looks best).</p>
+
+                <input type="hidden" name="gallery_present" value="1">
+
+                <ul data-gallery-list class="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3" aria-label="Gallery photos, in the order visitors see them">
+                    @foreach ($galleryPhotos as $path)
+                        <li data-gallery-item class="overflow-hidden rounded-lg border border-sand-300 bg-white">
+                            <input type="hidden" name="gallery[]" value="{{ $path }}">
+                            <div class="relative aspect-[4/3] bg-sand-100">
+                                <img src="{{ asset($path) }}" alt="" class="h-full w-full object-cover" loading="lazy">
+                                <span data-gallery-number class="absolute left-2 top-2 rounded-full bg-forest-900/80 px-2.5 py-0.5 text-xs font-medium text-white">{{ $loop->iteration }}</span>
+                            </div>
+                            <div class="flex items-center justify-between gap-2 px-2.5 py-2">
+                                <div class="flex gap-1.5">
+                                    <button type="button" data-gallery-move="-1" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-sand-300 bg-white text-forest-800 hover:bg-sand-100 focus-visible:ring-4 focus-visible:ring-gold-400/40" aria-label="Move this photo earlier">
+                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+                                    </button>
+                                    <button type="button" data-gallery-move="1" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-sand-300 bg-white text-forest-800 hover:bg-sand-100 focus-visible:ring-4 focus-visible:ring-gold-400/40" aria-label="Move this photo later">
+                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+                                    </button>
+                                </div>
+                                <button type="button" data-gallery-remove class="rounded-full px-3 py-1 text-sm text-red-700 hover:bg-red-50 focus-visible:ring-4 focus-visible:ring-red-200">Remove</button>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+
+                <p data-gallery-empty class="mt-5 rounded-lg border border-dashed border-sand-300 px-4 py-6 text-center text-sm text-ink-soft {{ count($galleryPhotos) ? 'hidden' : '' }}">
+                    No gallery photos yet. Add some below. Until you do, the villa uses its card photo and the photos that came with the site.
+                </p>
+
+                <div class="mt-6 border-t border-sand-300 pt-5">
+                    <input type="file" id="gallery_new" name="gallery_new[]" multiple accept="image/jpeg,image/png,image/webp,image/gif" data-gallery-input class="peer sr-only">
+                    <label for="gallery_new" class="btn-secondary cursor-pointer peer-focus-visible:ring-4 peer-focus-visible:ring-gold-400/40">Add photos</label>
+                    <p data-gallery-new-note class="mt-3 text-sm text-forest-800" aria-live="polite"></p>
+                    <div data-gallery-new-preview class="mt-3 grid gap-3 sm:grid-cols-3 xl:grid-cols-4"></div>
+                    <p class="field-hint">Choose one or several photos (JPG, PNG, WebP or GIF, up to 5 MB each, up to 20 at a time). Landscape photos at least 900 px wide look best. New photos are added at the end; save, then use the arrows to put them in order. If saving fails, add fewer photos at a time.</p>
+                    @error('gallery_new.*')<p class="mt-2 text-sm text-red-700" role="alert">{{ $message }}</p>@enderror
+                    @error('gallery_new')<p class="mt-2 text-sm text-red-700" role="alert">{{ $message }}</p>@enderror
+                </div>
+
+                <p class="field-hint mt-4">Remove, add and reorder as you like, then press Save changes. Nothing changes on the live site until you save.</p>
+            </section>
+            @endif
+
             @if ($show('button_text') || $show('button_url'))
             <section class="panel" aria-labelledby="button-heading">
                 <h2 id="button-heading" class="section-title">{{ $show('button_text') ? 'Button' : 'Link' }}</h2>

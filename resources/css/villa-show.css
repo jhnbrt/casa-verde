@@ -288,7 +288,7 @@
 }
 .vs-page .vs-strip ul {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--vs-cols, 5), minmax(0, 1fr));
     gap: 0;
     width: 100%;
     max-width: 1550px;
@@ -352,6 +352,26 @@
     .vs-page .vs-strip li:nth-child(even)::before { display: block; }
     .vs-page .vs-strip li:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .vs-page .vs-strip li:last-child:nth-child(odd)::before { display: none; }
+}
+
+/* Two icons for one highlight (queen bed + twin beds): side by side, a little smaller so they stay balanced */
+.vs-page .vs-strip .vs-icon-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 54px; /* same height as a single icon, so the labels line up */
+}
+.vs-page .vs-strip .vs-icon-pair .cv-icon,
+.vs-page .vs-strip .vs-icon-pair svg.cv-icon,
+.vs-page .vs-strip .vs-icon-pair img.cv-icon {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    min-height: 46px !important;
+    max-width: 46px !important;
+    max-height: 46px !important;
+    flex: 0 0 46px;
 }
 
 /* King Bed: enlarge the artwork only, without changing the amenity layout. */

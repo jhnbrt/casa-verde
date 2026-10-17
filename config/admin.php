@@ -81,12 +81,11 @@ return [
             'hints' => ['title' => 'Keep the villa name unchanged so the correct card uses this image.'],
             'hide' => ['subtitle', 'description', 'icon', 'price', 'features', 'button_text', 'button_url'],
         ],
-        'villas_photos' => [
-            'title' => 'Villa card: Photos',
-            'help' => 'The photos in the pop-up gallery that opens when a visitor clicks a villa photo on the Villas page. Add one entry per photo. Keep Title exactly as Standard Villa or Premium Villa; the order follows Sort order and the first photo opens in the middle. Use at least 2 photos per villa (up to 8 looks best). They open as a sliding gallery when a visitor clicks the villa photo on the Villas page. A villa with no entries here uses its card photo, wide photo and gallery photos.',
-            'fields' => ['title' => 'Villa name (Standard Villa or Premium Villa)', 'image' => 'Photo'],
-            'hints' => ['title' => 'Must match the villa title.', 'image' => 'A landscape photo, at least 900 px wide. It is shown cropped to a 4:3 card.'],
-            'hide' => ['subtitle', 'description', 'icon', 'price', 'features', 'button_text', 'button_url'],
+        'villas' => [
+            'title' => 'Villas',
+            'help' => 'One entry per villa (Standard Villa, Premium Villa). The Photo is the picture shown on the villa card. Below it, Gallery photos are the pictures that slide open when a visitor clicks that picture on the Villas page: add as many as you like (8 looks best), change their order, or remove them.',
+            'fields' => ['image' => 'Card photo (shown on the Villas page)'],
+            'gallery' => true,
         ],
         'villas_feature_icons' => [
             'title' => 'Villa card: Feature icons',

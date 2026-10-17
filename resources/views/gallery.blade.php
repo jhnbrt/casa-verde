@@ -86,12 +86,29 @@
             </section>
         @endforeach
 
-        {{-- CTA BAR --}}
-        <aside class="gal-cta" aria-label="Book your stay">
-            <x-icon :name="\App\Models\HomeContent::siteIcon('leaf')" :size="42" class="gal-cta-leaf" />
-            <p>Ready to experience it in person?</p>
-            <a href="{{ $book }}" class="cv-btn cv-btn--gold">Book your stay</a>
+        {{-- CTA BAR: independently editable through Gallery booking banner in admin --}}
+        @php
+            $galleryBanner = $contents->get('gallery_cta_icon', collect())->first();
+            $galleryCtaIcon = filled($galleryBanner?->icon) ? $galleryBanner->icon : \App\Models\HomeContent::siteIcon('leaf');
+            $galleryBannerHeading = filled($galleryBanner?->title) ? $galleryBanner->title : 'Ready to experience it in person?';
+            $galleryBannerButton = filled($galleryBanner?->button_text) ? $galleryBanner->button_text : 'Book your stay';
+            $galleryBannerUrl = filled($galleryBanner?->button_url) ? $galleryBanner->button_url : $book;
+            // Only valid hex color codes can become inline CSS values.
+            $galleryBannerBg = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $galleryBanner?->subtitle) ? $galleryBanner->subtitle : null;
+            $galleryBannerText = preg_match('/^#[0-9a-fA-F]{6}$/', (string) $galleryBanner?->description) ? $galleryBanner->description : null;
+            // HomeContent::features is an array accessor; never cast the whole array to string.
+            $galleryButtonColors = $galleryBanner?->features ?? [];
+            $galleryButtonColor = is_array($galleryButtonColors) ? ($galleryButtonColors[0] ?? null) : $galleryButtonColors;
+            $galleryBannerButtonBg = is_string($galleryButtonColor) && preg_match('/^#[0-9a-fA-F]{6}$/', trim($galleryButtonColor)) ? trim($galleryButtonColor) : null;
+        @endphp
+        @if(!$galleryBanner || $galleryBanner->active)
+        <aside class="gal-cta" aria-label="Book your stay"
+               style="{{ $galleryBannerBg ? '--gallery-cta-bg:'.$galleryBannerBg.';' : '' }}{{ $galleryBannerText ? '--gallery-cta-text:'.$galleryBannerText.';' : '' }}{{ $galleryBannerButtonBg ? '--gallery-cta-button:'.$galleryBannerButtonBg.';' : '' }}">
+            <x-icon :name="$galleryCtaIcon" :size="42" class="gal-cta-leaf" />
+            <p>{{ $galleryBannerHeading }}</p>
+            <a href="{{ $galleryBannerUrl }}" class="cv-btn cv-btn--gold">{{ $galleryBannerButton }}</a>
         </aside>
+        @endif
 
         {{-- Lightbox --}}
         <div class="gal-lb" id="galLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>

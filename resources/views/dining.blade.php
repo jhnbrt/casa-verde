@@ -73,10 +73,10 @@
         .dining-page .dining-features { gap: 16px; padding: 12px 3% 20px; }
         .dining-page .dining-feature { display: flex; flex-direction: column; align-items: center; }
         .dining-page .feature-icon {
-            width: 54px; height: 54px; margin-bottom: 12px;
+            width: 70px; height: 70px; margin: 0 auto 12px; flex: 0 0 70px; display: flex; align-items: center; justify-content: center; border-radius: 50%; box-sizing: border-box;
             border: 1px solid #e3b078; color: #dba46a;
         }
-        .dining-page .feature-icon svg { stroke-width: 1; }
+        .dining-page .feature-icon svg { width: 42px; height: 42px; max-width: 42px; max-height: 42px; display: block; flex-shrink: 0; stroke-width: 1.25; }
         .dining-page .dining-feature h3 {
             font-family: var(--cv-serif, serif);
             font-size: 1.05rem;
@@ -145,6 +145,30 @@
             .dining-page .menu-button { min-width: 0; width: 100%; max-width: 320px; }
         }
     </style>
+
+    /* Dining feature icon alignment: scoped to this page only. */
+    <style>
+      .dining-page .dining-features .dining-feature { display:flex; flex-direction:column; align-items:center; text-align:center; min-width:0; }
+      .dining-page .dining-features .feature-icon {
+        width:80px; height:80px; min-width:80px; min-height:80px;
+        flex:0 0 80px; box-sizing:border-box; border-radius:50%;
+        display:grid; place-items:center; padding:8px; margin:0 auto 12px;
+        overflow:hidden; line-height:1; 
+      }
+      .dining-page .dining-features .feature-icon > svg,
+      .dining-page .dining-features .feature-icon > img,
+      .dining-page .dining-features .feature-icon > .cv-icon {
+        display:block; position:static; margin:0 auto; padding:0;
+        width:70px !important; height:70px !important;
+        max-width:100%; max-height:100%; flex:none;
+        object-fit:contain; transform:none !important; transform-origin:center;
+        box-sizing:border-box;
+      }
+      .dining-page .dining-features .dining-feature:nth-child(3) .feature-icon > svg,
+      .dining-page .dining-features .dining-feature:nth-child(3) .feature-icon > img {
+        width:46px !important; height:46px !important;
+      }
+    </style>
 </head>
 
 <body>
@@ -187,7 +211,7 @@
                 <div class="dining-feature">
                     @if(filled($feature->icon))
                         <div class="feature-icon">
-                            <x-icon :name="$feature->icon" :size="34" />
+                            <x-icon :name="$feature->icon" :size="50" />
                         </div>
                     @endif
 

@@ -30,11 +30,24 @@ class PageContentDefaultsSeeder extends Seeder
      * Each villa's icon row (config/villas.php) becomes editable entries: label, villa name,
      * and an icon image (placeholder until the real icons arrive).
      */
+    protected function secondIcon(array $highlight): ?string
+    {
+        $second = $highlight['icon2'] ?? null;
+        $placeholder = $second ? 'images/icons/placeholders/'.$second.'.svg' : null;
+
+        return $placeholder && file_exists(public_path($placeholder)) ? $placeholder : null;
+    }
+
     protected function seedVillaHighlights(): void
     {
-        $position = 0;
+        $position = (int) HomeContent::where('section', 'villas_highlights')->max('sort_order');
 
         foreach (config('villas', []) as $slug => $detail) {
+            // A villa that already has highlight entries keeps exactly the ones saved in the admin.
+            if (HomeContent::where('section', 'villas_highlights')->where('subtitle', \Illuminate\Support\Str::headline($slug))->exists()) {
+                continue;
+            }
+
             foreach ($detail['highlights'] ?? [] as $highlight) {
                 $position++;
 
@@ -47,6 +60,8 @@ class PageContentDefaultsSeeder extends Seeder
                         'title' => $highlight['label'] ?? '',
                         'subtitle' => \Illuminate\Support\Str::headline($slug),
                         'icon' => file_exists(public_path($placeholder)) ? $placeholder : $icon,
+                        // Optional second icon shown next to the first (stored in the entry's picture field).
+                        'image' => $this->secondIcon($highlight),
                         'active' => true,
                     ],
                 );

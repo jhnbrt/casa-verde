@@ -187,3 +187,8 @@ body.gal-lock { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
     .gal-tile img, .gal-open img { transition: none; }
 }
+
+/* Gallery CTA colors, managed independently in admin. */
+.gal-cta { background: var(--gallery-cta-bg, var(--gal-forest)); color: var(--gallery-cta-text, #e2b98a); }
+.gal-cta .gal-cta-leaf { color: var(--gallery-cta-text, var(--gal-gold)); }
+.gal-cta .cv-btn--gold { background-color: var(--gallery-cta-button, #d9a35f); }

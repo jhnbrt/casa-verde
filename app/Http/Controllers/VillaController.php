@@ -37,23 +37,22 @@ class VillaController extends Controller
     }
 
     /**
-     * The photos of each villa card, keyed by the villa's slug. The admin list
-     * (Villas > "Villa card: Photos") wins; without it the card photo comes first,
-     * followed by the villa's gallery photos.
+     * The photos that open in each villa's gallery, keyed by the villa's slug. They come from
+     * the "Gallery photos" box on the villa entry in the admin; a villa without any uses its
+     * card photo, wide photo and gallery photos.
      *
      * @return array<string, array<int, string>>
      */
     protected function photos($contents, $villas): array
     {
-        $own = $contents->get('villas_photos', collect())->groupBy(fn ($row) => Str::slug((string) $row->title));
-        $exists = fn (?string $path): bool => filled($path) && file_exists(public_path($path));
+        $exists = fn ($path): bool => is_string($path) && filled($path) && file_exists(public_path($path));
         $photos = [];
 
         foreach ($villas as $villa) {
             $slug = Str::slug($villa->title);
 
-            $list = $own->has($slug)
-                ? $own->get($slug)->pluck('image')->all()
+            $list = ! empty($villa->gallery)
+                ? (array) $villa->gallery
                 : array_merge([$villa->image, config("villas.{$slug}.hero")], (array) config("villas.{$slug}.gallery", []));
 
             $photos[$slug] = array_values(array_unique(array_filter($list, $exists)));

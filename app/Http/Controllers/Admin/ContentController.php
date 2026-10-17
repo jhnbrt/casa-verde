@@ -89,6 +89,10 @@ class ContentController extends Controller
             $data['icon'] = $this->storeImage($request, 'icon_image');
         }
 
+        if (($gallery = $this->gallery($request)) !== null) {
+            $data['gallery'] = $gallery;
+        }
+
         $item = HomeContent::create($data);
 
         return redirect()
@@ -121,6 +125,10 @@ class ContentController extends Controller
         // An uploaded icon image is stored in the "icon" field as its path.
         if ($request->hasFile('icon_image')) {
             $data['icon'] = $this->storeImage($request, 'icon_image');
+        }
+
+        if (($gallery = $this->gallery($request)) !== null) {
+            $data['gallery'] = $gallery;
         }
 
         $content->update($data);
@@ -161,6 +169,10 @@ class ContentController extends Controller
             'sort_order' => ['nullable', 'integer'],
             'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg', 'max:5120'],
             'icon_image' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,gif,svg', 'max:2048'],
+            'gallery' => ['nullable', 'array', 'max:30'],
+            'gallery.*' => ['string', 'max:255'],
+            'gallery_new' => ['nullable', 'array', 'max:20'],
+            'gallery_new.*' => ['file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
         ]);
 
         // Titles and text can contain deliberate line breaks (the site renders
@@ -196,7 +208,7 @@ class ContentController extends Controller
             unset($data['sort_order']);
         }
 
-        unset($data['image'], $data['icon_image']);
+        unset($data['image'], $data['icon_image'], $data['gallery'], $data['gallery_new']);
 
         return $data;
     }
@@ -207,7 +219,45 @@ class ContentController extends Controller
      */
     protected function storeImage(Request $request, string $field = 'image'): string
     {
-        $file = $request->file($field);
+        return $this->storeFile($request->file($field), $field);
+    }
+
+    /**
+     * The photos of an entry's gallery, in order: the ones kept from before (in the order the
+     * form lists them) followed by newly uploaded ones. Null when the form had no gallery box,
+     * so saving any other entry can never touch a gallery.
+     *
+     * @return array<int, string>|null
+     */
+    protected function gallery(Request $request): ?array
+    {
+        if (! $request->boolean('gallery_present')
+            || ! \Illuminate\Support\Facades\Schema::hasColumn('home_contents', 'gallery')) {
+            return null;
+        }
+
+        $kept = collect((array) $request->input('gallery', []))
+            ->filter(fn ($path) => is_string($path)
+                && ! str_contains($path, '..')
+                && preg_match('#^images/[A-Za-z0-9._/-]+\.(jpe?g|png|webp|gif|svg)$#i', $path)
+                && file_exists(public_path($path)))
+            ->unique()
+            ->values()
+            ->all();
+
+        $added = [];
+
+        foreach ((array) $request->file('gallery_new', []) as $file) {
+            if ($file && $file->isValid()) {
+                $added[] = $this->storeFile($file, 'gallery_new');
+            }
+        }
+
+        return array_slice(array_merge($kept, $added), 0, 30);
+    }
+
+    protected function storeFile(\Illuminate\Http\UploadedFile $file, string $field): string
+    {
         if (strtolower($file->getClientOriginalExtension()) === 'svg') {
             $svg = file_get_contents($file->getRealPath());
             if (! preg_match('/<svg\b/i', $svg) || preg_match('/<\s*(script|foreignObject|iframe|object|embed|use|image|animate|set)\b|\bon[a-z]+\s*=|(?:href|src)\s*=|javascript:|data:|<!DOCTYPE|<!ENTITY|<\?xml-stylesheet/i', $svg)) {

@@ -36,7 +36,7 @@
     // Highlight icons: entries saved in the admin for this villa, else config/villas.php.
     $highlights = $contents->get('villas_highlights', collect())
         ->filter(fn ($row) => \Illuminate\Support\Str::slug((string) $row->subtitle) === \Illuminate\Support\Str::slug($villa->title))
-        ->map(fn ($row) => ['icon' => $row->icon ?: 'lotus', 'label' => $row->title])
+        ->map(fn ($row) => ['icon' => $row->icon ?: 'lotus', 'icon2' => $row->image ?: null, 'label' => $row->title])
         ->values()->all();
     if ($highlights === []) {
         $highlights = $detail['highlights'] ?? [];
@@ -98,10 +98,18 @@
 
     @if(!empty($highlights))
         <section class="vs-strip" aria-label="Villa highlights">
-            <ul>
+            <ul style="--vs-cols: {{ count($highlights) }}">
                 @foreach($highlights as $item)
                     <li>
-                        <x-icon :name="$item['icon']" :size="40" />
+                        @if(!empty($item['icon2']))
+                            {{-- Two icons side by side for one highlight, e.g. queen bed and twin beds --}}
+                            <div class="vs-icon-pair">
+                                <x-icon :name="$item['icon']" :size="40" />
+                                <x-icon :name="$item['icon2']" :size="40" />
+                            </div>
+                        @else
+                            <x-icon :name="$item['icon']" :size="40" />
+                        @endif
                         <span>{{ $item['label'] }}</span>
                     </li>
                 @endforeach

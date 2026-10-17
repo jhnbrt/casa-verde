@@ -19,6 +19,7 @@ class HomeContent extends Model
         'icon',
         'price',
         'features',
+        'gallery',
         'button_text',
         'button_url',
         'sort_order',
@@ -28,6 +29,7 @@ class HomeContent extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'active' => 'boolean',
+        'gallery' => 'array',
     ];
 
     /**
@@ -248,10 +250,8 @@ class HomeContent extends Model
                 app(\Database\Seeders\LongStayContentSeeder::class)->run();
             }
 
-            // Villa card photo galleries: load the starting photos once.
-            if (! static::where('section', 'villas_photos')->exists()) {
-                app(\Database\Seeders\VillaPhotosSeeder::class)->run();
-            }
+            // Villa photo galleries: give every villa its starting photos once.
+            static::fillVillaGalleries();
 
             if (static::where('section', 'dining_page_hero')->exists()
                 && static::where('section', 'site_icons')->exists()
@@ -271,6 +271,47 @@ class HomeContent extends Model
         } catch (\Throwable $e) {
             report($e);
         }
+    }
+
+    /**
+     * Give each villa the photos that open in its gallery when its picture is clicked on
+     * the Villas page: its card photo, wide photo and gallery photos. Villas that already
+     * have a gallery are left alone. Photo entries from the earlier "Villa card: Photos"
+     * list are moved into the villa and removed.
+     */
+    public static function fillVillaGalleries(): void
+    {
+        if (! \Illuminate\Support\Facades\Schema::hasColumn('home_contents', 'gallery')) {
+            return;
+        }
+
+        $legacy = static::where('section', 'villas_photos')
+            ->orderBy('sort_order')
+            ->get()
+            ->groupBy(fn (self $row) => Str::slug((string) $row->title));
+
+        foreach (static::where('section', 'villas')->get() as $villa) {
+            if (! empty($villa->gallery)) {
+                continue;
+            }
+
+            $slug = Str::slug((string) $villa->title);
+
+            $photos = $legacy->has($slug)
+                ? $legacy->get($slug)->pluck('image')->all()
+                : array_merge([$villa->image, config("villas.{$slug}.hero")], (array) config("villas.{$slug}.gallery", []));
+
+            $photos = array_values(array_unique(array_filter(
+                $photos,
+                fn ($path) => filled($path) && file_exists(public_path($path)),
+            )));
+
+            if ($photos !== []) {
+                $villa->update(['gallery' => $photos]);
+            }
+        }
+
+        static::where('section', 'villas_photos')->delete();
     }
 
     /**
