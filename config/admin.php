@@ -37,8 +37,8 @@ return [
         'offers' => ['label' => 'Special offers', 'match' => ['offers'], 'url' => '/special-offers'],
         'reviews' => ['label' => 'Reviews', 'match' => ['reviews'], 'url' => '/reviews'],
         'gallery' => ['label' => 'Gallery', 'match' => ['gallery'], 'url' => '/gallery'],
-        'about' => ['label' => 'About', 'match' => ['about'], 'url' => '/#about'],
-        'contact' => ['label' => 'Contact', 'match' => ['contact'], 'url' => '/#contact'],
+        'about' => ['label' => 'About', 'match' => ['about'], 'url' => '/about'],
+        'contact' => ['label' => 'Contact', 'match' => ['contact'], 'url' => '/contact'],
         'footer' => ['label' => 'Footer', 'match' => ['footer'], 'url' => '/#footer'],
     ],
 
@@ -60,6 +60,40 @@ return [
     */
 
     'sections' => [
+
+        'about_intro' => [
+            'title' => 'About Us: Our Story',
+            'help' => 'Edit the story shown near the top of the About page.',
+            'fields' => ['title' => 'Heading', 'description' => 'Story paragraphs'],
+            'hide' => ['subtitle', 'icon', 'price', 'features', 'button_text', 'button_url', 'image'],
+        ],
+        'about_values' => [
+            'title' => 'About Us: Mission, Philosophy and Pets',
+            'help' => 'Edit the main information cards. Separate paragraphs with a blank line.',
+            'fields' => ['title' => 'Heading', 'description' => 'Paragraphs'],
+            'hide' => ['subtitle', 'icon', 'price', 'features', 'button_text', 'button_url', 'image'],
+        ],
+        'about_sustainability' => [
+            'title' => 'About Us: Sustainability',
+            'help' => 'Edit each sustainability initiative. You may reorder these entries.',
+            'fields' => ['title' => 'Initiative name', 'description' => 'Description'],
+            'hide' => ['subtitle', 'icon', 'price', 'features', 'button_text', 'button_url', 'image'],
+        ],
+
+        'contact_page' => [
+            'title' => 'Contact page heading and details',
+            'help' => 'Edit the Contact page heading, address and contact information.',
+            'fields' => ['title' => 'Main heading', 'subtitle' => 'Eyebrow label', 'description' => 'Introductory text', 'button_text' => 'Contact email', 'button_url' => 'Contact phone (display text)'],
+            'hide' => ['image', 'icon', 'price', 'features'],
+        ],
+        'contact_map' => [
+            'title' => 'Contact page Google Map',
+            'help' => 'Paste the Google Maps EMBED URL from Google Maps > Share > Embed a map. Use the URL inside src="..." (not the entire iframe). The map is interactive and requires no API key.',
+            'fields' => ['title' => 'Map heading', 'subtitle' => 'Resort address', 'description' => 'Google Maps embed URL', 'button_url' => 'Open in Google Maps URL', 'button_text' => 'Map button text'],
+            'hints' => ['description' => 'Must start with https://www.google.com/maps/embed? or https://www.google.com/maps?; copy the exact location embed URL from Google Maps.', 'button_url' => 'Full Google Maps share link (https://...)'],
+            'hide' => ['image', 'icon', 'price', 'features'],
+        ],
+
         'site' => [
             'title' => 'Logo and resort name',
             'help' => 'The logo is shown in the header, in the round badge inside every "Book your stay" style button, in the footer, on the Events page and in this admin. Upload a square PNG or SVG with a transparent or dark-green background. Only one entry is used.',
@@ -86,6 +120,18 @@ return [
             'help' => 'One entry per villa (Standard Villa, Premium Villa). The Photo is the picture shown on the villa card. Below it, Gallery photos are the pictures that slide open when a visitor clicks that picture on the Villas page: add as many as you like (8 looks best), change their order, or remove them.',
             'fields' => ['image' => 'Card photo (shown on the Villas page)'],
             'gallery' => true,
+        ],
+        'villas_detail_photos_standard_villa' => [
+            'title' => 'Standard Villa detail: Interior photos',
+            'help' => 'These are the three interior photographs beside “Designed for comfort” on the Standard Villa detail page. Replace each Photo to update that position; Sort order 1 is the large image, then 2 and 3 are the smaller images. These are separate from the Villas listing and Home photos.',
+            'fields' => ['title' => 'Photo label', 'image' => 'Interior photo'],
+            'hide' => ['subtitle', 'description', 'icon', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'villas_detail_photos_premium_villa' => [
+            'title' => 'Premium Villa detail: Interior photos',
+            'help' => 'Photos beside the description on the Premium Villa detail page. Sort order 1 is the large photo; 2 and 3 are smaller. These are independent of the Home and Villas listing photos.',
+            'fields' => ['title' => 'Photo label', 'image' => 'Interior photo'],
+            'hide' => ['subtitle', 'description', 'icon', 'price', 'features', 'button_text', 'button_url'],
         ],
         'villas_feature_icons' => [
             'title' => 'Villa card: Feature icons',

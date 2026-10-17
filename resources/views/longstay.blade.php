@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=20261017" sizes="any">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=20261017">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Long Stay | Casa Verde Cliff Resort &amp; Spa</title>

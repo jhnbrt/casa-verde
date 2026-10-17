@@ -3,6 +3,8 @@
 
 <head>
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=20261017" sizes="any">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=20261017">
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +32,15 @@
     $layout    = $detail['layout'] ?? null;
     $usd       = $detail['usd'] ?? null;
     $storyHead = $detail['story_title'] ?? [];
-    $gallery   = $detail['gallery'] ?? [];
+    // Detail-page photos are independently editable in Admin > Villas.
+    // Match by villa slug and preserve the configured images until an admin photo exists.
+    $gallerySection = 'villas_detail_photos_' . \Illuminate\Support\Str::slug($villa->title, '_');
+    $adminPhotos = $contents->get($gallerySection, collect())
+        ->filter(fn ($row) => filled($row->image))
+        ->sortBy('sort_order')
+        ->pluck('image')
+        ->values()->all();
+    $gallery = $adminPhotos !== [] ? $adminPhotos : ($detail['gallery'] ?? []);
     $labels    = \App\Models\HomeContent::pageLabels($contents, 'villas_detail_labels');
     $L         = fn (int $n) => $labels[$n] ?? '';
     // Highlight icons: entries saved in the admin for this villa, else config/villas.php.

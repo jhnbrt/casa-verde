@@ -1,0 +1,18 @@
+
+/* Full-screen public photo viewer, scoped to avoid changing page layouts. */
+body.cv-photo-viewer-open { overflow: hidden; }
+.cv-photo-viewer-trigger { cursor: zoom-in; }
+.cv-photo-viewer-trigger:focus-visible { outline: 3px solid #d7a565; outline-offset: 3px; }
+.cv-photo-viewer[hidden] { display: none !important; }
+.cv-photo-viewer { position: fixed; inset: 0; z-index: 2147483000; background: rgba(2,19,15,.96); display: flex; align-items: center; justify-content: center; padding: 72px 70px 42px; box-sizing: border-box; }
+.cv-photo-viewer__image { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 3px; user-select: none; }
+.cv-photo-viewer__image.is-zoomed { max-width: none; max-height: none; width: auto; height: auto; transform: scale(1.7); cursor: zoom-out; }
+.cv-photo-viewer__toolbar { position: absolute; top: 15px; right: 20px; left: 20px; display: flex; align-items: center; justify-content: flex-end; gap: 12px; color: #f6eadd; font: 500 14px system-ui,sans-serif; }
+.cv-photo-viewer__count { margin-right: auto; }
+.cv-photo-viewer button { appearance: none; border: 1px solid rgba(220,175,107,.55); border-radius: 100px; background: rgba(8,44,34,.9); color: #f7e7d1; cursor: pointer; min-width: 44px; min-height: 44px; font: 500 15px system-ui,sans-serif; }
+.cv-photo-viewer button:hover, .cv-photo-viewer button:focus-visible { background: #bf9255; color: #061e17; }
+.cv-photo-viewer [data-cv-close] { font-size: 29px; line-height: 1; }
+.cv-photo-viewer__prev, .cv-photo-viewer__next { position: absolute; top: 50%; transform: translateY(-50%); font-size: 34px !important; }
+.cv-photo-viewer__prev { left: 14px; } .cv-photo-viewer__next { right: 14px; }
+@media(max-width:600px) { .cv-photo-viewer { padding: 78px 14px 64px; } .cv-photo-viewer__prev, .cv-photo-viewer__next { top: auto; bottom: 10px; transform: none; } .cv-photo-viewer__prev { left: 25%; } .cv-photo-viewer__next { right: 25%; } }
+@media(prefers-reduced-motion:reduce) { .cv-photo-viewer * { transition: none !important; } }

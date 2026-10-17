@@ -13,6 +13,8 @@
         'dining'      => 'dining.index',
         'long stay'   => 'longstay.index',
         'reviews'     => 'reviews.index',
+        'contact'     => 'contact.index',
+        'about'       => 'about.index',
     ];
 @endphp
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HomeContent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,6 +13,16 @@ class ContactController extends Controller
      * Receive the contact form and email it to the resort.
      * The recipient is MAIL_FROM_ADDRESS in .env (set it to the resort's inbox).
      */
+    public function index()
+    {
+        $contents = HomeContent::where('active', true)->orderBy('sort_order')->get()->groupBy('section');
+        $site = $contents->get('site', collect())->first();
+        $contact = $contents->get('contact_page', collect())->first();
+        $map = $contents->get('contact_map', collect())->first();
+
+        return view('contact', compact('contents', 'site', 'contact', 'map'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([

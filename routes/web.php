@@ -29,16 +29,13 @@ Route::post('/reviews', [ReviewController::class, 'store'])
     ->name('reviews.store');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/special-offers', [OfferController::class, 'index'])->name('offers.index');
-Route::get('/about', [HomeController::class, 'about'])->name('about.index'); 
+Route::get('/about', [AboutController::class, 'index'])->name('about.index'); 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
 Route::post('/contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
 
-// These sections live on the home page for now, so the short URLs
-// (bookmarks, emails, future menu links) land on the right section.
-Route::redirect('/about', '/#about')->name('about.index');
-Route::redirect('/contact', '/#contact')->name('contact.index');
+
 
 require __DIR__.'/admin.php';

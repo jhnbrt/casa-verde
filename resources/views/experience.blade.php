@@ -3,6 +3,8 @@
 
 <head>
 
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=20261017" sizes="any">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=20261017">
     <meta charset="UTF-8">
 
     <meta

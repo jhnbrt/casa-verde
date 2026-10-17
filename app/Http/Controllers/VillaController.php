@@ -95,7 +95,9 @@ class VillaController extends Controller
             'detail'   => $detail,
             'intro'    => $detail['intro'] ?? $villa->description,
             'tagline'  => $detail['tagline'] ?? $villa->subtitle,
-            'heroImage' => $detail['hero'] ?? $villa->image,
+            'heroImage' => $contents->get('villas_detail_hero_' . str_replace('-', '_', $slug), collect())
+                ->first(fn ($item) => filled($item->image))?->image
+                ?: ($detail['hero'] ?? $villa->image),
             'features' => $features ?? [],
         ]);
     }

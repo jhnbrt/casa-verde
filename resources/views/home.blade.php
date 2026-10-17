@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}?v=20261017" sizes="any">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=20261017">
     <meta charset="UTF-8">
 
     <meta
@@ -79,8 +81,16 @@
         ->get('about_resort', collect())
         ->first();
 
+    // Show only the original four Home page resort highlights.
+    $homeResortTitles = [
+        'boutique luxury', 'nature first',
+        'heartfelt hospitality', 'legendary sunsets',
+    ];
     $aboutValues = $contents
-        ->get('about_values', collect());
+        ->get('about_values', collect())
+        ->filter(fn ($item) => in_array(strtolower(trim((string) $item->title)), $homeResortTitles, true))
+        ->sortBy(fn ($item) => array_search(strtolower(trim((string) $item->title)), $homeResortTitles, true))
+        ->values();
 
     $aboutPrinciples = $contents
         ->get('about_principles', collect());

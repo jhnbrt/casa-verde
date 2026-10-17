@@ -1,3 +1,4 @@
+import '../css/photo-viewer.css';
 // Mobile navigation toggle
 document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.querySelector('.nav-toggle');
@@ -135,4 +136,91 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     refresh();
+});
+
+
+// Public pages: accessible full-screen photo viewer. Gallery has its own viewer.
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.querySelector('.gal-lightbox, .gal-lb, [data-gallery-lightbox]') || document.body.classList.contains('admin')) return;
+    const excluded = 'header, footer, nav, a, button, form, .feature-icon, .villa-icon, .villa-feature-icon, .vs-check-logo, .gal-tile, .gal-photo, [data-no-lightbox], [data-gallery-remove], .navbar, .site-logo';
+    const candidates = [...document.querySelectorAll('main img, section img, article img')].filter(img => {
+        if (img.closest(excluded) || img.getAttribute('aria-hidden') === 'true') return false;
+        const src = img.currentSrc || img.src;
+        if (!src || /(?:logo|icon|glyph|favicon|badge|symbol)/i.test(src)) return false;
+        return true;
+    });
+    if (!candidates.length) return;
+    const viewer = document.createElement('div');
+    viewer.className = 'cv-photo-viewer';
+    viewer.setAttribute('role','dialog');
+    viewer.setAttribute('aria-modal','true');
+    viewer.setAttribute('aria-label','Full screen photo viewer');
+    viewer.hidden = true;
+    viewer.innerHTML = `<div class="cv-photo-viewer__toolbar"><span class="cv-photo-viewer__count" aria-live="polite"></span><button type="button" data-cv-zoom aria-label="Zoom photo">Zoom +</button><button type="button" data-cv-close aria-label="Close viewer">×</button></div><button type="button" class="cv-photo-viewer__prev" data-cv-prev aria-label="Previous photo">‹</button><img class="cv-photo-viewer__image" alt=""><button type="button" class="cv-photo-viewer__next" data-cv-next aria-label="Next photo">›</button>`;
+    document.body.appendChild(viewer);
+    const image = viewer.querySelector('img');
+    const count = viewer.querySelector('.cv-photo-viewer__count');
+    const zoomButton = viewer.querySelector('[data-cv-zoom]');
+    let index = 0, zoomed = false, previousFocus = null, touchStart = null;
+    const show = (next) => {
+        index = (next + candidates.length) % candidates.length;
+        const source = candidates[index];
+        image.src = source.currentSrc || source.src;
+        image.alt = source.alt || 'Resort photo';
+        count.textContent = `${index + 1} / ${candidates.length}`;
+        zoomed = false;
+        image.classList.remove('is-zoomed');
+        zoomButton.textContent = 'Zoom +';
+    };
+    const close = () => {
+        viewer.hidden = true;
+        document.body.classList.remove('cv-photo-viewer-open');
+        image.removeAttribute('src');
+        previousFocus?.focus?.();
+    };
+    candidates.forEach((img, i) => {
+        img.classList.add('cv-photo-viewer-trigger');
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', `View full screen: ${img.alt || 'resort photo'}`);
+        const open = () => {
+            previousFocus = document.activeElement;
+            show(i);
+            viewer.hidden = false;
+            document.body.classList.add('cv-photo-viewer-open');
+            viewer.querySelector('[data-cv-close]').focus();
+        };
+        img.addEventListener('click', open);
+        img.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); }
+        });
+    });
+    viewer.querySelector('[data-cv-close]').addEventListener('click', close);
+    viewer.querySelector('[data-cv-prev]').addEventListener('click', () => show(index - 1));
+    viewer.querySelector('[data-cv-next]').addEventListener('click', () => show(index + 1));
+    zoomButton.addEventListener('click', () => {
+        zoomed = !zoomed;
+        image.classList.toggle('is-zoomed', zoomed);
+        zoomButton.textContent = zoomed ? 'Zoom −' : 'Zoom +';
+    });
+    viewer.addEventListener('click', event => { if (event.target === viewer) close(); });
+    document.addEventListener('keydown', event => {
+        if (viewer.hidden) return;
+        if (event.key === 'Escape') close();
+        if (event.key === 'ArrowLeft') show(index - 1);
+        if (event.key === 'ArrowRight') show(index + 1);
+        if (event.key === 'Tab') {
+            const controls = [...viewer.querySelectorAll('button')];
+            const first = controls[0], last = controls[controls.length - 1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        }
+    });
+    viewer.addEventListener('touchstart', e => { touchStart = e.changedTouches[0]?.clientX ?? null; }, {passive:true});
+    viewer.addEventListener('touchend', e => {
+        if (touchStart === null) return;
+        const dx = (e.changedTouches[0]?.clientX ?? touchStart) - touchStart;
+        if (Math.abs(dx) > 55) show(index + (dx < 0 ? 1 : -1));
+        touchStart = null;
+    }, {passive:true});
 });

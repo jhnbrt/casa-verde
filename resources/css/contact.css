@@ -1,0 +1,62 @@
+/* Contact page — Casa Verde cream / deep forest / muted gold */
+.cv-contact{--cv-green:#0d3027;--cv-gold:#d5a263;--cv-cream:#f7f3ed;background:var(--cv-cream);color:var(--cv-green);font-family:inherit;min-height:70vh;padding-bottom:90px}
+.cv-contact-intro{text-align:center;max-width:850px;margin:0 auto;padding:74px 24px 46px}
+.cv-contact-eyebrow{display:block;font-size:.76rem;font-weight:600;letter-spacing:.19em;color:#b98b51;margin-bottom:12px}
+.cv-contact h1,.cv-contact h2{font-family:Georgia,serif;font-weight:400;line-height:1.2}
+.cv-contact h1{font-size:clamp(2.5rem,4.4vw,3.8rem);margin:0 0 16px}
+.cv-contact-intro p{font-size:1rem;color:#69746b;line-height:1.7;margin:0 auto;max-width:700px}
+.cv-contact-details{max-width:1250px;margin:0 auto 44px;padding:0 28px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.cv-contact-detail{min-width:0;min-height:190px;box-sizing:border-box;padding:27px 20px 25px;border-radius:12px;background:#eaece3;color:var(--cv-green);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 5px 18px #0b2b2010}
+.cv-contact-detail--featured{background:var(--cv-green);color:#fffaf0}
+.cv-contact-detail-icon{display:block;width:36px;height:36px;margin-bottom:18px;color:#c69a61}
+.cv-contact-detail--featured .cv-contact-detail-icon{color:#e8bc7b}
+.cv-contact-detail-icon svg{width:100%;height:100%}
+.cv-contact-detail h2{font-size:1.45rem;margin:0 0 10px}
+.cv-contact-detail p{margin:0;font-size:.95rem;line-height:1.55;overflow-wrap:anywhere}
+.cv-contact-detail a{color:inherit;text-decoration:none}.cv-contact-detail a:hover{text-decoration:underline}
+.cv-contact-lower{max-width:1250px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start}
+.cv-contact-map-section{min-width:0;position:relative}
+.cv-contact-map-frame{width:100%;height:510px;overflow:hidden;border-radius:13px;background:#dfe8db;box-shadow:0 6px 24px #0b2b2014}
+.cv-contact-map-frame iframe{display:block;width:100%;height:100%;border:0}
+.cv-contact-maps-link{display:inline-flex;gap:8px;align-items:center;margin-top:13px;color:var(--cv-green);font-size:.92rem;font-weight:650;text-decoration:underline;text-decoration-color:var(--cv-gold);text-underline-offset:4px}
+.cv-contact-maps-link:hover{color:#ad7840}
+.cv-contact-form-section{min-width:0;padding:0}
+.cv-contact-form-title{font-size:1.55rem;margin:0 0 20px}
+.cv-contact-form{display:grid;gap:18px}
+.cv-contact-form label{display:grid;gap:9px;font-size:.93rem;font-weight:550;color:#293e36}
+.cv-contact-form label span{color:#b37c46}
+.cv-contact-form input,.cv-contact-form textarea{box-sizing:border-box;width:100%;padding:15px 17px;border:1px solid #d8d9d0;border-radius:9px;background:#fff;color:#0d3027;font:inherit;outline:none;transition:border-color .2s,box-shadow .2s}
+.cv-contact-form input::placeholder,.cv-contact-form textarea::placeholder{color:#98a099}
+.cv-contact-form input:focus,.cv-contact-form textarea:focus{border-color:#bd8d52;box-shadow:0 0 0 3px #d5a2632c}
+.cv-contact-form textarea{resize:vertical;min-height:110px}
+.cv-contact-form button{width:100%;min-height:50px;border:0;border-radius:9px;background:var(--cv-green);color:#fff;font:inherit;font-weight:650;cursor:pointer;transition:background .2s}
+.cv-contact-form button:hover{background:#195440}
+.cv-contact-success{margin:0;color:#176039}.cv-contact-error{margin:0;color:#a32d2d}
+@media(max-width:850px){.cv-contact-details{gap:12px;padding:0 20px}.cv-contact-detail{padding:22px 12px}.cv-contact-lower{gap:20px;padding:0 20px}.cv-contact-map-frame{height:470px}}
+@media(max-width:680px){.cv-contact{padding-bottom:60px}.cv-contact-intro{padding:52px 20px 36px}.cv-contact-details{grid-template-columns:1fr;gap:13px;margin-bottom:30px}.cv-contact-detail{min-height:145px}.cv-contact-lower{grid-template-columns:1fr;gap:34px}.cv-contact-map-frame{height:360px}.cv-contact-form-title{margin-bottom:18px}}
+
+
+/* Balanced contact layout: controlled sizes, no inherited stretch overrides. */
+.cv-contact,.cv-contact *{box-sizing:border-box}
+.cv-contact{width:100%;padding:112px clamp(20px,4vw,64px) 76px;--cv-green:#0d3027;--cv-gold:#d5a263;--cv-cream:#f7f3ed}
+.cv-contact-intro{padding:0 0 36px}
+.cv-contact-details,.cv-contact-lower{max-width:1320px;padding:0;margin-left:auto;margin-right:auto}
+.cv-contact-details{gap:22px;margin-bottom:38px}
+.cv-contact-detail{min-height:175px;padding:24px 20px}
+.cv-contact-detail-icon{width:32px;height:32px;margin-bottom:12px}
+.cv-contact-detail h2{font-size:1.4rem;margin-bottom:8px}
+.cv-contact-lower{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3vw,42px);align-items:start;width:100%}
+.cv-contact-map-section,.cv-contact-form-section{min-width:0;width:100%}
+.cv-contact-map-frame{height:490px;min-height:0;width:100%;position:relative;overflow:hidden;border-radius:13px}
+.cv-contact-map-frame iframe{position:absolute;inset:0;width:100%;height:100%;display:block;border:0}
+.cv-contact-maps-link{margin-top:12px}
+.cv-contact-form-title{font-size:clamp(1.6rem,2.2vw,2rem);line-height:1.2;margin:0 0 14px}
+.cv-contact-form{display:grid;gap:12px;width:100%}
+.cv-contact-form label{display:flex;flex-direction:column;gap:6px;font-size:.9rem;line-height:1.3}
+.cv-contact-form .cv-contact-field-label{display:inline;color:var(--cv-green)}
+.cv-contact-form .cv-contact-field-label>span{color:#b37c46}
+.cv-contact-form input,.cv-contact-form textarea{display:block;width:100%;max-width:100%;min-height:44px;padding:10px 14px;font-size:.95rem;line-height:1.4;border-radius:9px}
+.cv-contact-form textarea{height:100px;min-height:100px;resize:vertical}
+.cv-contact-form button{min-height:46px;font-size:.95rem}
+@media(max-width:850px){.cv-contact{padding:102px 22px 64px}.cv-contact-lower{grid-template-columns:1fr;gap:28px}.cv-contact-map-frame{height:390px}.cv-contact-details{gap:12px}}
+@media(max-width:680px){.cv-contact{padding:100px 18px 55px}.cv-contact-details{grid-template-columns:1fr;gap:12px}.cv-contact-detail{min-height:130px}.cv-contact-map-frame{height:320px}}
