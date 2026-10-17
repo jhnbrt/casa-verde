@@ -20,7 +20,7 @@
         <div class="absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-forest-950/85 to-transparent"></div>
 
         <div class="relative flex h-full flex-col justify-between p-12 text-white">
-            <img src="{{ asset('images/logo.png') }}" alt="" class="h-16 w-16">
+            <img src="{{ asset(\App\Models\HomeContent::siteLogo()) }}" alt="" class="h-16 w-16">
             <div>
                 <p class="font-display text-5xl font-semibold leading-[1.05]">Casa Verde<br>Cliff Resort &amp; Spa</p>
                 <p class="mt-3 text-lg text-sand-100/90">Camotes Island, Philippines</p>
@@ -33,7 +33,7 @@
         <div class="w-full max-w-sm">
 
             <div class="mb-8 flex h-14 w-14 items-center justify-center rounded-xl bg-forest-900 lg:hidden">
-                <img src="{{ asset('images/logo.png') }}" alt="" class="h-10 w-10">
+                <img src="{{ asset(\App\Models\HomeContent::siteLogo()) }}" alt="" class="h-10 w-10">
             </div>
 
             <h1 class="page-title">Sign in</h1>

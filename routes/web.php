@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LongStayController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VillaController;
@@ -22,6 +23,10 @@ Route::get('/wellness', [WellnessController::class, 'index'])->name('wellness.in
 Route::get('/dining', [DiningController::class, 'index'])->name('dining.index');
 Route::get('/long-stay', [LongStayController::class, 'index'])->name('longstay.index');
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::post('/reviews', [ReviewController::class, 'store'])
+    ->middleware('throttle:5,10')
+    ->name('reviews.store');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/special-offers', [OfferController::class, 'index'])->name('offers.index');
 Route::get('/about', [HomeController::class, 'about'])->name('about.index'); 

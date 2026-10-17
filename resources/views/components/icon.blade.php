@@ -2,6 +2,10 @@
 
 @php
     $paths = [
+        'couple' => '<circle cx="8" cy="6" r="3"/><circle cx="17" cy="7" r="2.6"/><path d="M2 21v-2.5a6 6 0 0 1 12 0V21H2ZM14.5 13a5.5 5.5 0 0 1 7.5 5.2V21h-5"/>',
+        'privacy-lock' => '<rect x="5" y="10" width="14" height="12" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M10 10V7a2 2 0 0 1 4 0v3"/><circle cx="12" cy="15" r="1.2"/><path d="M12 16.2v2"/>',
+        'tropical-home' => '<path d="m3 11 9-8 9 8M5 10v10h14V10M9 20v-6h6v6"/><path d="M2 22c3-2 5-2 8 0s5 2 8 0 4-2 5-1M3 5l2-2 2 2M19 5l2-2"/>',
+
         'pin'       => '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/>',
         'phone'     => '<path d="M21 16.5v3a1.6 1.6 0 0 1-1.8 1.6A18.5 18.5 0 0 1 3 4.8 1.6 1.6 0 0 1 4.6 3h3a1.6 1.6 0 0 1 1.6 1.4c.1 1 .4 1.9.7 2.8a1.6 1.6 0 0 1-.4 1.7L8.2 10a13 13 0 0 0 5.8 5.8l1.1-1.3a1.6 1.6 0 0 1 1.7-.4c.9.3 1.8.6 2.8.7a1.6 1.6 0 0 1 1.4 1.7Z"/>',
         'whatsapp'  => '<path d="M3.5 20.5 5 15.8A8.5 8.5 0 1 1 8.4 19l-4.9 1.5Z"/><path d="M9 8.8c.3 2.6 2.8 5.1 5.3 5.6l1.2-1.2-1.9-1-.9.7a4 4 0 0 1-2-2l.7-.9-1-1.9L9 8.8Z"/>',
@@ -41,11 +45,32 @@
         'coffee'    => '<path d="M4 10h11v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-4Z"/><path d="M15 11h1.5a2.5 2.5 0 0 1 0 5H15M8 3.5c-.8 1 .8 2 0 3.2M11.5 3.5c-.8 1 .8 2 0 3.2M3 21.5h13"/>',
         'cutlery'   => '<path d="M5.5 3v6.5M9 3v6.5M5.5 9.5a1.8 1.8 0 0 0 3.5 0M7.3 11.3V21"/><path d="M17 21V3c-2.3 1.5-3.2 4-3.2 7.5H17"/>',
         'wine'      => '<path d="M4.5 4h6.5c0 3.6-1.2 5.6-3.25 5.6S4.5 7.6 4.5 4Z"/><path d="M7.75 9.6V17M5.25 17h5"/><path d="M13.5 6H20c0 3.6-1.2 5.6-3.25 5.6S13.5 9.6 13.5 6Z"/><path d="M16.75 11.6V19M14.25 19h5"/>',
+        'laptop'    => '<rect x="5" y="5" width="14" height="10" rx="1.2"/><path d="M2.5 19h19l-2-4h-15l-2 4Z"/><path d="M10.5 17h3"/>',
+        'workation' => '<circle cx="8.5" cy="7.5" r="4.6"/><path d="M3.9 7.5h9.2M8.5 2.9v9.2M6.2 4.2c1.2 1.6 1.2 5.4 0 7M10.8 4.2c-1.2 1.6-1.2 5.4 0 7"/><rect x="9.5" y="12.5" width="11" height="7" rx="1"/><path d="M7.5 21.5h15"/>',
+        'meditation'=> '<circle cx="12" cy="4.6" r="2.1"/><path d="M12 7.5v5M8 11.5l4 1.4 4-1.4"/><path d="M4 19.5c2.5 1.2 5 1.8 8 1.8s5.5-.6 8-1.8c-1.6-2.4-4.6-3.6-8-3.6s-6.4 1.2-8 3.6Z"/>',
+        'family'    => '<circle cx="7" cy="5" r="2"/><circle cx="17" cy="5" r="2"/><circle cx="12" cy="11.2" r="1.6"/><path d="M4 21v-7.2a3 3 0 0 1 6 0V21M14 21v-7.2a3 3 0 0 1 6 0V21M10.2 21v-4a1.8 1.8 0 0 1 3.6 0v4"/>',
+        'suitcase'  => '<rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V5.6A1.6 1.6 0 0 1 10.6 4h2.8A1.6 1.6 0 0 1 15 5.6v1.9M3.5 13h17M10.5 13v1.6h3V13"/>',
+        'book'      => '<path d="M12 6.8C10 5.2 6.6 4.6 3.5 5v13.2c3.1-.4 6.5.1 8.5 1.6 2-1.5 5.4-2 8.5-1.6V5c-3.1-.4-6.5.2-8.5 1.8ZM12 6.8v13"/>',
+        'breakfast' => '<path d="M4 11h10v3.5a4.5 4.5 0 0 1-4.5 4.5h-1A4.5 4.5 0 0 1 4 14.5V11Z"/><path d="M14 12h1.3a2.2 2.2 0 0 1 0 4.4H14M7 3.8c-.8 1 .8 2 0 3.2M10.5 3.8c-.8 1 .8 2 0 3.2M3 21.5h12"/><path d="M15.5 21.5c.4-2.2 1.9-3.5 3.5-3.5s3.1 1.3 3.5 3.5h-7Z"/>',
+        'housekeeping' => '<path d="m3 11 9-7.5 9 7.5M5.5 9.5V20h13V9.5"/><path d="M12 17.4c-2.2-1.5-3-2.6-3-3.6a1.7 1.7 0 0 1 3-1.1 1.7 1.7 0 0 1 3 1.1c0 1-.8 2.1-3 3.6Z"/>',
         'arrow'     => '<path d="M4 12h15m-5-5 5 5-5 5"/>',
     ];
 @endphp
 
+@php
+    // An uploaded image (admin "Icon image") is stored as a path such as images/xyz.png.
+    $iconFile = trim((string) $name);
+    $isImage = (bool) preg_match('/\.(png|jpe?g|webp|gif|svg)$/i', $iconFile);
+@endphp
+@if ($isImage)
+    @if (file_exists(public_path($iconFile)))
+        <img {{ $attributes->merge(['class' => 'cv-icon cv-icon-img']) }} src="{{ asset($iconFile) }}" width="{{ $size }}" height="{{ $size }}" alt="" aria-hidden="true">
+    @endif
+@elseif (! isset($paths[$name]) && trim((string) $name) !== '')
+    <span {{ $attributes->merge(['class' => 'cv-icon cv-emoji']) }} style="font-size:calc({{ $size }}px * .85)" aria-hidden="true">{{ trim((string) $name) }}</span>
+@else
 <svg {{ $attributes->merge(['class' => 'cv-icon']) }} width="{{ $size }}" height="{{ $size }}" viewBox="0 0 24 24"
      fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     {!! $paths[$name] ?? '' !!}
 </svg>
+@endif

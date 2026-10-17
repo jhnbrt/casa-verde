@@ -167,3 +167,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+/* Booking logo badge: actual project emblem, not an icon font. */
+.navbar .book-button .book-icon { width: 34px; height: 34px; min-width: 34px; padding: 0; overflow: hidden; background: #05271f; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+.navbar .book-button .book-icon .cv-booking-logo { display: block !important; width: 100% !important; height: 100% !important; max-width: none; object-fit: contain; opacity: 1 !important; visibility: visible !important; }
+
+/* Clean booking emblem: original logo-badge image only, no additional decorations. */
+.navbar .book-button .book-icon { position: relative; border: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important; overflow: hidden; border-radius: 50%; padding: 0 !important; flex-shrink: 0; }
+.navbar .book-button .book-icon::before, .navbar .book-button .book-icon::after { content: none !important; display: none !important; }
+.navbar .book-button .book-icon > img.cv-booking-logo { display: block !important; width: 100% !important; height: 100% !important; object-fit: cover !important; border: 0 !important; border-radius: 50%; padding: 0 !important; margin: 0 !important; box-shadow: none !important; filter: none !important; }

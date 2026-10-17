@@ -18,7 +18,7 @@
     @php
         $img = fn (?string $path, string $fallback = 'images/main.jpg') => asset($path && file_exists(public_path($path)) ? $path : $fallback);
         $href = fn (?string $url) => \Illuminate\Support\Str::startsWith($url ?? '', ['http', '#', 'mailto:', 'tel:']) ? $url : url($url ?: '/#contact');
-        $logo = $site->image ?? 'images/logo.png';
+        $logo = \App\Models\HomeContent::siteLogo();
     @endphp
 
     <main class="cv-page ev">
@@ -41,7 +41,7 @@
         {{-- Intro + event types --}}
         <section class="cv-section ev-intro">
             <span class="cv-eyebrow">{{ $page['intro']['eyebrow'] }}</span>
-            <div class="cv-rule"><i></i><x-icon name="lotus" :size="26" /><i></i></div>
+            <x-rule :ornament="$page['intro']['icon']" />
             <h2 class="cv-title">{{ $page['intro']['title'] }}</h2>
             <p class="cv-lead">{{ $page['intro']['text'] }}</p>
 
@@ -65,7 +65,7 @@
         {{-- Features --}}
         <section class="cv-dark ev-features">
             <h2>{{ $page['features']['title'] }}</h2>
-            <div class="cv-rule"><i></i><x-icon name="lotus" :size="26" /><i></i></div>
+            <x-rule :ornament="$page['features']['icon']" />
             <div class="cv-feats ev-feats">
                 @foreach($page['features']['items'] as $feature)
                     <div>
@@ -84,7 +84,7 @@
             <img src="{{ $img($page['personal']['image'], 'images/dining3.jpg') }}" alt="{{ $page['personal']['title'] }}" loading="lazy">
             <div>
                 <span class="cv-eyebrow">{{ $page['personal']['eyebrow'] }}</span>
-                <div class="cv-rule"><i></i><x-icon name="lotus" :size="26" /><i></i></div>
+                <x-rule :ornament="$page['personal']['icon']" />
                 <h2>{{ $page['personal']['title'] }}</h2>
                 <p>{{ $page['personal']['text'] }}</p>
                 @if($page['personal']['button_text'])

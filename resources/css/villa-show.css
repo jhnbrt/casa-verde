@@ -278,3 +278,275 @@
     .vs-amenities { grid-template-columns: 1fr; }
     .vs-layout { flex-direction: column; align-items: flex-start; }
 }
+
+/* Balanced villa highlights: five equal columns and uniform original icons. */
+/* Villa highlight strip: compact, balanced reference layout */
+.vs-page .vs-strip {
+    background: var(--vs-forest);
+    color: #fff;
+    padding: 9px 18px 5px;
+}
+.vs-page .vs-strip ul {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    max-width: 1550px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+}
+.vs-page .vs-strip li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    min-height: 68px;
+    padding: 0 8px;
+    margin: 0;
+    border: 0 !important;
+    position: relative;
+    text-align: center;
+    font-family: var(--vs-sans);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: 0;
+}
+.vs-page .vs-strip li + li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 13px;
+    width: 2px;
+    background: var(--vs-gold-deep);
+}
+.vs-page .vs-strip .cv-icon,
+.vs-page .vs-strip svg.cv-icon,
+.vs-page .vs-strip img.cv-icon {
+    display: block;
+    width: 54px !important;
+    height: 54px !important;
+    min-width: 54px !important;
+    min-height: 54px !important;
+    max-width: 54px !important;
+    max-height: 54px !important;
+    flex: 0 0 54px;
+    object-fit: contain;
+    color: var(--vs-gold);
+    stroke-width: 1.3;
+}
+.vs-page .vs-strip li span {
+    display: block;
+    line-height: 1.15;
+    white-space: normal;
+}
+@media (max-width: 700px) {
+    .vs-page .vs-strip { padding: 10px 8px; }
+    .vs-page .vs-strip ul { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 8px; }
+    .vs-page .vs-strip li { min-height: 74px; font-size: 12px; }
+    .vs-page .vs-strip li + li::before { display: none; }
+    .vs-page .vs-strip li:nth-child(even)::before { display: block; }
+    .vs-page .vs-strip li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .vs-page .vs-strip li:last-child:nth-child(odd)::before { display: none; }
+}
+
+/* King Bed: enlarge the artwork only, without changing the amenity layout. */
+.vs-page .vs-strip li:nth-child(2) > .cv-icon {
+    transform: scale(1.28);
+    transform-origin: center center;
+}
+
+/* Reference-matched villa detail layout — desktop proportions */
+@media (min-width: 1101px) {
+  .vs-page .vs-hero {
+    grid-template-columns: minmax(0, 1.78fr) minmax(0, 1.15fr);
+    gap: clamp(32px, 3.2vw, 54px);
+    padding: 16px clamp(28px, 3.1vw, 50px);
+    align-items: center;
+  }
+  .vs-page .vs-hero-image {
+    aspect-ratio: 2.98 / 1;
+    min-height: 0;
+    border-radius: 15px;
+  }
+  .vs-page .vs-hero-info h1 { font-size: clamp(35px, 2.75vw, 43px); line-height: 1.04; }
+  .vs-page .vs-eyebrow { font-size: 14px; letter-spacing: .03em; margin-bottom: 5px; }
+  .vs-page .vs-tagline { font-size: clamp(19px, 1.4vw, 23px); margin: 7px 0 10px; }
+  .vs-page .vs-intro { font-size: clamp(15px, 1.05vw, 17px); line-height: 1.45; max-width: 430px; }
+  .vs-page .vs-price { font-size: 16px; margin: 16px 0 15px; gap: 7px; }
+  .vs-page .vs-price strong { font-size: 29px; }
+  .vs-page .vs-check { font-size: 15px; font-weight: 600; padding: 5px 26px 5px 5px; gap: 12px; }
+  .vs-page .vs-check-logo { width: 50px; height: 50px; }
+  .vs-page .vs-story {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.75fr) minmax(0, .65fr) minmax(0, .65fr);
+    gap: clamp(20px, 2vw, 32px);
+    padding: 13px clamp(30px, 5.5vw, 88px);
+    align-items: center;
+  }
+  .vs-page .vs-story-text h2 { font-size: clamp(31px, 2.45vw, 39px); }
+  .vs-page .vs-story-text p { font-size: 15px; line-height: 1.4; }
+  .vs-page .vs-photo { height: clamp(150px, 11.3vw, 180px); border-radius: 16px; }
+  .vs-page .vs-amenities {
+    grid-template-columns: minmax(145px, .8fr) repeat(3, minmax(0, 1fr)) minmax(350px, 1.6fr);
+    gap: clamp(15px, 1.7vw, 27px);
+    padding: 12px clamp(30px, 4vw, 62px);
+    align-items: start;
+  }
+  .vs-page .vs-amenities h3 { font-size: 21px; }
+  .vs-page .vs-amenity-list, .vs-page .vs-layout-areas ul { font-size: 14px; line-height: 1.48; }
+  .vs-page .vs-layout { align-items: center; }
+  .vs-page .vs-plan { width: clamp(155px, 15vw, 230px); }
+}
+/* Do not independently scale the bed icon: keep all five original symbols balanced. */
+.vs-page .vs-strip li:nth-child(2) > .cv-icon { transform: none; }
+
+
+/* Standard Villa hero — reference screenshot, isolated from the rest of the page. */
+@media (min-width: 1101px) {
+  .vs-page .vs-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 57%) minmax(0, 1fr);
+    column-gap: 3.25%;
+    align-items: start;
+    padding: 16px 3% 16px;
+  }
+  .vs-page .vs-hero-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2.96 / 1;
+    min-height: 0;
+    border-radius: 15px;
+    box-shadow: none;
+  }
+  .vs-page .vs-hero-info {
+    min-width: 0;
+    align-self: start;
+    padding-top: 0;
+  }
+  .vs-page .vs-eyebrow {
+    font-size: 14px;
+    line-height: 1.2;
+    margin: 0 0 5px;
+    letter-spacing: .02em;
+  }
+  .vs-page .vs-hero-info h1 {
+    font-size: clamp(37px, 2.7vw, 43px);
+    line-height: 1.06;
+    margin: 0;
+  }
+  .vs-page .vs-tagline {
+    font-size: clamp(19px, 1.4vw, 23px);
+    line-height: 1.25;
+    margin: 7px 0 11px;
+  }
+  .vs-page .vs-intro {
+    font-size: clamp(15px, 1.06vw, 17px);
+    line-height: 1.42;
+    max-width: 440px;
+    margin: 0;
+  }
+  .vs-page .vs-price {
+    margin: 19px 0 16px;
+    font-size: 16px;
+    line-height: 1.2;
+    gap: 7px 10px;
+  }
+  .vs-page .vs-price strong { font-size: 29px; line-height: 1; }
+  .vs-page .vs-check {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 5px 26px 5px 5px;
+    gap: 12px;
+    line-height: 1.25;
+  }
+  .vs-page .vs-check-logo { width: 50px; height: 50px; }
+}
+
+/* Villa hero refinement: compact booking button and consistent text rhythm. */
+.vs-page .vs-hero-info .vs-check {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 46px;
+    padding: 4px 19px 4px 4px;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: .025em;
+    align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+}
+.vs-page .vs-hero-info .vs-check-logo {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    overflow: hidden;
+}
+.vs-page .vs-hero-info .vs-check-logo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+.vs-page .vs-hero-info .vs-price {
+    margin-top: 15px;
+    margin-bottom: 12px;
+}
+.vs-page .vs-hero-info .vs-tagline { margin-bottom: 9px; }
+@media (min-width: 1101px) {
+    .vs-page .vs-hero { align-items: center; }
+    .vs-page .vs-hero-info { align-self: center; }
+}
+@media (max-width: 620px) {
+    .vs-page .vs-hero-info .vs-check { font-size: 12px; min-height: 44px; }
+    .vs-page .vs-hero-info .vs-check-logo { width: 36px; height: 36px; flex-basis: 36px; }
+}
+
+
+/* Villa amenities and floor plan: compact, aligned layout */
+@media (min-width: 1101px) {
+  .vs-page .vs-amenities {
+    grid-template-columns: minmax(130px, .75fr) repeat(3, minmax(0, 1fr)) minmax(310px, 1.65fr);
+    align-items: start;
+    gap: clamp(12px, 1.6vw, 25px);
+    padding: 14px clamp(30px, 4vw, 62px) 16px;
+    min-height: 0;
+  }
+  .vs-page .vs-layout { gap: 15px; padding-left: 18px; align-items: flex-start; }
+  .vs-page .vs-plan { width: clamp(170px, 15vw, 230px); max-height: 135px; }
+}
+.vs-page .vs-amenities-title { gap: 8px; }
+.vs-page .vs-amenities-title .cv-icon,
+.vs-page .vs-amenities-title svg {
+  width: 65px !important;
+  height: 65px !important;
+  max-width: 65px;
+  max-height: 65px;
+  flex: 0 0 65px;
+}
+.vs-page .vs-amenities-title h3 { margin: 0; }
+.vs-page .vs-amenity-list { margin: 0; padding-left: 18px; }
+.vs-page .vs-layout-areas ul { margin: 0; }
+@media (max-width: 1100px) {
+  .vs-page .vs-amenities { align-items: start; padding-top: 18px; padding-bottom: 18px; }
+  .vs-page .vs-layout { gap: 16px; }
+  .vs-page .vs-plan { max-width: 230px; }
+}
+@media (max-width: 620px) {
+  .vs-page .vs-amenities { grid-template-columns: 1fr; gap: 12px; }
+  .vs-page .vs-amenities-title { grid-column: 1; }
+  .vs-page .vs-layout { grid-column: 1; }
+}
+
+/* Center only the Villa Amenities heading icon */
+.vs-page .vs-amenities-title { align-items: center; text-align: center; }
+.vs-page .vs-amenities-title .cv-icon,
+.vs-page .vs-amenities-title svg { margin-inline: auto; }
+@media (max-width: 1100px) {
+  .vs-page .vs-amenities-title { flex-direction: column; align-items: center; }
+}

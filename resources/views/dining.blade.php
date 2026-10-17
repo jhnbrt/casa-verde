@@ -152,225 +152,86 @@
     @include('layouts.header')
 
 
+        @php
+        $pc = fn (string $section) => \App\Models\HomeContent::pageRows($contents, $section);
+        $img = fn (?string $path, string $fallback = 'images/main.jpg') => asset($path && file_exists(public_path($path)) ? $path : $fallback);
+        $href = fn (?string $url) => \Illuminate\Support\Str::startsWith($url ?? '', ['http', '#', 'mailto:', 'tel:']) ? $url : url($url ?: '/#contact');
+        $lines = fn (?string $text) => array_pad(explode("\n", str_replace("\r", '', trim((string) $text)), 2), 2, '');
+        $hero = $pc('dining_page_hero')->first();
+        [$heroTitle, $heroLine] = $lines($hero?->title);
+        $info = $pc('dining_page_info');
+        $menus = $pc('dining_page_menus');
+    @endphp
+
     <main class="dining-page">
 
-        {{-- =========================================
-             HERO SECTION
-        ========================================== --}}
+        {{-- Hero --}}
         <section class="dining-hero">
-
             <div class="dining-hero-content">
-
-                <span class="dining-label">
-                    DINING
-                </span>
-
-                <h1>
-                    TASTE THE ISLAND.
-                </h1>
-
-                <h2>
-                    Every meal becomes a memory.
-                </h2>
-
-                <p>
-                    Savor a curated dining experience inspired by fresh local
-                    ingredients, international flavors and breathtaking views.
-                    From sunrise breakfast to sunset cocktails, every moment is
-                    crafted to delight.
-                </p>
-
+                <span class="dining-label">{{ $hero?->subtitle }}</span>
+                <h1>{{ $heroTitle }}</h1>
+                @if($heroLine !== '')
+                    <h2>{{ $heroLine }}</h2>
+                @endif
+                <p>{{ $hero?->description }}</p>
             </div>
 
             <div class="dining-hero-image">
-                <img
-                    src="{{ asset('images/dining/dining-hero.jpg') }}"
-                    alt="Casa Verde Dining"
-                >
+                <img src="{{ $img($hero?->image, 'images/dining1.jpg') }}" alt="{{ trim($heroTitle) }}">
             </div>
-
         </section>
 
-
-        {{-- =========================================
-             DINING FEATURES
-        ========================================== --}}
+        {{-- Dining highlights --}}
         <section class="dining-features">
+            @foreach($pc('dining_page_features') as $feature)
+                <div class="dining-feature">
+                    @if(filled($feature->icon))
+                        <div class="feature-icon">
+                            <x-icon :name="$feature->icon" :size="34" />
+                        </div>
+                    @endif
 
-            {{-- 1. ASIAN & WESTERN --}}
-            <div class="dining-feature">
+                    <h3>{{ $feature->title }}</h3>
+                    <p class="feature-description">{{ $feature->description }}</p>
 
-                <div class="feature-icon">
-                    <x-icon name="cloche" :size="34" />
+                    <img src="{{ $img($feature->image, 'images/dining2.jpg') }}" alt="{{ $feature->title }}">
                 </div>
-
-                <h3>
-                    ASIAN & WESTERN CUISINE
-                </h3>
-
-                <p class="feature-description">
-                    Thoughtfully crafted dishes made with passion and precision.
-                </p>
-
-                <img
-                    src="{{ asset('images/dining/asian-western.jpg') }}"
-                    alt="Asian and Western Cuisine"
-                >
-
-            </div>
-
-
-            {{-- 2. COCKTAILS --}}
-            <div class="dining-feature">
-
-                <div class="feature-icon">
-                    <x-icon name="cocktail" :size="34" />
-                </div>
-
-                <h3>
-                    SIGNATURE COCKTAILS
-                </h3>
-
-                <p class="feature-description">
-                    Creative blends and tropical favorites to complement every moment.
-                </p>
-
-                <img
-                    src="{{ asset('images/dining/signature-cocktails.jpg') }}"
-                    alt="Signature Cocktails"
-                >
-
-            </div>
-
-
-            {{-- 3. SEAFOOD --}}
-            <div class="dining-feature">
-
-                <div class="feature-icon">
-                    <x-icon name="fish" :size="34" />
-                </div>
-
-                <h3>
-                    FRESH SEAFOOD
-                </h3>
-
-                <p class="feature-description">
-                    Daily catch and freshest seafood, prepared to perfection.
-                </p>
-
-                <img
-                    src="{{ asset('images/dining/fresh-seafood.jpg') }}"
-                    alt="Fresh Seafood"
-                >
-
-            </div>
-
-
-            {{-- 4. SUNSET --}}
-            <div class="dining-feature">
-
-                <div class="feature-icon">
-                    <x-icon name="sunset" :size="34" />
-                </div>
-
-                <h3>
-                    SUNSET DINNERS
-                </h3>
-
-                <p class="feature-description">
-                    Unforgettable sunsets paired with exquisite dining experiences.
-                </p>
-
-                <img
-                    src="{{ asset('images/dining/sunset-dinners.jpg') }}"
-                    alt="Sunset Dinner"
-                >
-
-            </div>
-
-
-            {{-- 5. BREAKFAST --}}
-            <div class="dining-feature">
-
-                <div class="feature-icon">
-                    <x-icon name="coffee" :size="34" />
-                </div>
-
-                <h3>
-                    BREAKFAST
-                </h3>
-
-                <p class="feature-description">
-                    Wholesome and delicious start to your day, every day.
-                </p>
-
-                <img
-                    src="{{ asset('images/dining/breakfast.jpg') }}"
-                    alt="Breakfast"
-                >
-
-            </div>
-
+            @endforeach
         </section>
 
-
-        {{-- =========================================
-             BOTTOM INFORMATION
-        ========================================== --}}
+        {{-- Bottom information --}}
         <section class="dining-bottom">
-
-            <div class="bottom-info">
-
-                <div class="bottom-icon">
-                    <x-icon name="cutlery" :size="46" />
+            @if($left = $info->get(0))
+                <div class="bottom-info">
+                    @if(filled($left->icon))
+                        <div class="bottom-icon"><x-icon :name="$left->icon" :size="46" /></div>
+                    @endif
+                    <div>
+                        <h3>{{ $left->title }}</h3>
+                        <p>{{ $left->description }}</p>
+                    </div>
                 </div>
-
-                <div>
-                    <h3>
-                        EXCEPTIONAL CUISINE
-                    </h3>
-
-                    <p>
-                        A culinary journey that celebrates local flavors
-                        and global inspiration.
-                    </p>
-                </div>
-
-            </div>
-
+            @endif
 
             <div class="dining-buttons">
-
-                <a href="#" class="menu-button">
-                    EXPLORE FOOD MENU
-                </a>
-
-                <a href="#" class="menu-button">
-                    EXPLORE DRINKS MENU
-                </a>
-
+                @foreach($menus as $menu)
+                    @if(filled($menu->button_text))
+                        <a href="{{ $href($menu->button_url ?: '#') }}" class="menu-button">{{ $menu->button_text }}</a>
+                    @endif
+                @endforeach
             </div>
 
-
-            <div class="bottom-info">
-
-                <div class="bottom-icon">
-                    <x-icon name="wine" :size="46" />
+            @if($right = $info->get(1))
+                <div class="bottom-info">
+                    @if(filled($right->icon))
+                        <div class="bottom-icon"><x-icon :name="$right->icon" :size="46" /></div>
+                    @endif
+                    <div>
+                        <h3>{{ $right->title }}</h3>
+                        <p>{{ $right->description }}</p>
+                    </div>
                 </div>
-
-                <div>
-                    <h3>
-                        PERFECT PAIRINGS
-                    </h3>
-
-                    <p>
-                        From fine wines to handcrafted cocktails,
-                        find your perfect match.
-                    </p>
-                </div>
-
-            </div>
-
+            @endif
         </section>
 
     </main>

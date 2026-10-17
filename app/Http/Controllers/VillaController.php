@@ -25,12 +25,45 @@ class VillaController extends Controller
         $villas = $contents
             ->get('villas', collect());
 
+        $villaPhotos = $this->photos($contents, $villas);
+
         return view('villa', compact(
             'contents',
             'site',
             'villasHeader',
-            'villas'
+            'villas',
+            'villaPhotos'
         ));
+    }
+
+    /**
+     * The photos of each villa card, keyed by the villa's slug. The admin list
+     * (Villas > "Villa card: Photos") wins; without it the card photo comes first,
+     * followed by the villa's gallery photos.
+     *
+     * @return array<string, array<int, string>>
+     */
+    protected function photos($contents, $villas): array
+    {
+        $own = $contents->get('villas_photos', collect())->groupBy(fn ($row) => Str::slug((string) $row->title));
+        $exists = fn (?string $path): bool => filled($path) && file_exists(public_path($path));
+        $photos = [];
+
+        foreach ($villas as $villa) {
+            $slug = Str::slug($villa->title);
+
+            $list = $own->has($slug)
+                ? $own->get($slug)->pluck('image')->all()
+                : array_merge([$villa->image, config("villas.{$slug}.hero")], (array) config("villas.{$slug}.gallery", []));
+
+            $photos[$slug] = array_values(array_unique(array_filter($list, $exists)));
+
+            if ($photos[$slug] === [] && filled($villa->image)) {
+                $photos[$slug] = [$villa->image];
+            }
+        }
+
+        return $photos;
     }
 
     public function show(string $slug)

@@ -22,7 +22,7 @@
     <main class="cv-page">
         <section class="cv-section">
             <span class="cv-eyebrow">{{ $page['header']['eyebrow'] }}</span>
-            <div class="cv-rule"><i></i><span>✿</span><i></i></div>
+            <x-rule :ornament="$page['header']['ornament']" />
             <h1 class="cv-title">{!! nl2br(e($page['header']['title'])) !!}</h1>
             <p class="cv-lead">{{ $page['header']['text'] }}</p>
 
@@ -31,7 +31,7 @@
                     <article class="cv-card">
                         <img src="{{ $img($offer['image']) }}" alt="{{ $offer['title'] }}" loading="lazy">
                         @if($offer['icon'])
-                            <div class="cv-ico" aria-hidden="true">{{ $offer['icon'] }}</div>
+                            <div class="cv-ico" aria-hidden="true"><x-glyph :value="$offer['icon']" :em="1.2" /></div>
                         @endif
                         <h3>{{ $offer['title'] }}</h3>
                         <p>{{ $offer['text'] }}</p>

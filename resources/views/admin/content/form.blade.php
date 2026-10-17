@@ -99,12 +99,12 @@
                     </div>
 
                     <div>
-                        <input type="file" id="image" name="image" accept="image/*" data-image-input class="peer sr-only">
+                        <input type="file" id="image" name="image" accept="image/*,.svg" data-image-input class="peer sr-only">
                         <label for="image" class="btn-secondary cursor-pointer peer-focus-visible:ring-4 peer-focus-visible:ring-gold-400/40">
                             {{ $item->image ? 'Replace photo' : 'Choose photo' }}
                         </label>
                         <p data-image-name class="mt-3 text-sm text-forest-800" aria-live="polite"></p>
-                        <p class="field-hint">JPG, PNG or WebP, up to 5 MB. A new photo replaces the current one.</p>
+                        <p class="field-hint">JPG, PNG, WebP or SVG, up to 5 MB. A new photo replaces the current one.</p>
                     </div>
                 </div>
             </section>
@@ -178,13 +178,28 @@
                     </div>
                     @endif
 
-                    @if ($show('icon'))
+                    @if (true) {{-- Every content entry can have its own admin-managed icon or SVG. --}}
+                    @php
+                        $iconIsImage = (bool) preg_match('/\.(png|jpe?g|webp|gif|svg)$/i', (string) old('icon', $item->icon));
+                    @endphp
                     <div>
                         <label for="icon" class="field-label">{{ $label('icon', 'Icon') }}</label>
-                        <input type="text" id="icon" name="icon" value="{{ old('icon', $item->icon) }}" placeholder="e.g. an emoji or icon class" class="field-input">
-                        @if ($hint('icon'))
-                            <p class="field-hint">{{ $hint('icon') }}</p>
+
+                        @if ($iconIsImage)
+                            <div class="mb-3 flex items-center gap-3">
+                                <span class="flex h-14 w-14 items-center justify-center rounded-lg border border-sand-300 bg-sand-100">
+                                    <img src="{{ asset(old('icon', $item->icon)) }}" alt="Current icon image" class="h-10 w-10 object-contain">
+                                </span>
+                                <span class="text-sm text-ink-soft">Current icon image</span>
+                            </div>
                         @endif
+
+                        <input type="file" id="icon_image" name="icon_image" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" class="field-input">
+                        <p class="field-hint">Upload an icon image (PNG, static SVG, JPG or WebP, up to 2 MB). A square image with a transparent background looks best. It replaces the current icon.</p>
+
+                        <label for="icon" class="field-label mt-4">Or type an emoji / icon name</label>
+                        <input type="text" id="icon" name="icon" value="{{ old('icon', $item->icon) }}" placeholder="e.g. 🌿 or lotus" class="field-input">
+                        <p class="field-hint">{{ $hint('icon') ?? 'An emoji (🌿) or an icon name (lotus, leaf, island). Upload a file above to replace the icon; clear this box to remove it (when no new file is selected).' }}</p>
                     </div>
                     @endif
                 </div>

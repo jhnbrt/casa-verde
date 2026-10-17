@@ -43,6 +43,7 @@ class EventController extends Controller
             'features' => [
                 'title' => $contents->get('events_features_header', collect())->first()?->title
                     ?: $defaults['features']['title'],
+                'icon' => $contents->get('events_features_header', collect())->first()?->icon,
                 'items' => $featureItems->isNotEmpty()
                     ? $featureItems->map(fn (HomeContent $row): array => $this->fromRow($row, []))->all()
                     : $defaults['features']['items'],

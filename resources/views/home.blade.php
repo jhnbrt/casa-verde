@@ -35,6 +35,11 @@
 
     $hero = $contents->get('hero', collect())->first();
 
+    $hl = fn (int $n) => \App\Models\HomeContent::pageItem($contents, 'home_labels', $n);
+    // A symbol / icon image set on a section's own entry wins over the shared "Home page: symbols and wording" entries.
+    $pick = fn ($row, int $n) => filled($row?->icon) ? $row->icon : $hl($n)?->icon;
+    $isImagePath = fn (?string $v): bool => (bool) preg_match('/\.(png|jpe?g|webp|gif|svg)$/i', trim((string) $v));
+
     $villasHeader = $contents
         ->get('villas_header', collect())
         ->first();
@@ -163,7 +168,7 @@ $contactFooter = $contents
                 class="primary-button"
             >
 
-                <span>✧</span>
+                <span><x-glyph :value="$pick($hero, 4)" :em="1.1" /></span>
 
                 {{ $hero->button_text }}
 
@@ -175,9 +180,9 @@ $contactFooter = $contents
                 class="secondary-button"
             >
 
-                <span>✧</span>
+                <span><x-glyph :value="$hl(1)?->icon" :em="1.1" /></span>
 
-                EXPLORE THE RESORT
+                {{ $hl(1)?->title }}
 
             </a>
 
@@ -195,7 +200,7 @@ $contactFooter = $contents
 
             <button class="play-button">
 
-                ▶
+                <x-glyph :value="$hl(5)?->icon" :em="1" />
 
             </button>
 
@@ -224,7 +229,8 @@ $contactFooter = $contents
                         5 => 'images/icons/spa.png',
                         6 => 'images/icons/dining.png',
                     ];
-                    $featureIcon = $featureIcons[$loop->iteration] ?? null;
+                    // An icon uploaded in the admin (Home > Hero strip) wins over the built-in picture.
+                    $featureIcon = \App\Models\HomeContent::customIconImage($feature->icon) ?? ($featureIcons[$loop->iteration] ?? null);
                 @endphp
 
                 <div class="feature-icon">
@@ -237,7 +243,7 @@ $contactFooter = $contents
                             loading="lazy"
                         >
                     @else
-                        {{ $feature->icon }}
+                        <x-glyph :value="$feature->icon" :em="1.6" />
                     @endif
 
                 </div>
@@ -299,6 +305,8 @@ $contactFooter = $contents
 
             @php
                 $villaSlug   = \Illuminate\Support\Str::slug($villa->title);
+                $homeVillaImage = $contents->get('home_villa_images', collect())
+                    ->first(fn ($item) => \Illuminate\Support\Str::slug($item->title) === $villaSlug);
                 $villaDetail = config("villas.{$villaSlug}", []);
                 $villaUsd    = $villaDetail['usd'] ?? null;
                 $cardIcons   = $villaDetail['card_icons'] ?? [];
@@ -319,7 +327,7 @@ $contactFooter = $contents
             <div class="villa-card">
 
                 <img
-                    src="{{ asset($villa->image) }}"
+                    src="{{ asset($homeVillaImage?->image ?: $villa->image) }}"
                     alt="{{ $villa->title }}"
                     class="villa-image"
                 >
@@ -329,7 +337,7 @@ $contactFooter = $contents
                     <h3>
                         <img
                             class="villa-icon"
-                            src="{{ asset('images/icons/ico-lotus.png') }}"
+                            src="{{ asset(\App\Models\HomeContent::customIconImage(\App\Models\HomeContent::siteIcon('villa')) ?? 'images/icons/ico-lotus.png') }}"
                             alt=""
                             width="38"
                             height="38"
@@ -355,7 +363,14 @@ $contactFooter = $contents
                         <ul class="villa-features">
                             @foreach($villaFeatures as $i => $feature)
                                 <li>
-                                    @php $iconFile = 'images/icons/ico-' . ($cardIcons[$i] ?? 'lotus') . '.png'; @endphp
+                                    @php
+                                        // Same admin entries as the Villas page (Villa card: Feature icons); an uploaded image replaces the built-in icon.
+                                        $customCardIcon = \App\Models\HomeContent::customIconImage(
+                                            $contents->get('villas_feature_icons', collect())
+                                                ->first(fn ($row) => \Illuminate\Support\Str::slug($row->title ?? '') === $villaSlug && (int) $row->sort_order === $i + 1)?->icon
+                                        );
+                                        $iconFile = $customCardIcon ?? 'images/icons/ico-' . ($cardIcons[$i] ?? 'lotus') . '.png';
+                                    @endphp
                                     @if(file_exists(public_path($iconFile)))
                                         <img class="villa-feature-icon" src="{{ asset($iconFile) }}" alt="" width="30" height="30">
                                     @else
@@ -414,7 +429,7 @@ $contactFooter = $contents
 
                 <div class="experience-symbol">
 
-                    ✧
+                    <x-glyph :value="$experiencesHeader->icon ?: ($hl(6)?->icon ?? 'images/icons/ico-lotus.png')" :em="1.2" />
 
                 </div>
 
@@ -565,7 +580,7 @@ $contactFooter = $contents
                     class="wellness-button"
                 >
 
-                    <span>✧</span>
+                    <span aria-hidden="true"><img src="{{ asset('images/logo-badge.png') }}" alt="" class="cv-spa-logo"></span>
 
                     {{ $wellnessIntro->button_text }}
 
@@ -616,6 +631,9 @@ $contactFooter = $contents
 
                 <div class="wellness-card-icon" aria-hidden="true">
 
+                    @if($isImagePath($item->icon))
+                        <x-icon :name="$item->icon" :size="48" />
+                    @else
                     @switch((($loop->iteration - 1) % 3) + 1)
 
                         @case(1)
@@ -653,9 +671,10 @@ $contactFooter = $contents
                             @break
 
                         @default
-                            {{ $item->icon }}
+                            <x-glyph :value="$item->icon" :em="1.6" />
 
                     @endswitch
+                    @endif
 
                 </div>
 
@@ -714,6 +733,9 @@ $contactFooter = $contents
 
                 <span></span>
 
+                @if(filled($pick($wellnessQuote, 10)))
+                    <x-icon :name="$pick($wellnessQuote, 10)" :size="64" class="wellness-quote-lotus" style="object-fit:contain" />
+                @else
                 <svg class="wellness-quote-lotus" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M32 8c-7 9-7 24 0 34 7-10 7-25 0-34z"/>
                     <path d="M32 42C21 40 14 31 13 21c9 2 16 9 19 21z"/>
@@ -721,6 +743,7 @@ $contactFooter = $contents
                     <path d="M32 42c-12 3-22-1-28-9 9-3 21 0 28 9z"/>
                     <path d="M32 42c12 3 22-1 28-9-9-3-21 0-28 9z"/>
                 </svg>
+                @endif
 
                 <span></span>
 
@@ -805,7 +828,7 @@ $contactFooter = $contents
 
  <div class="dining-decoration">
         <span></span>
-        <b>♧</b>
+        <b><x-glyph :value="$pick($diningIntro, 8)" :em="1.2" /></b>
         <span></span>
     </div>
 
@@ -904,9 +927,7 @@ $contactFooter = $contents
             class="long-stay-booking"
         >
 
-            <span class="long-stay-booking-icon">
-                ◈
-            </span>
+            <span class="long-stay-booking-icon" aria-hidden="true"><img src="{{ asset('images/logo-badge.png') }}" alt="" class="cv-booking-logo"></span>
 
             {{ $longStayBooking->button_text }}
 
@@ -1013,7 +1034,7 @@ $contactFooter = $contents
                     {{-- ICON --}}
 
                     <div class="long-stay-feature-icon">
-                        {{ $feature->icon }}
+                        <x-glyph :value="$feature->icon" :em="1.6" />
                     </div>
 
 
@@ -1058,7 +1079,7 @@ $contactFooter = $contents
         @else
 
             <h2>
-                Designed for the way you want to live.
+                {{ $hl(3)?->title }}
             </h2>
 
         @endif
@@ -1082,7 +1103,7 @@ $contactFooter = $contents
 
                     <div class="long-stay-option-icon">
 
-                        {{ $option->icon }}
+                        <x-glyph :value="$option->icon" :em="1.6" />
 
                     </div>
 
@@ -1222,7 +1243,7 @@ $contactFooter = $contents
                             <div class="about-value">
 
                                 <div class="about-value-icon">
-                                    {{ $value->icon }}
+                                    <x-glyph :value="$value->icon" :em="1.6" />
                                 </div>
 
                                 <div class="about-value-title">
@@ -1267,7 +1288,7 @@ $contactFooter = $contents
                         <div class="about-principle">
 
                             <div class="about-principle-icon">
-                                {{ $principle->icon }}
+                                <x-glyph :value="$principle->icon" :em="1.6" />
                             </div>
 
                             <div class="about-principle-title">
@@ -1365,7 +1386,7 @@ $contactFooter = $contents
         <div class="contact-information">
 
             <h3>
-                GET IN TOUCH
+                {{ $hl(2)?->title }}
             </h3>
 
 
@@ -1514,7 +1535,7 @@ $contactFooter = $contents
                     {{-- MAP MARKER --}}
 
                     <div class="contact-map-marker">
-                        <x-icon name="pin" :size="18" />
+                        <x-icon :name="\App\Models\HomeContent::siteIcon('pin')" :size="18" />
                     </div>
 
                 </div>

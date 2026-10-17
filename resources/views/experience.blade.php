@@ -173,459 +173,98 @@
 @include('layouts.header')
 
 
+    @php
+        $pc = fn (string $section) => \App\Models\HomeContent::pageRows($contents, $section);
+        $img = fn (?string $path, string $fallback = 'images/main.jpg') => asset($path && file_exists(public_path($path)) ? $path : $fallback);
+        $href = fn (?string $url) => \Illuminate\Support\Str::startsWith($url ?? '', ['http', '#', 'mailto:', 'tel:']) ? $url : url($url ?: '/#contact');
+        $lines = fn (?string $text) => array_pad(explode("\n", str_replace("\r", '', trim((string) $text)), 2), 2, '');
+        $hero = $pc('experiences_page_hero')->first();
+        $signatureHeading = $pc('experiences_page_signature_header')->first();
+        $moreHeading = $pc('experiences_page_more_header')->first();
+        $cta = $pc('experiences_page_cta')->first();
+    @endphp
+
 <main class="experience-page">
 
-
-<!-- =========================================================
-     HERO
-========================================================= -->
-
-<section class="experience-hero">
-
-    <div class="hero-introduction">
-
-        <p class="hero-label">
-            EXPERIENCES
-        </p>
-
-        <h1>
-            Moments that make<br>
-            your stay unforgettable.
-        </h1>
-
-        <p class="hero-description">
-            Every day at Casa Verde invites you to slow down,
-            explore and connect with the island
-        </p>
-
-    </div>
-
-
-    <div class="hero-image">
-
-        <img
-            src="{{ asset('images/experiences/hero.jpg') }}"
-            alt="Sunset experience"
-        >
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     SIGNATURE EXPERIENCES
-========================================================= -->
-
-<section class="experiences-area">
-
-    <div class="section-heading">
-
-        <span></span>
-
-        <h2>
-            SIGNATURE EXPERIENCES
-        </h2>
-
-        <span></span>
-
-    </div>
-
-
-    <div class="signature-grid">
-
-
-        <!-- CLIFFSIDE JACUZZI -->
-
-        <article class="signature-card">
-
-            <div class="signature-image">
-
-                <img
-                    src="{{ asset('images/experiences/cliffside-jacuzzi.jpg') }}"
-                    alt="Cliffside Jacuzzi"
-                >
-
-            </div>
-
-            <div class="signature-title">
-                Cliffside Jacuzzi
-            </div>
-
-        </article>
-
-
-
-        <!-- HIDDEN CAVE -->
-
-        <article class="signature-card">
-
-            <div class="signature-image">
-
-                <img
-                    src="{{ asset('images/experiences/hidden-cave.jpg') }}"
-                    alt="Hidden Cave"
-                >
-
-            </div>
-
-            <div class="signature-title">
-                Hidden Cave
-            </div>
-
-        </article>
-
-
-
-        <!-- INFINITY POOL -->
-
-        <article class="signature-card">
-
-            <div class="signature-image">
-
-                <img
-                    src="{{ asset('images/experiences/infinity-pool.jpg') }}"
-                    alt="Infinity Pool"
-                >
-
-            </div>
-
-            <div class="signature-title">
-                Infinity Pool
-            </div>
-
-        </article>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     MORE EXPERIENCES
-========================================================= -->
-
-<section class="experiences-area more-experiences">
-
-    <div class="section-heading">
-
-        <span></span>
-
-        <h2>
-            MORE EXPERIENCES
-        </h2>
-
-        <span></span>
-
-    </div>
-
-
-    <div class="more-grid">
-
-
-        <!-- PADEL -->
-
-        <article class="more-card">
-
-            <div class="more-image">
-
-                <img
-                    src="{{ asset('images/experiences/padel.jpg') }}"
-                    alt="Padel and Pickleball"
-                >
-
-            </div>
-
-            <div class="more-content">
-
-                <h3>
-                    Padel & Pickleball
-                </h3>
-
-                <p>
-                    Play with a sea view.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- BILLIARDS -->
-
-        <article class="more-card">
-
-            <div class="more-image">
-
-                <img
-                    src="{{ asset('images/experiences/billiards.jpg') }}"
-                    alt="Billiards Lounge"
-                >
-
-            </div>
-
-            <div class="more-content">
-
-                <h3>
-                    Billiards Lounge
-                </h3>
-
-                <p>
-                    Relax and unwind.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- ISLAND HOPPING -->
-
-        <article class="more-card">
-
-            <div class="more-image">
-
-                <img
-                    src="{{ asset('images/experiences/island-hopping.jpg') }}"
-                    alt="Island Hopping"
-                >
-
-            </div>
-
-            <div class="more-content">
-
-                <h3>
-                    Island Hopping
-                </h3>
-
-                <p>
-                    Discover nearby islands.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- SNORKELING -->
-
-        <article class="more-card">
-
-            <div class="more-image">
-
-                <img
-                    src="{{ asset('images/experiences/snorkeling.jpg') }}"
-                    alt="Snorkeling"
-                >
-
-            </div>
-
-            <div class="more-content">
-
-                <h3>
-                    Snorkeling
-                </h3>
-
-                <p>
-                    Explore vibrant reefs.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- SUNSET RITUALS -->
-
-        <article class="more-card">
-
-            <div class="more-image">
-
-                <img
-                    src="{{ asset('images/experiences/sunset-rituals.jpg') }}"
-                    alt="Sunset Rituals"
-                >
-
-            </div>
-
-            <div class="more-content">
-
-                <h3>
-                    Sunset Rituals
-                </h3>
-
-                <p>
-                    End the day mindfully.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- FITNESS -->
-
-        <article class="more-card">
-
-            <div class="more-image">
-
-                <img
-                    src="{{ asset('images/experiences/open-air-fitness.jpg') }}"
-                    alt="Open-Air Fitness"
-                >
-
-            </div>
-
-            <div class="more-content">
-
-                <h3>
-                    Open-Air Fitness
-                </h3>
-
-                <p>
-                    Move with nature.
-                </p>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- YOGA -->
-
-        <article class="more-card">
-
-            <div class="more-image">
-
-                <img
-                    src="{{ asset('images/experiences/yoga.jpg') }}"
-                    alt="Yoga Sessions"
-                >
-
-            </div>
-
-            <div class="more-content">
-
-                <h3>
-                    Yoga Sessions
-                </h3>
-
-                <p>
-                    Balance body and mind.
-                </p>
-
-            </div>
-
-        </article>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     BOTTOM CONCIERGE BAR
-========================================================= -->
-
-<section class="concierge-bar">
-
-
-    <!-- CONCIERGE PLANNING -->
-
-    <div class="concierge-item">
-
-        <div class="concierge-icon">
-            <x-icon name="cloche" :size="46" />
+    {{-- Hero --}}
+    <section class="experience-hero">
+        <div class="hero-introduction">
+            <p class="hero-label">{{ $hero?->subtitle }}</p>
+            <h1>{!! nl2br(e($hero?->title)) !!}</h1>
+            <p class="hero-description">{{ $hero?->description }}</p>
         </div>
 
-        <div>
+        <div class="hero-image">
+            <img src="{{ $img($hero?->image, 'images/exp1.jpg') }}" alt="{{ trim(strtok((string) $hero?->title, "\n")) }}">
+        </div>
+    </section>
 
-            <h3>
-                Concierge Planning
-            </h3>
-
-            <p>
-                Personalized experiences<br>
-                crafted just for you.
-            </p>
-
+    {{-- Signature experiences --}}
+    <section class="experiences-area">
+        <div class="section-heading">
+            <span></span>
+            <h2>{{ $signatureHeading?->title }}</h2>
+            <span></span>
         </div>
 
-    </div>
+        <div class="signature-grid">
+            @foreach($pc('experiences_page_signature') as $card)
+                <article class="signature-card">
+                    <div class="signature-image">
+                        <img src="{{ $img($card->image, 'images/exp2.jpg') }}" alt="{{ $card->title }}">
+                    </div>
+                    <div class="signature-title">{{ $card->title }}</div>
+                </article>
+            @endforeach
+        </div>
+    </section>
 
-
-
-    <!-- WHATSAPP -->
-
-    <div class="concierge-item">
-
-        <div class="concierge-icon whatsapp">
-            <x-icon name="whatsapp" :size="46" />
+    {{-- More experiences --}}
+    <section class="experiences-area more-experiences">
+        <div class="section-heading">
+            <span></span>
+            <h2>{{ $moreHeading?->title }}</h2>
+            <span></span>
         </div>
 
-        <div>
-
-            <h3>
-                WhatsApp Concierge
-            </h3>
-
-            <p>
-                Chat with us anytime for instant<br>
-                assistance.
-            </p>
-
+        <div class="more-grid">
+            @foreach($pc('experiences_page_more') as $card)
+                <article class="more-card">
+                    <div class="more-image">
+                        <img src="{{ $img($card->image, 'images/exp3.jpg') }}" alt="{{ $card->title }}">
+                    </div>
+                    <div class="more-content">
+                        <h3>{{ $card->title }}</h3>
+                        <p>{{ $card->description }}</p>
+                    </div>
+                </article>
+            @endforeach
         </div>
+    </section>
 
-    </div>
+    {{-- Bottom concierge bar --}}
+    <section class="concierge-bar">
+        @foreach($pc('experiences_page_concierge') as $note)
+            <div class="concierge-item">
+                @if(filled($note->icon))
+                    <div class="concierge-icon {{ str_contains((string) $note->icon, 'whatsapp') ? 'whatsapp' : '' }}">
+                        <x-icon :name="$note->icon" :size="46" />
+                    </div>
+                @endif
+                <div>
+                    <h3>{{ $note->title }}</h3>
+                    <p>{!! nl2br(e($note->description)) !!}</p>
+                </div>
+            </div>
+        @endforeach
 
-
-
-    <!-- RESERVATION -->
-
-    <div class="concierge-item">
-
-        <div class="concierge-icon">
-            <x-icon name="calendar" :size="46" />
-        </div>
-
-        <div>
-
-            <h3>
-                Activities by Reservation
-            </h3>
-
-            <p>
-                Thoughtfully planned for a seamless<br>
-                experience.
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- BUTTON -->
-
-    <a href="{{ url('/') }}#contact" class="plan-button">
-
-        <span class="plan-logo"><img src="{{ asset($site->image ?? 'images/logo.png') }}" alt="" width="34" height="34"></span>
-
-        PLAN YOUR EXPERIENCES
-
-    </a>
-
-</section>
-
+        @if($cta && filled($cta->button_text))
+            <a href="{{ $href($cta->button_url) }}" class="plan-button">
+                <span class="plan-logo"><img src="{{ asset(\App\Models\HomeContent::siteLogo()) }}" alt="" width="34" height="34"></span>
+                {{ $cta->button_text }}
+            </a>
+        @endif
+    </section>
 
 </main>
 

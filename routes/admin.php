@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -20,6 +21,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('content', ContentController::class)
             ->except(['show'])
             ->parameters(['content' => 'content']);
+
+        // Reviews written by guests on the website: show, hide or delete them.
+        Route::resource('reviews', AdminReviewController::class)
+            ->only(['index', 'update', 'destroy']);
     });
 
 });

@@ -15,7 +15,7 @@
     {{-- Sidebar (desktop) --}}
     <aside class="hidden bg-forest-900 text-sand-100 md:sticky md:top-0 md:flex md:h-screen md:w-64 md:shrink-0 md:flex-col lg:w-72">
         <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-6 pb-6 pt-7">
-            <img src="{{ asset('images/logo.png') }}" alt="" class="h-11 w-11">
+            <img src="{{ asset(\App\Models\HomeContent::siteLogo()) }}" alt="" class="h-11 w-11">
             <span>
                 <span class="block font-display text-2xl font-semibold leading-none text-white">Casa Verde</span>
                 <span class="mt-1 block text-sm text-gold-400">Site manager</span>
@@ -51,7 +51,7 @@
             <details class="group">
                 <summary class="flex h-14 cursor-pointer list-none items-center justify-between px-4 [&::-webkit-details-marker]:hidden">
                     <span class="flex items-center gap-2.5">
-                        <img src="{{ asset('images/logo.png') }}" alt="" class="h-8 w-8">
+                        <img src="{{ asset(\App\Models\HomeContent::siteLogo()) }}" alt="" class="h-8 w-8">
                         <span class="font-display text-xl font-semibold text-white">Casa Verde</span>
                     </span>
                     <span class="flex items-center gap-2 text-sm">

@@ -35,4 +35,17 @@
             @endforeach
         </ul>
     </details>
+
+    @php($onReviews = request()->routeIs('admin.reviews.*'))
+    @php($waitingReviews = \App\Models\Review::waitingForApproval())
+
+    <a href="{{ route('admin.reviews.index') }}"
+       @if ($onReviews) aria-current="page" @endif
+       class="flex items-center gap-3 rounded-lg border-l-2 px-3 py-2 text-[0.9375rem] transition-colors {{ $onReviews ? 'border-gold-400 bg-white/10 text-white' : 'border-transparent text-sand-200 hover:bg-white/5 hover:text-white' }}">
+        <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5a.56.56 0 011.04 0l2.13 5.11a.56.56 0 00.47.35l5.52.44c.5.04.7.67.32.99l-4.2 3.6a.56.56 0 00-.18.56l1.28 5.39a.56.56 0 01-.84.61l-4.73-2.89a.56.56 0 00-.58 0l-4.73 2.89a.56.56 0 01-.84-.61l1.28-5.39a.56.56 0 00-.18-.56l-4.2-3.6a.56.56 0 01.32-.99l5.52-.44a.56.56 0 00.47-.35L11.48 3.5z"/></svg>
+        <span class="flex-1">Guest reviews</span>
+        @if ($waitingReviews > 0)
+            <span class="rounded-full bg-gold-400 px-2 py-0.5 text-xs font-semibold text-forest-900">{{ $waitingReviews }}</span>
+        @endif
+    </a>
 </nav>

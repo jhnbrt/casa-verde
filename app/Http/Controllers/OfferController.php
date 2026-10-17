@@ -42,6 +42,7 @@ class OfferController extends Controller
                 'eyebrow' => $header?->subtitle ?: $defaults['header']['eyebrow'],
                 'title' => $header?->title ?: $defaults['header']['title'],
                 'text' => $header?->description ?: $defaults['header']['text'],
+                'ornament' => $header?->icon,
             ],
             'items' => $items,
             'note' => $contents->get('offers_note', collect())->first()?->description ?: $defaults['note'],

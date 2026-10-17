@@ -31,6 +31,161 @@ class HomeContent extends Model
     ];
 
     /**
+     * Entries of a page section: what is saved in the admin, or else the starting
+     * content from config/pagecontent.php (as unsaved entries, so views read both
+     * the same way).
+     *
+     * @param  Collection<string, Collection<int, static>>  $contents  active rows grouped by section
+     * @return Collection<int, static>
+     */
+    public static function pageRows(Collection $contents, string $section): Collection
+    {
+        $rows = $contents->get($section, collect());
+
+        if ($rows->isNotEmpty()) {
+            return $rows->values();
+        }
+
+        return collect(config("pagecontent.{$section}", []))
+            ->map(fn (array $attributes) => new static($attributes + ['active' => true]))
+            ->values();
+    }
+
+    /**
+     * First entry of a page section (see pageRows()).
+     *
+     * @param  Collection<string, Collection<int, static>>  $contents
+     */
+    public static function pageRow(Collection $contents, string $section): ?static
+    {
+        return static::pageRows($contents, $section)->first();
+    }
+
+    /**
+     * Short labels kept one per entry, keyed by position (1, 2, 3...).
+     *
+     * @param  Collection<string, Collection<int, static>>  $contents
+     * @return array<int, string>
+     */
+    public static function pageLabels(Collection $contents, string $section): array
+    {
+        return static::pageRows($contents, $section)
+            ->values()
+            ->mapWithKeys(fn (self $row, int $index) => [(int) ($row->sort_order ?: $index + 1) => (string) $row->title])
+            ->all();
+    }
+
+    /**
+     * One entry of a page section by its position (sort_order), falling back to the
+     * starting content from config/pagecontent.php when it is not in the admin yet.
+     *
+     * @param  Collection<string, Collection<int, static>>  $contents
+     */
+    public static function pageItem(Collection $contents, string $section, int $position): ?static
+    {
+        $row = $contents->get($section, collect())->firstWhere('sort_order', $position);
+
+        if ($row) {
+            return $row;
+        }
+
+        $default = config("pagecontent.{$section}.".($position - 1));
+
+        return $default ? new static($default + ['active' => true]) : null;
+    }
+
+    /**
+     * The resort logo: the picture set on the Site-wide entry in the admin, or the
+     * built-in logo when none is set or the file is missing. Used by the header, the
+     * round badge inside every button, the footer and the admin screens.
+     */
+    public static function siteLogo(): string
+    {
+        static $logo = null;
+
+        if ($logo !== null) {
+            return $logo;
+        }
+
+        try {
+            $path = trim((string) static::where('section', 'site')->where('active', true)->orderBy('sort_order')->value('image'));
+        } catch (\Throwable) {
+            $path = '';
+        }
+
+        return $logo = ($path !== '' && file_exists(public_path($path))) ? $path : 'images/logo.png';
+    }
+
+    /**
+     * An icon the admin has replaced with an uploaded image, as opposed to a built-in
+     * placeholder or an icon name. Returns null while the original design should show.
+     */
+    public static function customIconImage(?string $value): ?string
+    {
+        $value = trim((string) $value);
+
+        if ($value === ''
+            || ! preg_match('/\.(png|jpe?g|webp|gif|svg)$/i', $value)
+            || str_starts_with($value, 'images/icons/placeholders/')
+            || ! file_exists(public_path($value))) {
+            return null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * A shared site icon (see the "Site icons" section in the admin): an uploaded
+     * image path, an emoji, or an icon name.
+     */
+    public static function siteIcon(string $key): string
+    {
+        static $rows = null;
+
+        $position = ['arrow' => 1, 'leaf' => 2, 'pin' => 3, 'lotus' => 4, 'villa' => 5][$key] ?? 0;
+
+        if ($rows === null) {
+            try {
+                $rows = static::where('section', 'site_icons')->where('active', true)->pluck('icon', 'sort_order')->all();
+            } catch (\Throwable) {
+                $rows = [];
+            }
+        }
+
+        return trim((string) ($rows[$position] ?? config('pagecontent.site_icons.'.($position - 1).'.icon', $key)));
+    }
+
+    /**
+     * The site-wide "line design": style, colour and default ornament of the
+     * divider lines. Edited in the admin under Site-wide > Line design.
+     *
+     * @return array{ornament: string, style: string, color: ?string}
+     */
+    public static function divider(): array
+    {
+        static $design = null;
+
+        if ($design !== null) {
+            return $design;
+        }
+
+        try {
+            $row = static::where('section', 'site_divider')->where('active', true)->orderBy('sort_order')->first();
+        } catch (\Throwable) {
+            $row = null;
+        }
+
+        $style = strtolower(trim((string) $row?->subtitle));
+        $color = trim((string) $row?->title);
+
+        return $design = [
+            'ornament' => trim((string) $row?->icon) !== '' ? trim((string) $row->icon) : 'lotus',
+            'style' => in_array($style, ['solid', 'dashed', 'dotted', 'double', 'fade'], true) ? $style : 'solid',
+            'color' => preg_match('/^#[0-9a-f]{3,8}$/i', $color) ? $color : null,
+        ];
+    }
+
+    /**
      * Human-friendly name for a section slug: "long_stay_options" => "Long stay options".
      */
     public static function sectionLabel(string $section): string
@@ -67,11 +222,65 @@ class HomeContent extends Model
     }
 
     /**
+     * Load the starting content of the Dining, Experiences, Wellness, Villas, Long stay,
+     * Home symbols, site icons and villa highlight entries into the admin the first time
+     * it is opened, so they can be edited without running any command. Existing entries
+     * are never overwritten, and nothing happens once the content is there.
+     */
+    public static function ensurePageDefaults(): void
+    {
+        static $checked = false;
+
+        if ($checked) {
+            return;
+        }
+
+        $checked = true;
+
+        try {
+            // The Reviews page content loads on its own, independent of the checks below.
+            if (! static::where('section', 'reviews_icons')->exists()) {
+                app(\Database\Seeders\ReviewContentSeeder::class)->run();
+            }
+
+            // The redesigned Long Stay page adds entries (box items, side photos); load them once.
+            if (! static::where('section', 'long_stay_gallery')->exists()) {
+                app(\Database\Seeders\LongStayContentSeeder::class)->run();
+            }
+
+            // Villa card photo galleries: load the starting photos once.
+            if (! static::where('section', 'villas_photos')->exists()) {
+                app(\Database\Seeders\VillaPhotosSeeder::class)->run();
+            }
+
+            if (static::where('section', 'dining_page_hero')->exists()
+                && static::where('section', 'site_icons')->exists()
+                && static::where('section', 'long_stay_hero')->exists()) {
+                return;
+            }
+
+            app(\Database\Seeders\LongStayContentSeeder::class)->run();
+            app(\Database\Seeders\PageContentDefaultsSeeder::class)->run();
+
+            // Icon names (lotus, rings...) become editable placeholder images.
+            foreach (glob(public_path('images/icons/placeholders/*.svg')) ?: [] as $file) {
+                $name = pathinfo($file, PATHINFO_FILENAME);
+
+                static::where('icon', $name)->update(['icon' => 'images/icons/placeholders/'.$name.'.svg']);
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+    }
+
+    /**
      * Every admin group that has entries, keyed by group key, with the counts,
      * sections and cover photo the dashboard and content list need.
      */
     public static function pageGroups(): Collection
     {
+        static::ensurePageDefaults();
+
         $labels = collect(config('admin.content_groups', []))
             ->map(fn (array $group) => $group['label'])
             ->put('other', 'Other');

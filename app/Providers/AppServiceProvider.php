@@ -85,7 +85,7 @@ class AppServiceProvider extends ServiceProvider
             'brand' => [
                 'title' => $brand?->title ?: $defaults['brand']['title'],
                 'subtitle' => $brand?->subtitle ?: $defaults['brand']['subtitle'],
-                'image' => $logo ?: 'images/logo.png',
+                'image' => HomeContent::siteLogo(),
             ],
             'explore' => $links('footer_explore', $defaults['explore']),
             'useful' => $links('footer_links', $defaults['useful']),

@@ -1,7 +1,9 @@
 @php
     $cvVer = fn ($p) => file_exists(public_path($p)) ? filemtime(public_path($p)) : 1;
+    // One logo, edited in the admin (Site-wide): header, button badges, footer.
+    $cvLogo = \App\Models\HomeContent::siteLogo();
 @endphp
-<style>:root { --cv-logo: url('{{ asset('images/logo.png') }}?v={{ $cvVer('images/logo.png') }}'); }</style>
+<style>:root { --cv-logo: url('{{ asset($cvLogo) }}?v={{ $cvVer($cvLogo) }}'); }</style>
 
 @php
     $routeFor = [
@@ -10,6 +12,7 @@
         'wellness'    => 'wellness.index',
         'dining'      => 'dining.index',
         'long stay'   => 'longstay.index',
+        'reviews'     => 'reviews.index',
     ];
 @endphp
 
@@ -18,7 +21,7 @@
     <a href="{{ url('/') }}" class="logo-area" aria-label="Casa Verde Cliff Resort & Spa – home">
 
         @if($site)
-            <img src="{{ asset($site->image) }}?v={{ $cvVer($site->image) }}" alt="" width="42" height="42">
+            <img src="{{ asset($cvLogo) }}?v={{ $cvVer($cvLogo) }}" alt="" width="42" height="42">
 
             <span class="logo-text">
                 <span>{{ $site->title }}</span>
@@ -70,14 +73,14 @@
 
         {{-- Shown inside the mobile menu only --}}
         <a href="{{ url('/') }}#contact" class="book-button nav-book-mobile">
-            <span class="book-icon" aria-hidden="true"></span>
+            <span class="book-icon" aria-hidden="true"><img src="{{ asset('images/logo-badge.png') }}" alt="" class="cv-booking-logo"></span>
             Book your stay
         </a>
 
     </nav>
 
     <a href="{{ url('/') }}#contact" class="book-button nav-book-desktop">
-        <span class="book-icon" aria-hidden="true"></span>
+        <span class="book-icon" aria-hidden="true"><img src="{{ asset('images/logo-badge.png') }}" alt="" class="cv-booking-logo"></span>
         Book your stay
     </a>
 

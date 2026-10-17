@@ -36,6 +36,7 @@ return [
         ['title' => 'Gallery', 'url' => '/gallery'],
         ['title' => 'Special Offers', 'url' => '/special-offers'],
         ['title' => 'Events', 'url' => '/events'],
+        ['title' => 'Reviews', 'url' => '/reviews'],
         ['title' => 'Contact', 'url' => '/#contact'],
     ],
 

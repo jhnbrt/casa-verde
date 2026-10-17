@@ -42,3 +42,69 @@
 .cvf-legal{display:inline-flex;align-items:center}
 .cvf-bottom{color:rgba(255,255,255,.9)}
 .cvf-cta{padding-top:clamp(56px,8vw,96px)}
+
+/* Footer layout repair — desktop, tablet and mobile */
+.cvf, .cvf * { box-sizing: border-box; }
+.cvf-grid {
+  width: 100%; max-width: 1400px; margin: 0 auto;
+  padding: 60px clamp(24px, 4vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(180px,1.15fr) minmax(125px,.75fr) minmax(145px,.85fr) minmax(240px,1.4fr) minmax(240px,1.35fr);
+  gap: 0;
+  align-items: stretch;
+}
+.cvf-grid > .cvf-col { min-width: 0; padding: 6px clamp(15px, 2vw, 30px); gap: 14px; }
+.cvf-grid > .cvf-col:first-child { padding-left: 0; }
+.cvf-grid > .cvf-col:last-child { padding-right: 0; }
+.cvf-col h3 { margin: 0 0 8px; line-height: 1.4; }
+.cvf-col a, .cvf-col p { overflow-wrap: anywhere; }
+.cvf-line { display: grid; grid-template-columns: 22px minmax(0,1fr); align-items: start; gap: 12px; width: 100%; line-height: 1.65; }
+.cvf-line .cv-icon, .cvf-line > svg { grid-column: 1; margin-top: 3px; }
+.cvf-line > a, .cvf-line > span { grid-column: 2; min-width: 0; }
+.cvf-social { flex-wrap: wrap; gap: 12px; }
+.cvf-social a { flex: 0 0 40px; }
+.cvf-sub { margin-top: 16px !important; }
+.cvf-news { width: 100%; max-width: 360px; }
+.cvf-news input { width: 0; min-width: 0; }
+.cvf-news button { flex: 0 0 56px; }
+.cvf-brand { text-align: center; }
+.cvf-bottom { align-items: center; line-height: 1.6; }
+@media (max-width: 1150px) {
+  .cvf-grid { grid-template-columns: 1.05fr .8fr .9fr; row-gap: 36px; }
+  .cvf-grid > .cvf-col { border-left: 0; padding: 6px 22px; }
+  .cvf-grid > .cvf-brand { grid-column: auto; }
+  .cvf-grid > .cvf-col:nth-child(4), .cvf-grid > .cvf-col:nth-child(5) { grid-column: span 1; }
+}
+@media (max-width: 760px) {
+  .cvf-grid { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 42px 24px; gap: 30px 18px; }
+  .cvf-grid > .cvf-brand { grid-column: 1 / -1; }
+  .cvf-grid > .cvf-col { padding: 0; }
+  .cvf-grid > .cvf-col:nth-child(4), .cvf-grid > .cvf-col:nth-child(5) { grid-column: 1 / -1; }
+  .cvf-bottom { justify-content: center; text-align: center; }
+}
+@media (max-width: 440px) {
+  .cvf-grid { grid-template-columns: minmax(0,1fr); gap: 28px; }
+  .cvf-grid > .cvf-col, .cvf-grid > .cvf-brand, .cvf-grid > .cvf-col:nth-child(4), .cvf-grid > .cvf-col:nth-child(5) { grid-column: 1; }
+  .cvf-bottom { padding: 20px; }
+}
+
+/* Social icons: clear, centered Instagram / Facebook / TikTok marks */
+.cvf-social{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+.cvf-social a{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;width:44px;height:44px;padding:0;border-radius:50%;background:#d9a366;color:#041e18;opacity:1;text-decoration:none;line-height:1}
+.cvf-social a .cv-icon,.cvf-social a svg{display:block;flex:none;width:23px;height:23px;max-width:none;max-height:none;opacity:1;visibility:visible;color:inherit;stroke:currentColor;stroke-width:2;fill:none}
+.cvf-social a svg path[fill="currentColor"],.cvf-social a svg circle[fill="currentColor"]{fill:currentColor;stroke:none}
+.cvf-social a:hover,.cvf-social a:focus-visible{background:#f0c48c;color:#041e18;transform:translateY(-3px)}
+.cvf-social a:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* High-contrast social marks (override theme SVG styling) */
+.cvf .cvf-social > a { background-color:#d9a366 !important; color:#05251c !important; }
+.cvf .cvf-social > a .cv-icon,
+.cvf .cvf-social > a svg { color:#05251c !important; stroke:#05251c !important; opacity:1 !important; filter:none !important; }
+.cvf .cvf-social > a svg [fill="currentColor"] { fill:#05251c !important; }
+.cvf .cvf-social > a:hover { background-color:#f0c48c !important; }
+
+/* Social icons: match the actual cvf-social markup (not footer-social). */
+.cvf .cvf-social a {background:#d9a366 !important;color:#06251d !important;opacity:1 !important;}
+.cvf .cvf-social a .cv-icon, .cvf .cvf-social a svg {color:#06251d !important;stroke:#06251d !important;opacity:1 !important;filter:none !important;width:22px;height:22px;}
+.cvf .cvf-social a svg [fill="currentColor"] {fill:#06251d !important;}
+.cvf .cvf-social a:hover {background:#f0bd79 !important;}

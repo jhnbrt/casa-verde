@@ -2,6 +2,10 @@
     $home = url('/');
     $href = fn (?string $url) => \Illuminate\Support\Str::startsWith($url ?? '', ['http', '#', 'mailto:', 'tel:']) ? $url : url($url ?: '/');
     $logo = $footer['brand']['image'] ?? 'images/logo.png';
+    // The built-in gold placeholder pictures (images/icons/placeholders/NAME.svg) cannot take the
+    // footer colours when shown as an image, so they appear as the matching drawing instead,
+    // coloured by the page. An icon the admin uploads is shown exactly as uploaded.
+    $footerIcon = fn (?string $value) => preg_match('#^images/icons/placeholders/([a-z0-9-]+)\.svg$#i', trim((string) $value), $match) ? $match[1] : $value;
 @endphp
 
 @if(($footer['cta'] ?? null) && ! ($hideCta ?? false))
@@ -55,7 +59,7 @@
             <h3>Stay Connected</h3>
             <div class="cvf-social">
                 @foreach($footer['social'] as $social)
-                    <a href="{{ $href($social['url']) }}" aria-label="{{ $social['title'] }}"><x-icon :name="$social['icon']" :size="20" /></a>
+                    <a href="{{ $href($social['url']) }}" aria-label="{{ $social['title'] }}"><x-icon :name="$footerIcon($social['icon'])" :size="22" style="color:#06251d !important;stroke:#06251d !important;opacity:1 !important" /></a>
                 @endforeach
             </div>
             @if($footer['newsletter']['title'])
@@ -66,7 +70,7 @@
             @endif
             <form class="cvf-news" action="#" onsubmit="return false">
                 <input type="email" placeholder="Your email address" aria-label="Email address">
-                <button type="submit" aria-label="Subscribe"><x-icon name="arrow" :size="22" /></button>
+                <button type="submit" aria-label="Subscribe"><x-icon :name="$footerIcon(\App\Models\HomeContent::siteIcon('arrow'))" :size="22" /></button>
             </form>
         </div>
 

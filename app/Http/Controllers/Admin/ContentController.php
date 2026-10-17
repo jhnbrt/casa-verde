@@ -84,6 +84,11 @@ class ContentController extends Controller
             $data['image'] = $this->storeImage($request);
         }
 
+        // An uploaded icon image is stored in the "icon" field as its path.
+        if ($request->hasFile('icon_image')) {
+            $data['icon'] = $this->storeImage($request, 'icon_image');
+        }
+
         $item = HomeContent::create($data);
 
         return redirect()
@@ -111,6 +116,11 @@ class ContentController extends Controller
 
         if ($request->hasFile('image')) {
             $data['image'] = $this->storeImage($request);
+        }
+
+        // An uploaded icon image is stored in the "icon" field as its path.
+        if ($request->hasFile('icon_image')) {
+            $data['icon'] = $this->storeImage($request, 'icon_image');
         }
 
         $content->update($data);
@@ -143,13 +153,14 @@ class ContentController extends Controller
             'title' => ['nullable', 'string', 'max:255'],
             'subtitle' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
-            'icon' => ['nullable', 'string', 'max:100'],
+            'icon' => ['nullable', 'string', 'max:255'],
             'price' => ['nullable', 'numeric'],
             'features' => ['nullable', 'string'],
             'button_text' => ['nullable', 'string', 'max:100'],
             'button_url' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['nullable', 'integer'],
-            'image' => ['nullable', 'image', 'max:5120'],
+            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg', 'max:5120'],
+            'icon_image' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,gif,svg', 'max:2048'],
         ]);
 
         // Titles and text can contain deliberate line breaks (the site renders
@@ -185,7 +196,7 @@ class ContentController extends Controller
             unset($data['sort_order']);
         }
 
-        unset($data['image']);
+        unset($data['image'], $data['icon_image']);
 
         return $data;
     }
@@ -194,11 +205,17 @@ class ContentController extends Controller
      * Move the uploaded image into public/images and return its stored path,
      * matching the "images/filename.ext" convention already used across the site.
      */
-    protected function storeImage(Request $request): string
+    protected function storeImage(Request $request, string $field = 'image'): string
     {
-        $file = $request->file('image');
+        $file = $request->file($field);
+        if (strtolower($file->getClientOriginalExtension()) === 'svg') {
+            $svg = file_get_contents($file->getRealPath());
+            if (! preg_match('/<svg\b/i', $svg) || preg_match('/<\s*(script|foreignObject|iframe|object|embed|use|image|animate|set)\b|\bon[a-z]+\s*=|(?:href|src)\s*=|javascript:|data:|<!DOCTYPE|<!ENTITY|<\?xml-stylesheet/i', $svg)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([$field => 'Upload a static SVG icon without scripts, links, external resources or animations.']);
+            }
+        }
         $name = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
-        $filename = now()->format('Ymd_His').'_'.$name.'.'.$file->getClientOriginalExtension();
+        $filename = now()->format('Ymd_His').'_'.Str::uuid().'_'.$name.'.'.$file->getClientOriginalExtension();
 
         $file->move(public_path('images'), $filename);
 

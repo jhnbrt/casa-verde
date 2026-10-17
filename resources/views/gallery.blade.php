@@ -55,7 +55,7 @@
 
             <section class="gal-section" id="section-{{ $key }}" data-panel="{{ $key }}" aria-labelledby="title-{{ $key }}">
                 <a href="#all" class="gal-back">
-                    <x-icon name="arrow" :size="16" class="gal-back-icon" /> Back to gallery
+                    <x-icon :name="\App\Models\HomeContent::siteIcon('arrow')" :size="16" class="gal-back-icon" /> Back to gallery
                 </a>
 
                 <div class="gal-frame">
@@ -82,13 +82,13 @@
                     </div>
                 </div>
 
-                <a href="#{{ $next }}" class="gal-next">Next: {{ $sections[$next]['title'] }} <x-icon name="arrow" :size="16" /></a>
+                <a href="#{{ $next }}" class="gal-next">Next: {{ $sections[$next]['title'] }} <x-icon :name="\App\Models\HomeContent::siteIcon('arrow')" :size="16" /></a>
             </section>
         @endforeach
 
         {{-- CTA BAR --}}
         <aside class="gal-cta" aria-label="Book your stay">
-            <x-icon name="leaf" :size="42" class="gal-cta-leaf" />
+            <x-icon :name="\App\Models\HomeContent::siteIcon('leaf')" :size="42" class="gal-cta-leaf" />
             <p>Ready to experience it in person?</p>
             <a href="{{ $book }}" class="cv-btn cv-btn--gold">Book your stay</a>
         </aside>

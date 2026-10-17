@@ -31,6 +31,16 @@
     $usd       = $detail['usd'] ?? null;
     $storyHead = $detail['story_title'] ?? [];
     $gallery   = $detail['gallery'] ?? [];
+    $labels    = \App\Models\HomeContent::pageLabels($contents, 'villas_detail_labels');
+    $L         = fn (int $n) => $labels[$n] ?? '';
+    // Highlight icons: entries saved in the admin for this villa, else config/villas.php.
+    $highlights = $contents->get('villas_highlights', collect())
+        ->filter(fn ($row) => \Illuminate\Support\Str::slug((string) $row->subtitle) === \Illuminate\Support\Str::slug($villa->title))
+        ->map(fn ($row) => ['icon' => $row->icon ?: 'lotus', 'label' => $row->title])
+        ->values()->all();
+    if ($highlights === []) {
+        $highlights = $detail['highlights'] ?? [];
+    }
 @endphp
 
 <main class="vs-page">
@@ -47,7 +57,7 @@
 
         <div class="vs-hero-info">
 
-            <p class="vs-eyebrow">Our Villas</p>
+            <p class="vs-eyebrow">{{ $L(1) }}</p>
 
             <h1>{{ $villa->title }}</h1>
 
@@ -59,12 +69,12 @@
 
             @if($villa->price)
                 <p class="vs-price">
-                    <span class="vs-from">From</span>
+                    <span class="vs-from">{{ $L(8) }}</span>
                     <strong>PHP {{ number_format($villa->price) }}</strong>
                     <span class="vs-per">
-                        per night
+                        {{ $L(9) }}
                         @if($usd)
-                            / approx. USD {{ $usd }}
+                            / {{ $L(10) }} {{ $usd }}
                         @endif
                     </span>
                 </p>
@@ -72,9 +82,9 @@
 
             <a href="{{ $bookUrl }}" class="vs-check">
                 <span class="vs-check-logo">
-                    <img src="{{ asset('images/logo.png') }}" alt="" width="28" height="28">
+                    <img src="{{ asset(\App\Models\HomeContent::siteLogo()) }}" alt="" width="28" height="28">
                 </span>
-                Check availability
+                {{ $L(2) }}
             </a>
 
         </div>
@@ -86,10 +96,10 @@
          HIGHLIGHT STRIP
     ====================================================== --}}
 
-    @if(!empty($detail['highlights']))
+    @if(!empty($highlights))
         <section class="vs-strip" aria-label="Villa highlights">
             <ul>
-                @foreach($detail['highlights'] as $item)
+                @foreach($highlights as $item)
                     <li>
                         <x-icon :name="$item['icon']" :size="40" />
                         <span>{{ $item['label'] }}</span>
@@ -103,7 +113,7 @@
             <ul>
                 @foreach($features as $feature)
                     <li>
-                        <x-icon name="lotus" :size="40" />
+                        <x-icon :name="\App\Models\HomeContent::siteIcon('lotus')" :size="40" />
                         <span>{{ $feature }}</span>
                     </li>
                 @endforeach
@@ -159,8 +169,8 @@
         <section class="vs-amenities">
 
             <div class="vs-amenities-title">
-                <h3>Villa Amenities</h3>
-                <x-icon name="lotus" :size="46" />
+                <h3>{{ $L(3) }}</h3>
+                <x-icon :name="($contents->get('villas_amenities_icon', collect())->first()?->icon ?: 'lotus')" :size="65" />
             </div>
 
             @foreach($detail['amenities'] as $column)
@@ -175,11 +185,11 @@
                 <div class="vs-layout">
 
                     <div class="vs-layout-areas">
-                        <h3>Villa Layout</h3>
+                        <h3>{{ $L(4) }}</h3>
                         <ul>
-                            <li>Interior Area: {{ $layout['interior'] }} sqm</li>
-                            <li>Terrace Area: {{ $layout['terrace'] }} sqm</li>
-                            <li>Total Area: {{ $layout['total'] }} sqm</li>
+                            <li>{{ $L(5) }}: {{ $layout['interior'] }} sqm</li>
+                            <li>{{ $L(6) }}: {{ $layout['terrace'] }} sqm</li>
+                            <li>{{ $L(7) }}: {{ $layout['total'] }} sqm</li>
                         </ul>
                     </div>
 

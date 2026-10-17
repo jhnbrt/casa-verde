@@ -36,7 +36,7 @@
                                 <img src="{{ asset($group['cover']) }}" alt="" loading="lazy" class="h-full w-full object-cover">
                             @else
                                 <div class="flex h-full items-center justify-center">
-                                    <img src="{{ asset('images/logo.png') }}" alt="" class="h-20 w-20">
+                                    <img src="{{ asset(\App\Models\HomeContent::siteLogo()) }}" alt="" class="h-20 w-20">
                                 </div>
                             @endif
                         </div>
