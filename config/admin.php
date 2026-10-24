@@ -36,6 +36,7 @@ return [
         'events' => ['label' => 'Events', 'match' => ['events'], 'url' => '/events'],
         'offers' => ['label' => 'Special offers', 'match' => ['offers'], 'url' => '/special-offers'],
         'reviews' => ['label' => 'Reviews', 'match' => ['reviews'], 'url' => '/reviews'],
+        'assistant' => ['label' => 'Chat & offers', 'match' => ['ai_chat', 'chat_faq', 'offer_popup'], 'url' => '/'],
         'gallery' => ['label' => 'Gallery', 'match' => ['gallery'], 'url' => '/gallery'],
         'about' => ['label' => 'About', 'match' => ['about'], 'url' => '/about'],
         'contact' => ['label' => 'Contact', 'match' => ['contact'], 'url' => '/contact'],
@@ -488,6 +489,68 @@ return [
             'fields' => ['title' => 'Label (for your reference)', 'icon' => 'Icon image'],
             'hints' => ['icon' => 'Upload a square PNG or SVG, ideally gold on a transparent background. Leave empty to keep the built-in icon.'],
             'hide' => ['subtitle', 'description', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+
+        // ---- AI chat assistant and counter-offer popup -------------------------
+        'ai_chat' => [
+            'title' => 'AI chat assistant',
+            'help' => 'The chat bubble at the bottom corner of every page. The AI brain is where you tell the assistant what to know and how to behave: write it like instructions to a new front-desk staff member (rooms, policies, check-in times, tone, what to say about bookings). The villa prices on the website and the active counter offer are added automatically. To switch the chat off, turn this entry off. It works best with a free Gemini key in the .env file on the server (GEMINI_API_KEY, see AI_PROVIDER). Without any key the chat still works from the quick answers (Quick answers section), at no cost.',
+            'fields' => [
+                'title' => 'Assistant name',
+                'subtitle' => 'Greeting shown when the chat opens',
+                'description' => 'AI brain (instructions and knowledge)',
+                'features' => 'Suggested questions (one per line)',
+                'button_text' => 'Chat button label',
+                'button_url' => 'Booking / contact link the assistant gives guests',
+                'price' => 'Messages allowed per visitor per day',
+                'icon' => 'Chat button icon (image)',
+                'image' => 'Assistant photo (optional)',
+            ],
+            'hints' => [
+                'description' => 'The assistant only knows what is written here, plus the prices on the Villas page. Anything missing, it will honestly say it does not know. Update it whenever rates, policies or services change. You can write in English, Bisaya or Tagalog.',
+                'features' => 'Up to 5 short questions guests can tap to start. Leave empty for none.',
+                'button_url' => 'For example /#contact. The assistant sends guests here to book or ask the team.',
+                'price' => 'Keeps the AI cost under control. Leave empty for 30.',
+                'icon' => 'Upload a small square PNG or SVG. Leave empty for the built-in speech bubble.',
+            ],
+            'rows' => ['description' => 20],
+            'hide' => [],
+        ],
+        'chat_faq' => [
+            'title' => 'Chat quick answers',
+            'help' => 'Free answers that need no AI. When a guest\'s message contains one of an entry\'s keywords, the chat replies with its answer straight away. With a free AI key set, these also act as a backup when the AI is busy, and the AI knows them too. One entry per question. Check the prices and facts, and add the questions your guests ask most.',
+            'fields' => ['title' => 'Question (for your reference)', 'description' => 'Answer shown to the guest', 'features' => 'Keywords (one per line)'],
+            'hints' => [
+                'features' => 'Words or short phrases a guest might type, in English, Bisaya or Tagalog, for example: price, how much, magkano. The entry with the most matching keywords answers.',
+                'description' => 'Write it as you would reply to a guest. You can include a page such as /villas or /#contact and it becomes a link.',
+            ],
+            'rows' => ['description' => 6],
+            'hide' => ['subtitle', 'image', 'icon', 'price', 'button_text', 'button_url'],
+        ],
+        'offer_popup' => [
+            'title' => 'Counter-offer popup',
+            'help' => 'The offer shown to a visitor who has spent some time on the website and is about to leave (see "Offer popup: rules" for the timing). Turn this entry on to start showing it; it is off until you do. To preview it, add ?preview-offer to the end of any page address, for example casa-verde.test/?preview-offer.',
+            'fields' => [
+                'subtitle' => 'Small label above the headline',
+                'title' => 'Headline',
+                'description' => 'Offer text',
+                'features' => 'Offer code (first line only)',
+                'image' => 'Photo (optional)',
+                'button_text' => 'Button text',
+                'button_url' => 'Button link',
+            ],
+            'hints' => [
+                'features' => 'The code visitors can copy and mention when they enquire, for example CASAVERDE10. Leave empty for no code. The assistant also mentions this offer in the chat.',
+                'button_url' => 'For example /#contact, or a full address starting with https://',
+            ],
+            'hide' => ['icon', 'price'],
+        ],
+        'offer_popup_rules' => [
+            'title' => 'Offer popup: rules',
+            'help' => 'Four settings, in this order: 1 minimum time on the website, 2 days before showing again to the same visitor, 3 show when the visitor comes back to the tab, 4 show when the mouse moves up to leave. Change the number in the Value box of each entry and keep the entries in this order.',
+            'fields' => ['title' => 'Setting (for your reference)', 'price' => 'Value'],
+            'hints' => ['price' => 'A number. For the two yes/no settings use 1 for yes and 0 for no.'],
+            'hide' => ['subtitle', 'description', 'image', 'icon', 'features', 'button_text', 'button_url'],
         ],
 
         // ---- Special offers -------------------------------------------------

@@ -28,6 +28,8 @@ export default defineConfig({
                 'resources/js/gallery.js',
                 'resources/js/reviews.js',
                 'resources/js/villa-photos.js',
+                'resources/css/widgets.css',
+                'resources/js/widgets.js',
             ],
             refresh: true,
         }),

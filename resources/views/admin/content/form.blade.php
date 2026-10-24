@@ -70,7 +70,7 @@
                     @if ($show('description'))
                     <div>
                         <label for="description" class="field-label">{{ $label('description', 'Description') }}</label>
-                        <textarea id="description" name="description" rows="5" class="field-input">{{ old('description', $item->description) }}</textarea>
+                        <textarea id="description" name="description" rows="{{ $meta['rows']['description'] ?? 5 }}" class="field-input">{{ old('description', $item->description) }}</textarea>
                     </div>
                     @endif
 

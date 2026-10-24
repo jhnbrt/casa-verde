@@ -245,6 +245,11 @@ class HomeContent extends Model
                 app(\Database\Seeders\ReviewContentSeeder::class)->run();
             }
 
+            // The AI chat assistant, quick answers and counter-offer popup settings (Chat & offers); load them once.
+            if (! static::where('section', 'ai_chat')->exists() || ! static::where('section', 'chat_faq')->exists()) {
+                app(\Database\Seeders\AssistantContentSeeder::class)->run();
+            }
+
             // The redesigned Long Stay page adds entries (box items, side photos); load them once.
             if (! static::where('section', 'long_stay_gallery')->exists()) {
                 app(\Database\Seeders\LongStayContentSeeder::class)->run();

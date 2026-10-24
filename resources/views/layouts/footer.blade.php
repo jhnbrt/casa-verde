@@ -86,3 +86,7 @@
         <span>&copy; {{ date('Y') }} {{ $footer['bottom'] }}</span>
     </div>
 </footer>
+
+@unless(! empty($hideWidgets))
+    @include('layouts.widgets')
+@endunless

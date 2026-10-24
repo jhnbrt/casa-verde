@@ -12,9 +12,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VillaController;
 use App\Http\Controllers\WellnessController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AiChatController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::post('/ai-chat', [AiChatController::class, 'reply'])
+    ->middleware('throttle:20,1')
+    ->name('ai-chat.reply');
 
 Route::get('/villas', [VillaController::class, 'index'])->name('villas.index');
 Route::get('/villas/{slug}', [VillaController::class, 'show'])->name('villas.show');
