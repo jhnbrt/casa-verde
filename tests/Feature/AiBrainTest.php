@@ -14,6 +14,9 @@ uses(RefreshDatabase::class);
 
 beforeEach(function () {
     $this->brainDir = sys_get_temp_dir().'/cv-brain-'.uniqid();
+
+    // The migrations copy the starting chat content into the database; start each test without it.
+    HomeContent::whereIn('section', ['ai_chat', 'chat_faq', 'offer_popup'])->delete();
     config([
         'aichat.storage_path' => $this->brainDir,
         'services.ai_provider' => 'gemini',

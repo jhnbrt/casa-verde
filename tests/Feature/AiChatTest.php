@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Http;
 uses(RefreshDatabase::class);
 
 // Keep the saved questions of these tests out of the real storage folder.
-beforeEach(fn () => config(['aichat.storage_path' => sys_get_temp_dir().'/cv-chat-'.uniqid()]));
+beforeEach(function () {
+    config(['aichat.storage_path' => sys_get_temp_dir().'/cv-chat-'.uniqid()]);
+
+    // The migrations copy the starting chat content into the database; start each test without it.
+    HomeContent::whereIn('section', ['ai_chat', 'chat_faq', 'offer_popup'])->delete();
+});
 
 function chatBrain(array $overrides = []): HomeContent
 {

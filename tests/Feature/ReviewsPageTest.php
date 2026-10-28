@@ -7,6 +7,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+// The migrations copy the built-in reviews content into the database, so start each test
+// with none of it saved in the admin.
+beforeEach(function () {
+    HomeContent::whereIn('section', [
+        'reviews_header', 'reviews_items', 'reviews_stats', 'reviews_icons',
+    ])->delete();
+});
+
 test('the reviews page shows the built-in content before anything is saved in the admin', function () {
     $this->get('/reviews')
         ->assertOk()
