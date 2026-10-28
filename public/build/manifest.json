@@ -1,0 +1,206 @@
+{
+  "resources/css/about.css": {
+    "file": "assets/about-CuKrXiAi.css",
+    "name": "about",
+    "names": [
+      "about.css"
+    ],
+    "src": "resources/css/about.css",
+    "isEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-BgAw_Uk9.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/contact.css": {
+    "file": "assets/contact-C9kcm5hu.css",
+    "name": "contact",
+    "names": [
+      "contact.css"
+    ],
+    "src": "resources/css/contact.css",
+    "isEntry": true
+  },
+  "resources/css/dining.css": {
+    "file": "assets/dining-DK6lVb1m.css",
+    "name": "dining",
+    "names": [
+      "dining.css"
+    ],
+    "src": "resources/css/dining.css",
+    "isEntry": true
+  },
+  "resources/css/events.css": {
+    "file": "assets/events-qZ3mI8h4.css",
+    "name": "events",
+    "names": [
+      "events.css"
+    ],
+    "src": "resources/css/events.css",
+    "isEntry": true
+  },
+  "resources/css/experience.css": {
+    "file": "assets/experience-BYD0O8ET.css",
+    "name": "experience",
+    "names": [
+      "experience.css"
+    ],
+    "src": "resources/css/experience.css",
+    "isEntry": true
+  },
+  "resources/css/footer.css": {
+    "file": "assets/footer-B_n6m__Y.css",
+    "name": "footer",
+    "names": [
+      "footer.css"
+    ],
+    "src": "resources/css/footer.css",
+    "isEntry": true
+  },
+  "resources/css/gallery.css": {
+    "file": "assets/gallery-DMPasJlT.css",
+    "name": "gallery",
+    "names": [
+      "gallery.css"
+    ],
+    "src": "resources/css/gallery.css",
+    "isEntry": true
+  },
+  "resources/css/header.css": {
+    "file": "assets/header-DYw4d_Ij.css",
+    "name": "header",
+    "names": [
+      "header.css"
+    ],
+    "src": "resources/css/header.css",
+    "isEntry": true
+  },
+  "resources/css/home-villas.css": {
+    "file": "assets/home-villas-CmWuDOUJ.css",
+    "name": "home-villas",
+    "names": [
+      "home-villas.css"
+    ],
+    "src": "resources/css/home-villas.css",
+    "isEntry": true
+  },
+  "resources/css/home.css": {
+    "file": "assets/home-BD2oQixk.css",
+    "name": "home",
+    "names": [
+      "home.css"
+    ],
+    "src": "resources/css/home.css",
+    "isEntry": true
+  },
+  "resources/css/longstay.css": {
+    "file": "assets/longstay-Cle-mRJ3.css",
+    "name": "longstay",
+    "names": [
+      "longstay.css"
+    ],
+    "src": "resources/css/longstay.css",
+    "isEntry": true
+  },
+  "resources/css/pages.css": {
+    "file": "assets/pages-gvTviqg8.css",
+    "name": "pages",
+    "names": [
+      "pages.css"
+    ],
+    "src": "resources/css/pages.css",
+    "isEntry": true
+  },
+  "resources/css/reviews.css": {
+    "file": "assets/reviews-DDjj_uLL.css",
+    "name": "reviews",
+    "names": [
+      "reviews.css"
+    ],
+    "src": "resources/css/reviews.css",
+    "isEntry": true
+  },
+  "resources/css/theme.css": {
+    "file": "assets/theme-QZgYhNJ0.css",
+    "name": "theme",
+    "names": [
+      "theme.css"
+    ],
+    "src": "resources/css/theme.css",
+    "isEntry": true
+  },
+  "resources/css/villa-show.css": {
+    "file": "assets/villa-show-DT6Olcvz.css",
+    "name": "villa-show",
+    "names": [
+      "villa-show.css"
+    ],
+    "src": "resources/css/villa-show.css",
+    "isEntry": true
+  },
+  "resources/css/villa.css": {
+    "file": "assets/villa-Dg8xOkB4.css",
+    "name": "villa",
+    "names": [
+      "villa.css"
+    ],
+    "src": "resources/css/villa.css",
+    "isEntry": true
+  },
+  "resources/css/wellness.css": {
+    "file": "assets/wellness-DS1AAE_C.css",
+    "name": "wellness",
+    "names": [
+      "wellness.css"
+    ],
+    "src": "resources/css/wellness.css",
+    "isEntry": true
+  },
+  "resources/css/widgets.css": {
+    "file": "assets/widgets-Blx2CU1_.css",
+    "name": "widgets",
+    "names": [
+      "widgets.css"
+    ],
+    "src": "resources/css/widgets.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-D9hm6KBQ.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-CBMBqyed.css"
+    ]
+  },
+  "resources/js/gallery.js": {
+    "file": "assets/gallery-DM1LUYym.js",
+    "name": "gallery",
+    "src": "resources/js/gallery.js",
+    "isEntry": true
+  },
+  "resources/js/reviews.js": {
+    "file": "assets/reviews-BiJtEPY3.js",
+    "name": "reviews",
+    "src": "resources/js/reviews.js",
+    "isEntry": true
+  },
+  "resources/js/villa-photos.js": {
+    "file": "assets/villa-photos-CtqQKMlW.js",
+    "name": "villa-photos",
+    "src": "resources/js/villa-photos.js",
+    "isEntry": true
+  },
+  "resources/js/widgets.js": {
+    "file": "assets/widgets-LEd-Rt8Z.js",
+    "name": "widgets",
+    "src": "resources/js/widgets.js",
+    "isEntry": true
+  }
+}
