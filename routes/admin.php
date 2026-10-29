@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AiBrainController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryPhotosController;
@@ -52,6 +53,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('connection/check', 'checkConnection')->name('connection.check')->middleware('throttle:10,1');
             Route::delete('connection', 'removeConnection')->name('connection.remove');
         });
+
+        // Booking requests sent from the website's Book page.
+        Route::get('bookings/export', [AdminBookingController::class, 'export'])->name('bookings.export');
+        Route::resource('bookings', AdminBookingController::class)
+            ->only(['index', 'update', 'destroy']);
 
         // Reviews written by guests on the website: show, hide or delete them.
         Route::post('reviews/sync-google', [AdminReviewController::class, 'syncGoogle'])

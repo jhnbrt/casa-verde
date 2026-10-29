@@ -40,7 +40,7 @@
     $vBottom = \App\Models\HomeContent::pageRows($contents, 'villas_page_bottom');
     $vBook = \App\Models\HomeContent::pageRow($contents, 'villas_page_book');
     $featureIconRows = \App\Models\HomeContent::pageRows($contents, 'villas_feature_icons');
-    $vHref = fn (?string $url) => \Illuminate\Support\Str::startsWith($url ?? '', ['http', '#', 'mailto:', 'tel:']) ? $url : url($url ?: '/#contact');
+    $vHref = fn (?string $url) => \Illuminate\Support\Str::startsWith($url ?? '', ['http', '#', 'mailto:', 'tel:']) ? $url : url($url ?: '/book');
 @endphp
 
 

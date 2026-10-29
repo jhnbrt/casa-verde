@@ -54,6 +54,19 @@
         <span class="flex-1">Gallery photos</span>
     </a>
 
+    @php($onBookings = request()->routeIs('admin.bookings.*'))
+    @php($pendingBookings = \App\Models\Booking::pendingCount())
+
+    <a href="{{ route('admin.bookings.index') }}"
+       @if ($onBookings) aria-current="page" @endif
+       class="flex items-center gap-3 rounded-lg border-l-2 px-3 py-2 text-[0.9375rem] transition-colors {{ $onBookings ? 'border-gold-400 bg-white/10 text-white' : 'border-transparent text-sand-200 hover:bg-white/5 hover:text-white' }}">
+        <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+        <span class="flex-1">Bookings</span>
+        @if ($pendingBookings > 0)
+            <span class="rounded-full bg-gold-400 px-2 py-0.5 text-xs font-semibold text-forest-900" title="Requests waiting for a reply">{{ $pendingBookings }}</span>
+        @endif
+    </a>
+
     @php($onReviews = request()->routeIs('admin.reviews.*'))
     @php($waitingReviews = \App\Models\Review::waitingForApproval())
 

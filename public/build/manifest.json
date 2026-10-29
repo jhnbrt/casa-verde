@@ -9,12 +9,21 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-_OJfqk6n.css",
+    "file": "assets/app-BUZ2VRPq.css",
     "name": "app",
     "names": [
       "app.css"
     ],
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/book.css": {
+    "file": "assets/book-DQ1kU4ih.css",
+    "name": "book",
+    "names": [
+      "book.css"
+    ],
+    "src": "resources/css/book.css",
     "isEntry": true
   },
   "resources/css/contact.css": {
@@ -187,6 +196,12 @@
     "css": [
       "assets/app-CBMBqyed.css"
     ]
+  },
+  "resources/js/book.js": {
+    "file": "assets/book-BU120Tuj.js",
+    "name": "book",
+    "src": "resources/js/book.js",
+    "isEntry": true
   },
   "resources/js/gallery.js": {
     "file": "assets/gallery-DM1LUYym.js",

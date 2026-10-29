@@ -28,7 +28,7 @@
 @include('layouts.header')
 
 @php
-    $bookUrl   = url('/') . '#contact';
+    $bookUrl   = route('booking.villa', \Illuminate\Support\Str::slug($villa->title));
     $layout    = $detail['layout'] ?? null;
     $usd       = $detail['usd'] ?? null;
     $storyHead = $detail['story_title'] ?? [];

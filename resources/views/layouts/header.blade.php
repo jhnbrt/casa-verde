@@ -74,14 +74,14 @@
         @endforeach
 
         {{-- Shown inside the mobile menu only --}}
-        <a href="{{ url('/') }}#contact" class="book-button nav-book-mobile">
+        <a href="{{ route('booking.index') }}" class="book-button nav-book-mobile">
             <span class="book-icon" aria-hidden="true"><img src="{{ asset('images/logo-badge.png') }}" alt="" class="cv-booking-logo"></span>
             Book your stay
         </a>
 
     </nav>
 
-    <a href="{{ url('/') }}#contact" class="book-button nav-book-desktop">
+    <a href="{{ route('booking.index') }}" class="book-button nav-book-desktop">
         <span class="book-icon" aria-hidden="true"><img src="{{ asset('images/logo-badge.png') }}" alt="" class="cv-booking-logo"></span>
         Book your stay
     </a>

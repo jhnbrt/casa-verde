@@ -394,4 +394,43 @@ to your comfort and care.',
     'villas_highlights' => [
     ],
 
+
+    // ---- Booking page (/book) -------------------------------------------------
+    // Wording, one entry per label, in this order (see the admin help text).
+    'booking_labels' => [
+        ['title' => 'Choose a villa'],
+        ['title' => 'Pick dates & guests'],
+        ['title' => 'We confirm by email'],
+        ['title' => 'Reserve this villa'],
+        ['title' => 'Hide booking form'],
+        ['title' => '/ night'],
+        ['title' => 'Non-refundable rate · taxes and fees as stated in the terms'],
+        ['title' => 'Promo dates:'],
+        ['title' => 'Dates'],
+        ['title' => 'Guests'],
+        ['title' => 'Your details'],
+        ['title' => 'Confirm booking request'],
+        ['title' => 'Pay nothing now. We confirm availability by email first.'],
+        ['title' => 'I agree to the Terms & Conditions'],
+        ['title' => 'Terms & Conditions'],
+        ['title' => 'Your stay'],
+        ['title' => 'Estimated total'],
+    ],
+
+    'booking_confirmation' => [
+        [
+            'subtitle' => 'Request received',
+            'title' => 'Thank you, :name',
+            'description' => 'Your booking request has been sent to our team. It is not a confirmed reservation yet. We will check availability and email you at :email.',
+        ],
+    ],
+
+    'booking_settings' => [
+        [
+            'title' => '',
+            'subtitle' => '30',
+            'price' => 10,
+            'description' => 'Online booking is paused right now. Please contact us and our team will gladly arrange your stay.',
+        ],
+    ],
 ];

@@ -13,6 +13,7 @@ use App\Http\Controllers\VillaController;
 use App\Http\Controllers\WellnessController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AiChatController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -23,6 +24,13 @@ Route::post('/ai-chat', [AiChatController::class, 'reply'])
 
 Route::get('/villas', [VillaController::class, 'index'])->name('villas.index');
 Route::get('/villas/{slug}', [VillaController::class, 'show'])->name('villas.show');
+Route::get('/book', [BookingController::class, 'index'])->name('booking.index');
+Route::get('/book/received', [BookingController::class, 'confirmed'])->name('booking.confirmed');
+Route::get('/book/{slug}', [BookingController::class, 'index'])->name('booking.villa');
+Route::post('/book/{slug}', [BookingController::class, 'store'])
+    ->middleware('throttle:6,10')
+    ->name('booking.store');
+
 Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
 Route::get('/wellness', [WellnessController::class, 'index'])->name('wellness.index');
 Route::get('/dining', [DiningController::class, 'index'])->name('dining.index');
