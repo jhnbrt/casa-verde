@@ -102,7 +102,7 @@ class ReviewController extends Controller
         $guestPhotos = array_values((array) config('reviews.guest_photos', []));
         $guestItems = $guestReviews->map(fn (Review $review): array => [
             'name' => $review->name,
-            'place' => (string) $review->place,
+            'place' => $review->isFromGoogle() ? 'Google review' : (string) $review->place,
             'quote' => $review->comment,
             'rating' => $review->rating,
             'image' => $guestPhotos !== [] ? $guestPhotos[$review->id % count($guestPhotos)] : null,

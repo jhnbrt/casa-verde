@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Casa Verde Cliff Resort &amp; Spa</title>
-    @vite(['resources/css/header.css', 'resources/css/pages.css', 'resources/css/about.css', 'resources/css/theme.css', 'resources/css/footer.css', 'resources/js/app.js'])
+    @vite(['resources/css/header.css', 'resources/css/pages.css', 'resources/css/about.css', 'resources/css/theme.css', 'resources/css/footer.css','resources/css/rule.css', 'resources/js/app.js'])
 </head>
 <body>
 @include('layouts.header')
@@ -15,7 +15,7 @@
         <div class="cv-about-hero-inner">
             <span class="cv-about-eyebrow">CASA VERDE CLIFF RESORT &amp; SPA</span>
             <h1>Rooted in Nature.<br><em>Inspired by Camotes.</em></h1>
-            <span class="cv-about-rule" aria-hidden="true"></span>
+            <x-rule />
             <p>Discover our story, our values, and our promise to preserve the island we call home.</p>
         </div>
     </section>

@@ -11,7 +11,7 @@
         'resources/css/pages.css',
         'resources/css/longstay.css',
         'resources/css/theme.css',
-        'resources/css/footer.css',
+        'resources/css/footer.css','resources/css/rule.css',
         'resources/js/app.js'
     ])
 </head>

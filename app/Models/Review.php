@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     protected $fillable = [
+        'source',
+        'external_id',
+        'reviewed_at',
         'name',
         'place',
         'rating',
@@ -23,6 +26,7 @@ class Review extends Model
         return [
             'rating' => 'integer',
             'is_published' => 'boolean',
+            'reviewed_at' => 'datetime',
         ];
     }
 
@@ -35,6 +39,11 @@ class Review extends Model
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('is_published', true);
+    }
+
+    public function isFromGoogle(): bool
+    {
+        return $this->source === 'google';
     }
 
     /**

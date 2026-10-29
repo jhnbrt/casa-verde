@@ -8,6 +8,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/css/header.css',
+                'resources/css/rule.css',
                 'resources/css/home.css',
                 'resources/css/home-villas.css',
                 'resources/css/villa.css',

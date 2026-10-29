@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AiBrainController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GalleryPhotosController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->except(['show'])
             ->parameters(['content' => 'content']);
 
+        // Media library: every photo, icon, symbol and logo, and which ones the site uses now.
+        Route::get('media', [MediaController::class, 'index'])->name('media.index');
+
+        // Gallery photos: see and change every photo on the Gallery page in one place.
+        Route::prefix('gallery')->name('gallery.')->controller(GalleryPhotosController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store');
+            Route::put('{content}', 'update')->name('update');
+            Route::post('{content}/move', 'move')->name('move');
+            Route::delete('{content}', 'destroy')->name('destroy');
+        });
+
         // AI Brain: teach the website assistant, manage what it knows, see what guests ask, test it.
         Route::prefix('ai-brain')->name('ai-brain.')->controller(AiBrainController::class)->group(function () {
             Route::get('/', 'index')->name('index');
@@ -40,6 +54,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // Reviews written by guests on the website: show, hide or delete them.
+        Route::post('reviews/sync-google', [AdminReviewController::class, 'syncGoogle'])
+            ->name('reviews.sync-google')->middleware('throttle:6,1');
         Route::resource('reviews', AdminReviewController::class)
             ->only(['index', 'update', 'destroy']);
     });

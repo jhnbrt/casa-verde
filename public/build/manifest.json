@@ -9,7 +9,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-BgAw_Uk9.css",
+    "file": "assets/app-_OJfqk6n.css",
     "name": "app",
     "names": [
       "app.css"
@@ -123,6 +123,15 @@
       "reviews.css"
     ],
     "src": "resources/css/reviews.css",
+    "isEntry": true
+  },
+  "resources/css/rule.css": {
+    "file": "assets/rule-SXBEp6Tz.css",
+    "name": "rule",
+    "names": [
+      "rule.css"
+    ],
+    "src": "resources/css/rule.css",
     "isEntry": true
   },
   "resources/css/theme.css": {

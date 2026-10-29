@@ -17,7 +17,7 @@
         'resources/css/header.css',
         'resources/css/villa-show.css',
         'resources/css/theme.css',
-        'resources/css/footer.css',
+        'resources/css/footer.css','resources/css/rule.css',
         'resources/js/app.js'
     ])
 
@@ -157,7 +157,7 @@
                             @endunless
                         @endforeach
                     </h2>
-                    <span class="vs-rule"></span>
+                    <x-rule class="vs-story-rule" />
                 @endif
 
                 @foreach($detail['story_text'] ?? [] as $paragraph)

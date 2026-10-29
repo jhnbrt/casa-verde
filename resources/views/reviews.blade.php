@@ -11,7 +11,7 @@
         'resources/css/pages.css',
         'resources/css/reviews.css',
         'resources/css/theme.css',
-        'resources/css/footer.css',
+        'resources/css/footer.css','resources/css/rule.css',
         'resources/js/reviews.js',
         'resources/js/app.js'
     ])
@@ -43,7 +43,7 @@
         {{-- Heading --}}
         <header class="rv-head">
             <span class="rv-eyebrow">{{ $page['header']['eyebrow'] }}</span>
-            <span class="rv-tick" aria-hidden="true"></span>
+            <x-rule />
             <h1>{{ $page['header']['title'] }}</h1>
             <p>{{ $page['header']['text'] }}</p>
         </header>
@@ -140,7 +140,7 @@
 
         {{-- Share your experience: guests rate their stay and it appears in the carousel above --}}
         <section class="rv-share" id="rv-share" aria-labelledby="rv-share-title">
-            <span class="rv-tick" aria-hidden="true"></span>
+            <x-rule />
             <h2 id="rv-share-title">{{ $page['header']['button_text'] ?: 'Share your experience' }}</h2>
             <p class="rv-share__lead">Stayed with us? Rate your visit and tell other travellers what it was like.</p>
 
@@ -148,7 +148,7 @@
                 <p class="rv-share__summary">
                     <svg class="rv-star" aria-hidden="true"><use href="#rv-star"/></svg>
                     <strong>{{ number_format($guestSummary['average'], 1) }} / 5</strong>
-                    from {{ $guestSummary['count'] }} {{ \Illuminate\Support\Str::plural('guest review', $guestSummary['count']) }} on this site
+                    from {{ $guestSummary['count'] }} {{ \Illuminate\Support\Str::plural('guest review', $guestSummary['count']) }}
                 </p>
             @endif
 

@@ -11,7 +11,7 @@
 @if(($footer['cta'] ?? null) && ! ($hideCta ?? false))
     <section class="cvf-cta">
         <h2>{{ $footer['cta']['title'] }}</h2>
-        <div class="cvf-rule"><i></i><img src="{{ asset($logo) }}" alt="" width="34" height="34"><i></i></div>
+        <x-rule />
         @if($footer['cta']['button_text'])
             <a href="{{ $href($footer['cta']['button_url']) }}" class="cvf-btn">{{ $footer['cta']['button_text'] }}</a>
         @endif

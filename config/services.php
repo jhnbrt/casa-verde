@@ -28,6 +28,25 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // Google reviews shown on the Reviews page (php artisan reviews:sync-google). Keys go in the .env file.
+    //   places           - Places API (New): needs an API key and the Place ID, but Google returns at most
+    //                      the 5 "most relevant" reviews.
+    //   business_profile - Business Profile API: returns EVERY review, needs the owner's Google login (OAuth)
+    //                      and Google's approval for the API.
+    // Run "php artisan reviews:find-google-place" with the API key to look up the Place ID.
+    'google_reviews' => [
+        'driver' => env('GOOGLE_REVIEWS_DRIVER', 'places'),
+        'api_key' => env('GOOGLE_PLACES_API_KEY'),
+        'place_id' => env('GOOGLE_PLACE_ID'),
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'refresh_token' => env('GOOGLE_REFRESH_TOKEN'),
+        'account_id' => env('GOOGLE_BUSINESS_ACCOUNT_ID'),
+        'location_id' => env('GOOGLE_BUSINESS_LOCATION_ID'),
+        'min_rating' => (int) env('GOOGLE_REVIEWS_MIN_RATING', 1),
+        'publish' => env('GOOGLE_REVIEWS_PUBLISH', true),
+    ],
+
     // AI chat assistant. Keys go in the .env file (never in the admin).
     // AI_PROVIDER = gemini | openai | anthropic. Leave it empty to use whichever key is present.
     // With no key the chat still works from the quick answers written in the admin.

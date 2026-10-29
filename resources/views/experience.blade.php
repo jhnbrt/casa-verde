@@ -18,7 +18,7 @@
         'resources/css/header.css',
         'resources/css/experience.css',
         'resources/css/theme.css',
-        'resources/css/footer.css',
+        'resources/css/footer.css','resources/css/rule.css',
         'resources/js/app.js'
     ])
 

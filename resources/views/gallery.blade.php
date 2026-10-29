@@ -11,7 +11,7 @@
         'resources/css/pages.css',
         'resources/css/gallery.css',
         'resources/css/theme.css',
-        'resources/css/footer.css',
+        'resources/css/footer.css','resources/css/rule.css',
         'resources/js/gallery.js',
         'resources/js/app.js'
     ])

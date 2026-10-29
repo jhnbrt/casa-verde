@@ -16,7 +16,13 @@
                 @endif
             </p>
         </div>
-        <a href="{{ route('reviews.index') }}#rv-share" target="_blank" rel="noopener" class="btn-secondary self-start whitespace-nowrap sm:self-auto">View page</a>
+        <div class="flex gap-2 self-start sm:self-auto">
+            <form action="{{ route('admin.reviews.sync-google') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn-secondary whitespace-nowrap">Sync Google reviews</button>
+            </form>
+            <a href="{{ route('reviews.index') }}#rv-share" target="_blank" rel="noopener" class="btn-secondary whitespace-nowrap">View page</a>
+        </div>
     </div>
 
     <p class="mt-6 text-sm text-ink-soft">
@@ -37,13 +43,16 @@
                         <div class="min-w-0 flex-1 basis-64">
                             <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                                 <span class="font-medium text-forest-900">{{ $review->name }}</span>
+                                @if ($review->isFromGoogle())
+                                    <span class="rounded-full bg-sand-200 px-2 py-0.5 text-xs text-ink-soft">Google</span>
+                                @endif
                                 @if ($review->place)
                                     <span class="text-sm text-ink-soft">{{ $review->place }}</span>
                                 @endif
                                 <span class="text-sm text-gold-600" role="img" aria-label="{{ $review->rating }} out of 5 stars">{{ str_repeat('★', $review->rating) }}<span class="text-sand-300">{{ str_repeat('★', 5 - $review->rating) }}</span></span>
                             </div>
                             <p class="mt-1 whitespace-pre-line break-words text-[0.9375rem] text-ink">{{ $review->comment }}</p>
-                            <p class="mt-1 text-xs text-ink-soft">{{ $review->created_at->format('M j, Y · g:i A') }}</p>
+                            <p class="mt-1 text-xs text-ink-soft">{{ ($review->reviewed_at ?? $review->created_at)->format('M j, Y · g:i A') }}</p>
                         </div>
 
                         <div class="flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end">

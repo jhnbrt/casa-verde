@@ -134,9 +134,16 @@ return [
             'fields' => ['title' => 'Photo label', 'image' => 'Interior photo'],
             'hide' => ['subtitle', 'description', 'icon', 'price', 'features', 'button_text', 'button_url'],
         ],
+        'home_villa_feature_icons' => [
+            'title' => 'Home page: Villa card feature icons',
+            'help' => 'Each entry controls one feature icon on the villa cards on the Home page. These are separate from the Villas page, so changing them here never changes the Villas page. Keep Title exactly as Standard Villa or Premium Villa, and Sort order as 1, 2 or 3 to match the feature line. Upload a PNG, JPG, WebP or SVG under Icon, or enter an icon name (bed, leaf, house, sunset, balcony, star).',
+            'fields' => ['title' => 'Villa name (Standard Villa or Premium Villa)', 'icon' => 'Feature icon / SVG / image'],
+            'hints' => ['title' => 'Must match the villa title.', 'sort_order' => '1 = first feature; 2 = second; 3 = third.'],
+            'hide' => ['subtitle', 'description', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
         'villas_feature_icons' => [
-            'title' => 'Villa card: Feature icons',
-            'help' => 'Each entry controls one feature icon on the Villas listing. Keep Title exactly as Standard Villa or Premium Villa, and Sort order as 1, 2 or 3 to match the feature line. Upload a PNG, JPG, WebP or SVG under Icon, or enter an icon name. The feature text is edited separately in the villa entry.',
+            'title' => 'Villas page: Villa card feature icons',
+            'help' => 'Each entry controls one feature icon on the Villas page. These are separate from the Home page, so changing them here never changes the Home page. Keep Title exactly as Standard Villa or Premium Villa, and Sort order as 1, 2 or 3 to match the feature line. Upload a PNG, JPG, WebP or SVG under Icon, or enter an icon name. The feature text is edited separately in the villa entry.',
             'fields' => ['title' => 'Villa name (Standard Villa or Premium Villa)', 'icon' => 'Feature icon / SVG / image'],
             'hints' => ['title' => 'Must match the villa title.', 'sort_order' => '1 = first feature; 2 = second; 3 = third.'],
             'hide' => ['subtitle', 'description', 'image', 'price', 'features', 'button_text', 'button_url'],
@@ -144,12 +151,12 @@ return [
 
         'experiences_header' => [
             'title' => 'Home page: Experiences heading',
-            'help' => 'Upload the decorative lotus or another image under Icon. This overrides the Experiences divider in Home page: symbols and wording. Clear Icon to use that divider again.',
+            'help' => 'The divider under this heading now follows the site-wide Line design (Site-wide > Line design), so the picture set here is no longer used.',
             'fields' => ['icon' => 'Experiences decoration image / symbol'],
         ],
         'dining_intro' => [
             'title' => 'Home page: Dining intro',
-            'help' => 'Upload an image or type a symbol under Icon to change the small ornament in the divider line under the Dining section. Clear Icon to use the shared symbol in Home page: symbols and wording.',
+            'help' => 'The divider under the Dining section now follows the site-wide Line design (Site-wide > Line design), so the ornament set here is no longer used.',
             'fields' => ['icon' => 'Dining divider ornament (image / symbol)'],
             'hints' => ['icon' => 'Upload an image (PNG or SVG), or type an emoji or symbol such as ♧ 🍽️.'],
         ],
@@ -326,12 +333,12 @@ return [
         // ---- Site-wide line design -------------------------------------------
         'site_divider' => [
             'title' => 'Line design',
-            'help' => 'The thin divider line with a small ornament in the middle, used under page labels across the site. Change it once here and every page follows.',
+            'help' => 'The one divider used everywhere on the site: a thin line with a small ornament in the middle. It appears under page headings, between Home sections and above the footer button. Change it once here and every page follows. For your own ornament, upload an image under Icon image (PNG or SVG with a transparent background).',
             'fields' => ['title' => 'Line colour', 'subtitle' => 'Line style', 'icon' => 'Ornament in the middle'],
             'hints' => [
                 'title' => 'A colour code such as #c9a06a. Leave empty for the default gold.',
                 'subtitle' => 'Type one of: solid, dashed, dotted, double, fade.',
-                'icon' => 'An emoji (🌿 ✿ ❖) or an icon name (lotus, leaf, island). Type none for a plain line.',
+                'icon' => 'Upload an image under Icon image (roughly square), or type an emoji (🌿 ✿ ❖) or an icon name (lotus, leaf, island). Type none for a plain line.',
             ],
             'hide' => ['description', 'image', 'price', 'features', 'button_text', 'button_url'],
         ],
@@ -372,9 +379,8 @@ return [
         'long_stay_intro' => [
             'title' => 'Introduction',
             'help' => 'The heading and paragraph above the three boxes.',
-            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro paragraph', 'icon' => 'Line ornament (middle of the divider)'],
-            'hints' => ['icon' => 'Optional. An emoji or icon name. Leave empty to use the site-wide Line design; type none for a plain line.'],
-            'hide' => ['image', 'price', 'features', 'button_text', 'button_url'],
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro paragraph'],
+            'hide' => ['icon', 'image', 'price', 'features', 'button_text', 'button_url'],
         ],
         'long_stay_panels' => [
             'title' => 'Information boxes',
@@ -417,9 +423,8 @@ return [
         'events_intro' => [
             'title' => 'Introduction',
             'help' => 'The heading and intro paragraph above the three event cards.',
-            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro paragraph', 'icon' => 'Line ornament (middle of the divider)'],
-            'hints' => ['icon' => 'Optional. An emoji (🌿) or icon name (lotus). Leave empty to use the site-wide Line design; type none for a plain line.'],
-            'hide' => ['image', 'price', 'features', 'button_text', 'button_url'],
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro paragraph'],
+            'hide' => ['icon', 'image', 'price', 'features', 'button_text', 'button_url'],
         ],
         'events_types' => [
             'title' => 'Event cards',
@@ -431,9 +436,8 @@ return [
         'events_features_header' => [
             'title' => 'Highlights heading',
             'help' => 'The heading of the dark "Everything, beautifully considered" strip.',
-            'fields' => ['title' => 'Heading', 'icon' => 'Line ornament (middle of the divider)'],
-            'hints' => ['icon' => 'Optional. An emoji (🌿) or icon name (lotus). Leave empty to use the site-wide Line design; type none for a plain line.'],
-            'hide' => ['subtitle', 'description', 'image', 'price', 'features', 'button_text', 'button_url'],
+            'fields' => ['title' => 'Heading'],
+            'hide' => ['icon', 'subtitle', 'description', 'image', 'price', 'features', 'button_text', 'button_url'],
         ],
         'events_features' => [
             'title' => 'Highlights',
@@ -445,9 +449,8 @@ return [
         'events_personal' => [
             'title' => '"Made personal" section',
             'help' => 'The photo and text block beside it, under the highlights strip.',
-            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Paragraph', 'image' => 'Photo', 'button_text' => 'Button text', 'button_url' => 'Button link', 'icon' => 'Line ornament (middle of the divider)'],
-            'hints' => ['icon' => 'Optional. An emoji (🌿) or icon name (lotus). Leave empty to use the site-wide Line design; type none for a plain line.'],
-            'hide' => ['price', 'features'],
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Paragraph', 'image' => 'Photo', 'button_text' => 'Button text', 'button_url' => 'Button link'],
+            'hide' => ['icon', 'price', 'features'],
         ],
         'events_cta' => [
             'title' => 'Closing banner',
@@ -557,9 +560,8 @@ return [
         'offers_header' => [
             'title' => 'Page heading',
             'help' => 'The heading and intro at the top of the Special Offers page.',
-            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro paragraph', 'icon' => 'Line ornament (middle of the divider)'],
-            'hints' => ['icon' => 'Optional. An emoji (🌿) or icon name (lotus). Leave empty to use the site-wide Line design; type none for a plain line.'],
-            'hide' => ['image', 'price', 'features', 'button_text', 'button_url'],
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro paragraph'],
+            'hide' => ['icon', 'image', 'price', 'features', 'button_text', 'button_url'],
         ],
         'offers' => [
             'title' => 'Offer cards',

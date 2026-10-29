@@ -18,7 +18,7 @@
         'resources/css/home.css',
         'resources/css/theme.css',
         'resources/css/home-villas.css',
-        'resources/css/footer.css',
+        'resources/css/footer.css','resources/css/rule.css',
         'resources/js/app.js'
     ])
 </head>
@@ -300,7 +300,7 @@ $contactFooter = $contents
 
             <h2>{{ $villasHeader->title }}</h2>
 
-            <span class="villas-rule" aria-hidden="true"></span>
+            <x-rule class="home-rule" />
 
             <p class="section-subtitle">{{ $villasHeader->description }}</p>
 
@@ -374,17 +374,19 @@ $contactFooter = $contents
                             @foreach($villaFeatures as $i => $feature)
                                 <li>
                                     @php
-                                        // Same admin entries as the Villas page (Villa card: Feature icons); an uploaded image replaces the built-in icon.
-                                        $customCardIcon = \App\Models\HomeContent::customIconImage(
-                                            $contents->get('villas_feature_icons', collect())
-                                                ->first(fn ($row) => \Illuminate\Support\Str::slug($row->title ?? '') === $villaSlug && (int) $row->sort_order === $i + 1)?->icon
-                                        );
-                                        $iconFile = $customCardIcon ?? 'images/icons/ico-' . ($cardIcons[$i] ?? 'lotus') . '.png';
+                                        // The Home page has its own icon entries (Home page: Villa card feature icons),
+                                        // separate from the Villas page. An uploaded image or an icon name replaces the built-in icon.
+                                        $iconValue = trim((string) $contents->get('home_villa_feature_icons', collect())
+                                            ->first(fn ($row) => \Illuminate\Support\Str::slug($row->title ?? '') === $villaSlug && (int) $row->sort_order === $i + 1)?->icon);
+                                        $customCardIcon = \App\Models\HomeContent::customIconImage($iconValue);
+                                        $iconName = ($customCardIcon || $iconValue === '') ? ($cardIcons[$i] ?? 'lotus') : $iconValue;
+                                        $iconFile = $customCardIcon
+                                            ?? (preg_match('/^[a-z0-9-]+$/', $iconName) ? 'images/icons/ico-' . $iconName . '.png' : null);
                                     @endphp
-                                    @if(file_exists(public_path($iconFile)))
+                                    @if($iconFile && file_exists(public_path($iconFile)))
                                         <img class="villa-feature-icon" src="{{ asset($iconFile) }}" alt="" width="30" height="30">
                                     @else
-                                        <x-icon :name="$cardIcons[$i] ?? 'lotus'" :size="30" />
+                                        <x-icon :name="$iconName" :size="30" />
                                     @endif
                                     <span>{{ $feature }}</span>
                                 </li>
@@ -405,7 +407,7 @@ $contactFooter = $contents
 
     </div>
 
-    <div class="section-divider"></div>
+    <x-rule class="home-rule home-rule--wide" />
 
 </section>
 
@@ -433,19 +435,7 @@ $contactFooter = $contents
             </p>
 
 
-            <div class="experience-decoration">
-
-                <span></span>
-
-                <div class="experience-symbol">
-
-                    <x-glyph :value="$experiencesHeader->icon ?: ($hl(6)?->icon ?? 'images/icons/ico-lotus.png')" :em="1.2" />
-
-                </div>
-
-                <span></span>
-
-            </div>
+            <x-rule class="home-rule" />
 
 
             <h2>
@@ -836,11 +826,7 @@ $contactFooter = $contents
 
     @endif
 
- <div class="dining-decoration">
-        <span></span>
-        <b><x-glyph :value="$pick($diningIntro, 8)" :em="1.2" /></b>
-        <span></span>
-    </div>
+ <x-rule class="home-rule" />
 
     <div class="dining-cards">
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Review;
+use App\Services\GoogleReviews;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -32,6 +33,22 @@ class ReviewController extends Controller
         return back()->with('status', $review->is_published
             ? 'The review is now shown on the Reviews page.'
             : 'The review is hidden from the Reviews page.');
+    }
+
+    /**
+     * "Sync Google reviews" button.
+     */
+    public function syncGoogle(GoogleReviews $google): RedirectResponse
+    {
+        try {
+            $result = $google->sync();
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->with('status', 'Google sync failed: '.$e->getMessage());
+        }
+
+        return back()->with('status', "Google sync done: {$result['saved']} review(s) saved.");
     }
 
     public function destroy(Review $review): RedirectResponse
