@@ -23,6 +23,8 @@
         $book = url('/') . '#contact';
         $chips = ['all' => 'All', 'resort' => 'Resort', 'villas' => 'Villas', 'dining' => 'Dining', 'wellness' => 'Wellness', 'experiences' => 'Experience', 'sunsets' => 'Sunsets'];
         $keys = array_keys($sections);
+        // The same logo the header uses (changed in the admin, Site-wide).
+        $galLogo = \App\Models\HomeContent::siteLogo();
     @endphp
 
     <main class="cv-page gal" id="gallery">
@@ -55,10 +57,20 @@
         @foreach($sections as $key => $section)
             @php $next = $keys[($loop->index + 1) % count($keys)]; @endphp
 
-            <section class="gal-section" id="section-{{ $key }}" data-panel="{{ $key }}" aria-labelledby="title-{{ $key }}">
-                <a href="#all" class="gal-back">
-                    <x-icon :name="\App\Models\HomeContent::siteIcon('arrow')" :size="16" class="gal-back-icon" /> Back to gallery
-                </a>
+            <section class="gal-section gal-section--{{ $key }}" id="section-{{ $key }}" data-panel="{{ $key }}" aria-labelledby="title-{{ $key }}">
+                <div class="gal-topbar">
+                    <a href="#all" class="gal-back">
+                        <x-icon :name="\App\Models\HomeContent::siteIcon('arrow')" :size="16" class="gal-back-icon" /> Back to gallery
+                    </a>
+
+                    @if($site)
+                        <a href="{{ url('/') }}" class="gal-brand" aria-label="{{ $site->title }} – home">
+                            <img src="{{ asset($galLogo) }}?v={{ file_exists(public_path($galLogo)) ? filemtime(public_path($galLogo)) : 1 }}" alt="" width="46" height="46">
+                            <span class="gal-brand-name">{{ $site->title }}</span>
+                            @if(filled($site->subtitle))<small class="gal-brand-sub">{{ $site->subtitle }}</small>@endif
+                        </a>
+                    @endif
+                </div>
 
                 <div class="gal-frame">
                     <header class="gal-frame-head">
@@ -75,7 +87,7 @@
 
                                 @isset($item['label'])
                                     <figcaption>
-                                        <span class="gal-badge"><x-icon :name="$item['icon']" :size="22" /></span>
+                                        <span class="gal-badge"><x-icon :name="$item['icon']" :size="74" /></span>
                                         {{ $item['label'] }}
                                     </figcaption>
                                 @endisset

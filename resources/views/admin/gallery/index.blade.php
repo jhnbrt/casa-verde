@@ -19,7 +19,7 @@
             return null;
         }
 
-        foreach ([$icon, "images/icons/placeholders/{$icon}.svg", "images/icons/{$icon}.png"] as $candidate) {
+        foreach ([$icon, "images/icons/gallery/{$icon}.svg", "images/icons/placeholders/{$icon}.svg", "images/icons/{$icon}.png"] as $candidate) {
             if ($src = $thumb($candidate)) {
                 return $src;
             }
@@ -95,7 +95,7 @@
     @foreach ($sections as $section)
         <section id="cat-{{ $section['key'] }}" class="mt-12 scroll-mt-24">
             <h2 class="text-xl font-semibold text-forest-900">{{ $section['title'] }} <span class="text-base font-normal text-ink-soft">· {{ $section['photos']->count() }} {{ \Illuminate\Support\Str::plural('photo', $section['photos']->count()) }}</span></h2>
-            <p class="mt-1 text-ink-soft">Shown on the Gallery page in this order. Photo 1 is the largest in the layout. Use the arrows to reorder.</p>
+            <p class="mt-1 text-ink-soft">Shown on the Gallery page in this order. Photo 1 is the largest in the layout. Use the arrows to reorder.@if ($section['labelled']) Photos with a label become cards with a round icon; a photo without a label becomes a wide banner under the cards. @endif</p>
 
             <ul role="list" class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                 @foreach ($section['photos'] as $photo)
@@ -136,6 +136,17 @@
                                         </span>
                                         <input type="file" name="icon_image" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" class="{{ $fileInput }}" aria-label="New label icon">
                                     </div>
+                                    @if ($builtInIcons)
+                                        <label class="mt-2 block">
+                                            <span class="text-xs text-ink-soft">Or choose a ready-made icon</span>
+                                            <select name="built_in_icon" class="field-input mt-1" aria-label="Ready-made icon">
+                                                <option value="">Keep the current icon</option>
+                                                @foreach ($builtInIcons as $name => $label)
+                                                    <option value="{{ $name }}">{{ $label }}</option>
+                                                @endforeach
+                                            </select>
+                                        </label>
+                                    @endif
                                 </div>
                             @endif
                             <button type="submit" class="btn-primary self-start">Save</button>
@@ -177,6 +188,18 @@
                                 <span class="field-label">Label under the photo <span class="font-normal text-ink-soft">(optional)</span></span>
                                 <input type="text" name="subtitle" maxlength="60" class="field-input">
                             </label>
+                            <div>
+                                <span class="field-label">Label icon <span class="font-normal text-ink-soft">(optional)</span></span>
+                                <input type="file" name="icon_image" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" class="{{ $fileInput }} mt-1" aria-label="Label icon">
+                                @if ($builtInIcons)
+                                    <select name="built_in_icon" class="field-input mt-2" aria-label="Ready-made icon">
+                                        <option value="">Or choose a ready-made icon</option>
+                                        @foreach ($builtInIcons as $name => $label)
+                                            <option value="{{ $name }}">{{ $label }}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
+                            </div>
                         @endif
                         <button type="submit" class="btn-secondary mt-auto self-start">Add photo</button>
                     </form>

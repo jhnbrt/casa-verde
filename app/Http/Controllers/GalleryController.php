@@ -94,10 +94,15 @@ class GalleryController extends Controller
         $overview = array_map(fn (array $tile): array => ['img' => $this->url($tile['img'])] + $tile, $overview);
 
         foreach ($sections as $key => $section) {
-            $sections[$key]['items'] = array_map(
-                fn (array $item): array => ['img' => $this->url($item['img'])] + $item,
-                $section['items']
-            );
+            $sections[$key]['items'] = array_map(function (array $item): array {
+                $item = ['img' => $this->url($item['img'])] + $item;
+
+                if (isset($item['label'])) {
+                    $item['icon'] = $this->iconPath($item['icon'] ?? null);
+                }
+
+                return $item;
+            }, $section['items']);
         }
 
         return [$overview, $sections];
@@ -195,6 +200,21 @@ class GalleryController extends Controller
         ];
 
         return [$overview, $sections];
+    }
+
+    /**
+     * A built-in icon name (cave, snorkel, padel, island...) becomes its picture in
+     * public/images/icons/gallery/; an uploaded picture path or an emoji is kept as it is.
+     */
+    private function iconPath(?string $icon): string
+    {
+        $icon = trim((string) $icon) ?: 'island';
+
+        if (preg_match('/^[a-z0-9-]+$/i', $icon) && file_exists(public_path("images/icons/gallery/{$icon}.svg"))) {
+            return "images/icons/gallery/{$icon}.svg";
+        }
+
+        return $icon;
     }
 
     private function pickPath(string $slot, array $fallbacks): string

@@ -14,22 +14,12 @@
     $heading = $contact?->title ?: 'Get in touch';
     $eyebrow = $contact?->subtitle ?: 'CONTACT US';
     $intro = $contact?->description ?: 'We would love to help you plan your stay at Casa Verde Cliff Resort & Spa.';
-    $address = $map?->subtitle ?: 'Mankahilo, Consuelo, Camotes Islands, Cebu 6050, Philippines';
+    $mapData = \App\Support\MapEmbed::from($map);
+    $address = $mapData['address'];
     $email = trim((string) ($contact?->button_text ?? ''));
     $phone = trim((string) ($contact?->button_url ?? ''));
-    $place = 'Casa Verde Cliff Resort and Spa, Mankahilo, Consuelo, Camotes, Cebu';
-    $defaultMap = 'https://www.google.com/maps?q='.rawurlencode($place).'&t=k&z=17&output=embed';
-    $candidate = trim((string) ($map?->description ?? ''));
-    // Restrict admin-supplied iframe URLs to Google Maps to prevent arbitrary embedded sites.
-    $host = parse_url($candidate, PHP_URL_HOST);
-    $validMap = is_string($host) && in_array(strtolower($host), ['www.google.com','google.com','maps.google.com'], true)
-        && str_starts_with((string) parse_url($candidate, PHP_URL_PATH), '/maps');
-    $mapUrl = $validMap && str_starts_with($candidate, 'https://') ? $candidate : $defaultMap;
-    $mapsLink = trim((string) ($map?->button_url ?? ''));
-    $linkHost = parse_url($mapsLink, PHP_URL_HOST);
-    if (!str_starts_with($mapsLink, 'https://') || !is_string($linkHost) || !in_array(strtolower($linkHost), ['google.com','www.google.com','maps.google.com','maps.app.goo.gl'], true)) {
-        $mapsLink = 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($place);
-    }
+    $mapUrl = $mapData['embed'];
+    $mapsLink = $mapData['link'];
 @endphp
 <main class="cv-contact">
     <section class="cv-contact-intro">

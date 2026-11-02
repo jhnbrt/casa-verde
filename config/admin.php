@@ -89,8 +89,8 @@ return [
             'hide' => ['image', 'icon', 'price', 'features'],
         ],
         'contact_map' => [
-            'title' => 'Contact page Google Map',
-            'help' => 'Paste the Google Maps EMBED URL from Google Maps > Share > Embed a map. Use the URL inside src="..." (not the entire iframe). The map is interactive and requires no API key.',
+            'title' => 'Google Map (Contact page and Home "Find us")',
+            'help' => 'Paste the Google Maps EMBED URL from Google Maps > Share > Embed a map. Use the URL inside src="..." (not the entire iframe). The map is interactive and requires no API key. The same map is shown on the Contact page and under "Find us" on the Home page. For the satellite view, add &t=k to the URL.',
             'fields' => ['title' => 'Map heading', 'subtitle' => 'Resort address', 'description' => 'Google Maps embed URL', 'button_url' => 'Open in Google Maps URL', 'button_text' => 'Map button text'],
             'hints' => ['description' => 'Must start with https://www.google.com/maps/embed? or https://www.google.com/maps?; copy the exact location embed URL from Google Maps.', 'button_url' => 'Full Google Maps share link (https://...)'],
             'hide' => ['image', 'icon', 'price', 'features'],

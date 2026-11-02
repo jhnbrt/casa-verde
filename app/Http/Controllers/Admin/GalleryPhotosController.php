@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
@@ -64,6 +65,7 @@ class GalleryPhotosController extends Controller
             'overview' => HomeContent::where('section', 'gallery_overview')->orderBy('sort_order')->get(),
             'sections' => $sections,
             'banner' => $banner,
+            'builtInIcons' => $this->builtInIcons(),
         ]);
     }
 
@@ -77,6 +79,7 @@ class GalleryPhotosController extends Controller
         $data = $request->validate([
             'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:8192'],
             'icon_image' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,gif,svg', 'max:2048'],
+            'built_in_icon' => ['nullable', 'string', Rule::in(array_keys($this->builtInIcons()))],
             'title' => ['nullable', 'string', 'max:160'],
             'subtitle' => ['nullable', 'string', 'max:60'],
             'button_text' => ['nullable', 'string', 'max:60'],
@@ -102,6 +105,11 @@ class GalleryPhotosController extends Controller
             $content->icon = $this->storeIcon($request->file('icon_image'));
         }
 
+        // Or pick one of the built-in icons (an upload above wins when both are given).
+        if (! $request->hasFile('icon_image') && filled($data['built_in_icon'] ?? null) && $content->section === 'gallery_experiences') {
+            $content->icon = $data['built_in_icon'];
+        }
+
         $content->save();
 
         return back()->with('status', 'Saved.');
@@ -117,6 +125,8 @@ class GalleryPhotosController extends Controller
             'image' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:8192'],
             'title' => ['nullable', 'string', 'max:160'],
             'subtitle' => ['nullable', 'string', 'max:60'],
+            'icon_image' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,gif,svg', 'max:2048'],
+            'built_in_icon' => ['nullable', 'string', Rule::in(array_keys($this->builtInIcons()))],
         ]);
 
         $section = 'gallery_'.$data['category'];
@@ -126,7 +136,11 @@ class GalleryPhotosController extends Controller
             'section' => $section,
             'title' => $data['title'] ?: self::CATEGORIES[$data['category']],
             'subtitle' => $labelled ? $data['subtitle'] : null,
-            'icon' => $labelled ? 'island' : null,
+            'icon' => $labelled
+                ? ($request->hasFile('icon_image')
+                    ? $this->storeIcon($request->file('icon_image'))
+                    : (($data['built_in_icon'] ?? null) ?: 'island'))
+                : null,
             'image' => $this->storePhoto($request->file('image')),
             'sort_order' => ((int) HomeContent::where('section', $section)->max('sort_order')) + 1,
             'active' => true,
@@ -181,6 +195,29 @@ class GalleryPhotosController extends Controller
         });
 
         return back()->with('status', 'Order changed.');
+    }
+
+    /**
+     * The ready-made icons (public/images/icons/gallery/*.svg) offered next to the upload,
+     * as name => label. Dropping another .svg into that folder adds it to the list.
+     *
+     * @return array<string, string>
+     */
+    private function builtInIcons(): array
+    {
+        $icons = [];
+
+        foreach (glob(public_path('images/icons/gallery/*.svg')) ?: [] as $file) {
+            $name = pathinfo($file, PATHINFO_FILENAME);
+
+            if (preg_match('/^[a-z0-9-]+$/i', $name)) {
+                $icons[$name] = Str::headline($name);
+            }
+        }
+
+        ksort($icons);
+
+        return $icons;
     }
 
     /**

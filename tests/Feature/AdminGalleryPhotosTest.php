@@ -121,3 +121,69 @@ test('an unsafe SVG icon is refused', function () {
 
     expect($banner->fresh()->icon)->toBe($before);
 });
+
+test('experience cards show their icon and a photo without a label becomes a banner', function () {
+    $this->get('/gallery')
+        ->assertOk()
+        ->assertSee('gal-item--1 has-label', false)
+        ->assertSee('images/icons/gallery/cave.svg', false)
+        ->assertSee('images/icons/gallery/island.svg', false);
+});
+
+test('an experience icon can be switched to a ready-made icon or an uploaded one', function () {
+    $this->actingAs($this->admin)->get(route('admin.gallery.index'))
+        ->assertOk()->assertSee('Or choose a ready-made icon');
+
+    $card = HomeContent::where('section', 'gallery_experiences')->whereNotNull('subtitle')->orderBy('sort_order')->firstOrFail();
+
+    $this->actingAs($this->admin)
+        ->put(route('admin.gallery.update', $card), ['built_in_icon' => 'padel'])
+        ->assertRedirect();
+
+    expect($card->fresh()->icon)->toBe('padel');
+    $this->get('/gallery')->assertSee('images/icons/gallery/padel.svg', false);
+
+    $this->actingAs($this->admin)
+        ->put(route('admin.gallery.update', $card), ['icon_image' => UploadedFile::fake()->image('my-icon.png', 120, 120)])
+        ->assertRedirect();
+
+    $icon = $card->fresh()->icon;
+    $this->uploaded[] = $icon;
+
+    expect($icon)->toStartWith('images/')->and($icon)->toContain('my-icon');
+    $this->get('/gallery')->assertSee($icon, false);
+
+    $this->actingAs($this->admin)
+        ->put(route('admin.gallery.update', $card), ['built_in_icon' => '../../evil'])
+        ->assertSessionHasErrors('built_in_icon');
+});
+
+test('a new experience card can be added with a label and a ready-made icon', function () {
+    $this->actingAs($this->admin)->get(route('admin.gallery.index'));
+
+    $this->actingAs($this->admin)->post(route('admin.gallery.store'), [
+        'category' => 'experiences',
+        'image' => UploadedFile::fake()->image('kayak.jpg', 800, 600),
+        'title' => 'Kayaking',
+        'subtitle' => 'Kayak Trip',
+        'built_in_icon' => 'snorkel',
+    ])->assertRedirect();
+
+    $card = HomeContent::where('section', 'gallery_experiences')->where('subtitle', 'Kayak Trip')->firstOrFail();
+    $this->uploaded[] = $card->image;
+
+    expect($card->icon)->toBe('snorkel');
+    $this->get('/gallery')->assertSee('Kayak Trip');
+});
+
+
+test('every gallery category has the back link and the resort logo on top', function () {
+    HomeContent::updateOrCreate(['section' => 'site'], [
+        'title' => 'CASA VERDE CLIFF RESORT & SPA', 'subtitle' => 'CAMOTES ISLAND, PHILIPPINES', 'sort_order' => 1, 'active' => true,
+    ]);
+
+    $html = $this->get('/gallery')->assertOk()->getContent();
+
+    expect(substr_count($html, 'class="gal-brand"'))->toBe(6)
+        ->and($html)->toContain('CAMOTES ISLAND, PHILIPPINES');
+});

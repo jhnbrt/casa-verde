@@ -1522,17 +1522,13 @@ $contactFooter = $contents
 
                 <div class="contact-map">
 
-                    <img
-                        src="{{ asset($contactMap->image) }}"
-                        alt="Casa Verde location map"
-                    >
-
-
-                    {{-- MAP MARKER --}}
-
-                    <div class="contact-map-marker">
-                        <x-icon :name="\App\Models\HomeContent::siteIcon('pin')" :size="18" />
-                    </div>
+                    <iframe
+                        src="{{ \App\Support\MapEmbed::from($contactMap)['embed'] }}"
+                        title="Casa Verde Cliff Resort &amp; Spa on Google Maps"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        allowfullscreen
+                    ></iframe>
 
                 </div>
 
