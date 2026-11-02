@@ -13,6 +13,14 @@ beforeEach(function () {
         $this->markTestSkipped('The GD extension is needed to make a test icon.');
     }
 
+    // A fresh test database has no villas, and the cards (and their icons) only show for villas that exist.
+    foreach (['Standard Villa' => 1, 'Premium Villa' => 2] as $title => $order) {
+        HomeContent::create([
+            'section' => 'villas', 'title' => $title, 'subtitle' => 'Test villa', 'image' => 'images/logo.png',
+            'price' => 5000, 'sort_order' => $order, 'active' => true,
+        ]);
+    }
+
     $image = imagecreatetruecolor(64, 64);
     imagepng($image, public_path($this->icon));
     imagedestroy($image);

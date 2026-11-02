@@ -105,7 +105,8 @@ class HomeContent extends Model
     {
         static $logo = null;
 
-        if ($logo !== null) {
+        // Remembered for the rest of the request; tests change the content between requests, so they skip it.
+        if ($logo !== null && ! app()->runningUnitTests()) {
             return $logo;
         }
 
@@ -146,7 +147,7 @@ class HomeContent extends Model
 
         $position = ['arrow' => 1, 'leaf' => 2, 'pin' => 3, 'lotus' => 4, 'villa' => 5][$key] ?? 0;
 
-        if ($rows === null) {
+        if ($rows === null || app()->runningUnitTests()) {
             try {
                 $rows = static::where('section', 'site_icons')->where('active', true)->pluck('icon', 'sort_order')->all();
             } catch (\Throwable) {
@@ -167,7 +168,7 @@ class HomeContent extends Model
     {
         static $design = null;
 
-        if ($design !== null) {
+        if ($design !== null && ! app()->runningUnitTests()) {
             return $design;
         }
 

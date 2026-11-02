@@ -313,9 +313,10 @@ return [
         ],
         'wellness_page_treatments' => [
             'title' => 'Treatments',
-            'help' => 'One entry per treatment card. Replace the photo to change the card image; add an entry to add a card.',
-            'fields' => ['title' => 'Treatment name', 'description' => 'Short description', 'image' => 'Photo'],
-            'hide' => ['subtitle', 'icon', 'price', 'features', 'button_text', 'button_url'],
+            'help' => 'One entry per treatment card. Replace the photo to change the card image; add an entry to add a card. The round Badge icon on the photo is separate from the picture: upload your own, or type an icon name or emoji. Leave it empty for no badge. If the photo itself already has a badge drawn on it, upload a photo without one.',
+            'fields' => ['title' => 'Treatment name', 'description' => 'Short description', 'image' => 'Photo', 'icon' => 'Badge icon on the photo'],
+            'hints' => ['icon' => 'An icon name: hands, stones, leaf, foot, spaset, lotus, meditation, cocktail... or an emoji (🌿). Or upload an image above. Clear this box to remove the badge.'],
+            'hide' => ['subtitle', 'price', 'features', 'button_text', 'button_url'],
         ],
         'wellness_page_perks' => [
             'title' => 'Spa highlights',

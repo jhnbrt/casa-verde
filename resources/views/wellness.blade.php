@@ -138,6 +138,49 @@
 /* Line icons (replace the text glyphs) */
 .wellness-page .feature-icon svg { stroke-width: 1.2; }
 
+
+/* =========================================================
+   TREATMENT CARDS – round icon badge on each photo
+   (inline on purpose: it works without rebuilding the CSS)
+   The photo keeps its own shape, so the badge always sits
+   in the same spot, on every screen size.
+========================================================= */
+
+.wellness-page .wellness-card-image {
+    height: auto;
+    aspect-ratio: 236 / 130;
+    container-type: inline-size;
+}
+
+.wellness-page .wellness-card-badge {
+    position: absolute;
+    top: -.5cqw;
+    left: -.5cqw;
+    z-index: 2;
+    width: 21cqw;
+    height: 21cqw;
+    max-width: 78px;
+    max-height: 78px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #0b3b31;
+    border: 1.5px solid #c9a06a;
+    color: #e9cfa4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    pointer-events: none;
+}
+
+.wellness-page .wellness-card-badge .cv-icon {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+}
+
+.wellness-page .wellness-card-badge .cv-emoji {
+    font-size: 1.2rem;
+    line-height: 1;
+}
     </style>
 
 </head>
@@ -177,6 +220,12 @@
             <article class="wellness-card">
                 <div class="wellness-card-image">
                     <img src="{{ $img($treatment->image, 'images/wellness2.jpg') }}" alt="{{ $treatment->title }}">
+
+                    @if(filled($treatment->icon))
+                        <span class="wellness-card-badge" aria-hidden="true">
+                            <x-icon :name="$treatment->icon" :size="26" />
+                        </span>
+                    @endif
                 </div>
                 <div class="wellness-card-content">
                     <h2>{{ $treatment->title }}</h2>

@@ -703,3 +703,20 @@ a {
     }
 
 }
+
+/* Round icon badge on each treatment photo; set per treatment in the admin.
+   Sized from the card width so it stays the same shape on every screen. */
+.wellness-card-image { container-type: inline-size; }
+.wellness-card-badge {
+    position: absolute; top: 4px; left: 4px; z-index: 2;
+    width: 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: #0b3b31; border: 1.5px solid #c9a06a; color: #e9cfa4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+    pointer-events: none;
+}
+.wellness-card-badge .cv-icon { width: 60%; height: 60%; object-fit: contain; }
+.wellness-card-badge .cv-emoji { font-size: 1.1rem; line-height: 1; }
+@supports (width: 1cqw) {
+    .wellness-card-badge { top: 1.5cqw; left: 1.5cqw; width: 20cqw; height: 20cqw; max-width: 64px; max-height: 64px; }
+}

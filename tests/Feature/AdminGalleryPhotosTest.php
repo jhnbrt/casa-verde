@@ -123,11 +123,14 @@ test('an unsafe SVG icon is refused', function () {
 });
 
 test('experience cards show their icon and a photo without a label becomes a banner', function () {
-    $this->get('/gallery')
+    $html = $this->get('/gallery')
         ->assertOk()
         ->assertSee('gal-item--1 has-label', false)
-        ->assertSee('images/icons/gallery/cave.svg', false)
-        ->assertSee('images/icons/gallery/island.svg', false);
+        ->getContent();
+
+    // Icon names became editable placeholder pictures (images/icons/placeholders/), so accept either folder.
+    expect($html)->toMatch('#images/icons/(gallery|placeholders)/cave\.svg#')
+        ->and($html)->toMatch('#images/icons/(gallery|placeholders)/island\.svg#');
 });
 
 test('an experience icon can be switched to a ready-made icon or an uploaded one', function () {
