@@ -18,7 +18,7 @@
     "isEntry": true
   },
   "resources/css/book.css": {
-    "file": "assets/book-DQ1kU4ih.css",
+    "file": "assets/book-1uO4N1kT.css",
     "name": "book",
     "names": [
       "book.css"
@@ -45,7 +45,7 @@
     "isEntry": true
   },
   "resources/css/events.css": {
-    "file": "assets/events-qZ3mI8h4.css",
+    "file": "assets/events-DGWOxWIA.css",
     "name": "events",
     "names": [
       "events.css"
@@ -72,7 +72,7 @@
     "isEntry": true
   },
   "resources/css/gallery.css": {
-    "file": "assets/gallery-DMPasJlT.css",
+    "file": "assets/gallery-DiS_dNZR.css",
     "name": "gallery",
     "names": [
       "gallery.css"
@@ -99,7 +99,7 @@
     "isEntry": true
   },
   "resources/css/home.css": {
-    "file": "assets/home-BD2oQixk.css",
+    "file": "assets/home-0I1t56st.css",
     "name": "home",
     "names": [
       "home.css"
@@ -171,7 +171,7 @@
     "isEntry": true
   },
   "resources/css/wellness.css": {
-    "file": "assets/wellness-DS1AAE_C.css",
+    "file": "assets/wellness-BJ0O04K6.css",
     "name": "wellness",
     "names": [
       "wellness.css"
@@ -198,7 +198,7 @@
     ]
   },
   "resources/js/book.js": {
-    "file": "assets/book-BU120Tuj.js",
+    "file": "assets/book-DGakTr6u.js",
     "name": "book",
     "src": "resources/js/book.js",
     "isEntry": true
