@@ -253,6 +253,31 @@
                         <p class="field-hint">{{ $hint('icon') ?? 'An emoji (🌿) or an icon name (lotus, leaf, island). Upload a file above to replace the icon; clear this box to remove it (when no new file is selected).' }}</p>
                     </div>
                     @endif
+
+                    @if (isset($meta['fields']['perk_icon']))
+                    @php
+                        $perkIsImage = (bool) preg_match('/\.(png|jpe?g|webp|gif|svg)$/i', (string) old('perk_icon', $item->perk_icon));
+                    @endphp
+                    <div>
+                        <label for="perk_icon" class="field-label">{{ $label('perk_icon', 'Second icon') }}</label>
+
+                        @if ($perkIsImage)
+                            <div class="mb-3 flex items-center gap-3">
+                                <span class="flex h-14 w-14 items-center justify-center rounded-lg border border-sand-300 bg-sand-100">
+                                    <img src="{{ asset(old('perk_icon', $item->perk_icon)) }}" alt="Current second icon image" class="h-10 w-10 object-contain">
+                                </span>
+                                <span class="text-sm text-ink-soft">Current icon image</span>
+                            </div>
+                        @endif
+
+                        <input type="file" id="perk_icon_image" name="perk_icon_image" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" class="field-input">
+                        <p class="field-hint">Upload an image (PNG, static SVG, JPG or WebP, up to 2 MB). It replaces the current icon.</p>
+
+                        <label for="perk_icon" class="field-label mt-4">Or type an emoji / icon name</label>
+                        <input type="text" id="perk_icon" name="perk_icon" value="{{ old('perk_icon', $item->perk_icon) }}" placeholder="e.g. 🏷️ or tag" class="field-input">
+                        <p class="field-hint">{{ $hint('perk_icon') ?? 'An emoji or an icon name. Clear this box to go back to the original drawing.' }}</p>
+                    </div>
+                    @endif
                 </div>
             </section>
         </aside>

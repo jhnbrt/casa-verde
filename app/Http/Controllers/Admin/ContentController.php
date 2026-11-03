@@ -89,6 +89,10 @@ class ContentController extends Controller
             $data['icon'] = $this->storeImage($request, 'icon_image');
         }
 
+        if ($request->hasFile('perk_icon_image')) {
+            $data['perk_icon'] = $this->storeImage($request, 'perk_icon_image');
+        }
+
         if (($gallery = $this->gallery($request)) !== null) {
             $data['gallery'] = $gallery;
         }
@@ -127,6 +131,10 @@ class ContentController extends Controller
             $data['icon'] = $this->storeImage($request, 'icon_image');
         }
 
+        if ($request->hasFile('perk_icon_image')) {
+            $data['perk_icon'] = $this->storeImage($request, 'perk_icon_image');
+        }
+
         if (($gallery = $this->gallery($request)) !== null) {
             $data['gallery'] = $gallery;
         }
@@ -162,6 +170,7 @@ class ContentController extends Controller
             'subtitle' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'icon' => ['nullable', 'string', 'max:255'],
+            'perk_icon' => ['nullable', 'string', 'max:255'],
             'price' => ['nullable', 'numeric'],
             'features' => ['nullable', 'string'],
             'button_text' => ['nullable', 'string', 'max:100'],
@@ -169,6 +178,7 @@ class ContentController extends Controller
             'sort_order' => ['nullable', 'integer'],
             'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif,svg', 'max:5120'],
             'icon_image' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,gif,svg', 'max:2048'],
+            'perk_icon_image' => ['nullable', 'file', 'mimes:png,jpg,jpeg,webp,gif,svg', 'max:2048'],
             'gallery' => ['nullable', 'array', 'max:30'],
             'gallery.*' => ['string', 'max:255'],
             'gallery_new' => ['nullable', 'array', 'max:20'],
@@ -208,7 +218,7 @@ class ContentController extends Controller
             unset($data['sort_order']);
         }
 
-        unset($data['image'], $data['icon_image'], $data['gallery'], $data['gallery_new']);
+        unset($data['image'], $data['icon_image'], $data['perk_icon_image'], $data['gallery'], $data['gallery_new']);
 
         return $data;
     }

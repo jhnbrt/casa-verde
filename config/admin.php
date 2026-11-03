@@ -620,11 +620,16 @@ return [
                 'title' => 'Offer name',
                 'subtitle' => 'Highlight',
                 'description' => 'Short description',
-                'icon' => 'Icon (emoji)',
+                'icon' => 'Card icon (big, beside the title)',
+                'perk_icon' => 'Small icon (beside the highlight line)',
                 'button_text' => 'Button text',
                 'button_url' => 'Button link',
             ],
-            'hints' => ['subtitle' => 'Line 1 is shown in bold (e.g. "1 NIGHT FREE"). Line 2 is the smaller text next to it.'],
+            'hints' => [
+                'subtitle' => 'Line 1 is shown in bold (e.g. "1 NIGHT FREE"). Line 2 is the smaller text next to it.',
+                'icon' => 'Upload an image, or type an emoji or an icon name (island, lotus, heart, leaf, stones, spaset, villa...). Clear it to use the original drawing.',
+                'perk_icon' => 'Upload an image, or type an emoji or an icon name (tag, lotus, heart, leaf...). Clear it to use the original drawing.',
+            ],
             'hide' => ['price', 'features'],
         ],
         'offers_note' => [

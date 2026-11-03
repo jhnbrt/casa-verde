@@ -17,6 +17,7 @@ class HomeContent extends Model
         'description',
         'image',
         'icon',
+        'perk_icon',
         'price',
         'features',
         'gallery',

@@ -57,6 +57,7 @@ class OfferController extends Controller
         return $this->item(
             $row->title,
             $row->icon,
+            $row->perk_icon,
             $row->description,
             $row->subtitle,
             $row->image,
@@ -74,6 +75,7 @@ class OfferController extends Controller
         return $this->item(
             $item['title'],
             $item['icon'],
+            $item['perk_icon'] ?? null,
             $item['text'],
             $item['highlight'],
             $item['image'],
@@ -87,13 +89,14 @@ class OfferController extends Controller
      *
      * @return array<string, mixed>
      */
-    protected function item(?string $title, ?string $icon, ?string $text, ?string $highlight, ?string $image, ?string $buttonText, ?string $buttonUrl): array
+    protected function item(?string $title, ?string $icon, ?string $perkIcon, ?string $text, ?string $highlight, ?string $image, ?string $buttonText, ?string $buttonUrl): array
     {
         $lines = preg_split('/\R/', trim((string) $highlight), 2) ?: [];
 
         return [
             'title' => $title,
             'icon' => $icon,
+            'perk_icon' => $perkIcon,
             'text' => $text,
             'perk' => trim($lines[0] ?? ''),
             'perk_text' => trim($lines[1] ?? ''),

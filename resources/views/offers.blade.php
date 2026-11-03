@@ -18,7 +18,7 @@
       .cv-offers-page .cv-card>img{display:block;width:100%;aspect-ratio:1.78;object-fit:cover;border-radius:24px;flex:none}
       .cv-offers-page .cv-offer-main{display:grid;grid-template-columns:82px minmax(0,1fr);gap:10px;padding:10px 13px 13px;flex:1}
       .cv-offers-page .cv-ico{display:flex;align-items:flex-start;justify-content:center;padding-top:8px;color:#dba568;font-size:42px;line-height:1}
-      .cv-offers-page .cv-ico svg{width:65px;height:65px;max-width:100%;stroke:#dba568;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.cv-offers-page .cv-perk-icon{flex:0 0 39px;display:flex;align-items:center;justify-content:center;color:#dba568}.cv-offers-page .cv-perk-icon svg{width:35px;height:35px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+      .cv-offers-page .cv-ico svg{width:65px;height:65px;max-width:100%;stroke:#dba568;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.cv-offers-page .cv-ico img,.cv-offers-page .cv-ico .cv-icon{width:65px;height:65px;object-fit:contain}.cv-offers-page .cv-perk-icon img,.cv-offers-page .cv-perk-icon .cv-icon{width:35px;height:35px;object-fit:contain}.cv-offers-page .cv-perk-icon .cv-emoji{font-size:28px;line-height:1}.cv-offers-page .cv-perk-icon{flex:0 0 39px;display:flex;align-items:center;justify-content:center;color:#dba568}.cv-offers-page .cv-perk-icon svg{width:35px;height:35px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
       .cv-offers-page .cv-card h3{font-size:clamp(23px,2vw,32px);line-height:1.15;margin:0 0 9px;font-weight:500;color:#09241e}
       .cv-offers-page .cv-card p{font-family:var(--cv-serif,Georgia,serif);font-size:clamp(15px,1.15vw,18px);line-height:1.5;margin:0;padding:0;color:#394c46}
       .cv-offers-page .cv-offer-perk{border-top:1px solid #e2ac71;margin:0 10% 10px;padding:13px 0 0;min-height:42px;display:flex;align-items:center;gap:7px;font-size:clamp(13px,1.02vw,17px);line-height:1.4;white-space:normal}
@@ -49,27 +49,11 @@
                     <article class="cv-card">
                         <img src="{{ $img($offer['image']) }}" alt="{{ $offer['title'] }}" loading="lazy">
                         <div class="cv-offer-main">
-                            <div class="cv-ico" aria-hidden="true">
-                                @if($loop->index === 0)
-                                    <svg viewBox="0 0 80 70"><path d="M8 59h64M12 64h55M26 56l9-32M35 24c-13-7-20-3-25 5 12-3 18-2 25-5ZM35 24c-7-13-17-14-25-11 10 3 16 7 25 11ZM35 24c3-15 11-20 20-18-9 5-14 11-20 18ZM35 24c13-7 23-4 29 4-13-2-21-1-29-4ZM35 24c7 4 12 12 13 20-6-8-10-14-13-20ZM48 57l10-24M58 33c-10-7-17-5-22 0 10-1 16 0 22 0ZM58 33c-3-10-10-14-18-12 9 4 13 8 18 12ZM58 33c5-11 13-13 20-10-10 2-15 6-20 10ZM58 33c9-4 16-1 20 5-10-2-15-3-20-5Z"/></svg>
-                                @elseif($loop->index === 1)
-                                    <svg viewBox="0 0 80 70"><path d="M40 57C25 43 24 28 40 9c16 19 15 34 0 48ZM40 57C20 55 11 43 13 25c19 3 29 14 27 32ZM40 57c20-2 29-14 27-32-19 3-29 14-27 32ZM40 57C24 65 11 60 3 47c13-9 26-7 37 10ZM40 57c16 8 29 3 37-10-13-9-26-7-37 10Z"/></svg>
-                                @else
-                                    <svg viewBox="0 0 80 70"><path d="M40 62 11 32C-3 14 20-2 40 22 60-2 83 14 69 32Z" stroke-width="3"/></svg>
-                                @endif
-                            </div>
+                            <div class="cv-ico" aria-hidden="true"><x-offer-icon :name="$offer['icon']" variant="card" :position="$loop->index" /></div>
                             <div><h3>{{ $offer['title'] }}</h3><p>{{ $offer['text'] }}</p></div>
                         </div>
                         @if(!empty($offer['perk']))
-                            <div class="cv-offer-perk"><span class="cv-perk-icon" aria-hidden="true">
-                                @if($loop->index === 0)
-                                    <svg viewBox="0 0 40 40"><path d="M5 21 22 4h12v12L17 35a4 4 0 0 1-6 0l-6-6a5 5 0 0 1 0-8Z"/><circle cx="27" cy="12" r="3"/></svg>
-                                @elseif($loop->index === 1)
-                                    <svg viewBox="0 0 40 40"><path d="M20 35C8 25 9 16 20 5c11 11 12 20 0 30ZM20 35C8 33 4 26 6 17c10 2 15 8 14 18ZM20 35c12-2 16-9 14-18-10 2-15 8-14 18Z"/></svg>
-                                @else
-                                    <svg viewBox="0 0 40 40"><path d="M20 35 5 19C-3 8 12 1 20 13 28 1 43 8 35 19Z" stroke-width="2.5"/></svg>
-                                @endif
-                            </span><span><b>{{ $offer['perk'] }}</b> {{ $offer['perk_text'] ?? '' }}</span></div>
+                            <div class="cv-offer-perk"><span class="cv-perk-icon" aria-hidden="true"><x-offer-icon :name="$offer['perk_icon']" variant="perk" :position="$loop->index" /></span><span><b>{{ $offer['perk'] }}</b> {{ $offer['perk_text'] ?? '' }}</span></div>
                         @endif
                         <div class="cv-offer-action"><a href="{{ $href($offer['button_url']) }}" class="cv-btn">{{ $offer['button_text'] }}</a></div>
                     </article>
