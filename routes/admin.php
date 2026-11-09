@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryPhotosController;
+use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // Booking requests sent from the website's Book page.
+        // Website languages: which are offered and how a first-time visitor's is picked.
+        Route::get('languages', [LanguageController::class, 'edit'])->name('languages.edit');
+        Route::put('languages', [LanguageController::class, 'update'])->name('languages.update');
+
         Route::get('bookings/export', [AdminBookingController::class, 'export'])->name('bookings.export');
         Route::resource('bookings', AdminBookingController::class)
             ->only(['index', 'update', 'destroy']);

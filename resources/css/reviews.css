@@ -26,20 +26,21 @@
 /* ---------- Carousel ---------- */
 .rv-carousel { position: relative; margin-top: clamp(36px, 5vw, 60px); }
 .rv-viewport { outline-offset: 6px; touch-action: pan-y; }
-.rv-track { display: grid; justify-items: center; align-items: center; perspective: 2200px; }
+.rv-track { display: grid; justify-items: center; align-items: center; }
 
 .rv-slide {
     grid-area: 1 / 1;
     width: var(--rv-w);
-    transition: transform .8s cubic-bezier(.22,.8,.24,1), opacity .6s ease;
-    will-change: transform, opacity;
+    transition: transform .8s cubic-bezier(.22,.8,.24,1), opacity .7s ease, filter .7s ease;
+    will-change: transform, opacity, filter;
     cursor: pointer;
 }
 .rv-slide[data-pos="0"]  { z-index: 3; cursor: default; }
-.rv-slide[data-pos="-1"] { z-index: 2; transform: translateX(calc(var(--rv-w) * -.93)) rotateY(30deg) scale(.86); }
-.rv-slide[data-pos="1"]  { z-index: 2; transform: translateX(calc(var(--rv-w) * .93)) rotateY(-30deg) scale(.86); }
-.rv-slide[data-pos="-2"] { z-index: 1; opacity: 0; pointer-events: none; transform: translateX(calc(var(--rv-w) * -1.3)) rotateY(40deg) scale(.8); }
-.rv-slide[data-pos="2"]  { z-index: 1; opacity: 0; pointer-events: none; transform: translateX(calc(var(--rv-w) * 1.3)) rotateY(-40deg) scale(.8); }
+/* The middle review is crisp; its neighbours are faded and softly blurred */
+.rv-slide[data-pos="-1"] { z-index: 2; opacity: .6; filter: blur(3px); transform: translateX(calc(var(--rv-w) * -1.06)) scale(.9); }
+.rv-slide[data-pos="1"]  { z-index: 2; opacity: .6; filter: blur(3px); transform: translateX(calc(var(--rv-w) * 1.06)) scale(.9); }
+.rv-slide[data-pos="-2"] { z-index: 1; opacity: 0; pointer-events: none; transform: translateX(calc(var(--rv-w) * -1.5)) scale(.82); }
+.rv-slide[data-pos="2"]  { z-index: 1; opacity: 0; pointer-events: none; transform: translateX(calc(var(--rv-w) * 1.5)) scale(.82); }
 
 .rv-card {
     display: grid;
@@ -155,10 +156,10 @@
 .rv-reel__strip span { display: block; height: 1.15em; line-height: 1.15em; text-align: center; }
 
 /* ---------- Smaller screens ---------- */
-@media (min-width: 1180px) {
-    .rv { --rv-w: clamp(420px, 36vw, 600px); }
+@media (min-width: 1000px) {
+    .rv { --rv-w: clamp(440px, 32vw, 680px); }
 }
-@media (max-width: 1179px) {
+@media (max-width: 999px) {
     .rv-slide[data-pos="-1"], .rv-slide[data-pos="1"] { opacity: 0; pointer-events: none; }
     .rv-slide[data-pos="-1"] { transform: translateX(-60%) scale(.9); }
     .rv-slide[data-pos="1"]  { transform: translateX(60%) scale(.9); }

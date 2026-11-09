@@ -34,6 +34,7 @@ return [
         'dining' => ['label' => 'Dining', 'match' => ['dining'], 'url' => '/dining'],
         'long_stay' => ['label' => 'Long stay', 'match' => ['long_stay'], 'url' => '/long-stay'],
         'events' => ['label' => 'Events', 'match' => ['events'], 'url' => '/events'],
+        'yoga' => ['label' => 'Yoga Reset', 'match' => ['yoga'], 'url' => '/yoga-reset'],
         'offers' => ['label' => 'Special offers', 'match' => ['offers'], 'url' => '/special-offers'],
         'reviews' => ['label' => 'Reviews', 'match' => ['reviews'], 'url' => '/reviews'],
         'booking' => ['label' => 'Booking', 'match' => ['booking'], 'url' => '/book'],
@@ -152,8 +153,15 @@ return [
 
         'experiences_header' => [
             'title' => 'Home page: Experiences heading',
-            'help' => 'The divider under this heading now follows the site-wide Line design (Site-wide > Line design), so the picture set here is no longer used.',
-            'fields' => ['icon' => 'Experiences decoration image / symbol'],
+            'help' => 'The label, heading and text above the Experiences carousel. The divider under the label follows the site-wide Line design (Site-wide > Line design), so the picture set here is not used.',
+            'fields' => ['price' => 'Turn to the next card every (seconds)', 'icon' => 'Experiences decoration image / symbol'],
+            'hints' => ['price' => 'Leave empty for 5 seconds. Type 0 to stop the automatic turning (visitors can still use the arrows).'],
+        ],
+        'experiences' => [
+            'title' => 'Home page: Experience cards',
+            'help' => 'One entry per card in the Experiences carousel, in the order shown. The first card opens in the middle. Add an entry to add a card (3 or more cards make the 3D carousel). A landscape photo at least 1000 px wide looks best.',
+            'fields' => ['title' => 'Card title', 'description' => 'Short text under the title', 'image' => 'Photo'],
+            'hide' => ['subtitle', 'icon', 'price', 'features', 'button_text', 'button_url'],
         ],
         'dining_intro' => [
             'title' => 'Home page: Dining intro',
@@ -171,6 +179,12 @@ return [
             'title' => 'Home page: Wellness intro',
             'help' => 'The Icon is the small symbol before the Wellness button text. Upload an image or type a symbol; clear it to use the shared symbol in Home page: symbols and wording.',
             'fields' => ['icon' => 'Button symbol (image / symbol)'],
+        ],
+        'language_settings' => [
+            'title' => 'Languages (use the Languages page)',
+            'help' => 'These are managed on the Languages page in the sidebar. Changing them here may break the language menu.',
+            'fields' => ['title' => 'Name'],
+            'hide' => ['subtitle', 'image', 'icon', 'price', 'features', 'button_text', 'button_url'],
         ],
         'booking_page' => [
             'title' => 'Booking page: heading',
@@ -503,6 +517,77 @@ return [
             'hide' => ['icon', 'price', 'features'],
         ],
         'events_cta' => [
+            'title' => 'Closing banner',
+            'help' => 'The banner at the bottom. The first entry sets the heading and background photo; every entry adds one button.',
+            'fields' => ['title' => 'Heading (first entry only)', 'image' => 'Background photo (first entry only)', 'button_text' => 'Button text', 'button_url' => 'Button link'],
+            'hide' => ['subtitle', 'description', 'icon', 'price', 'features'],
+        ],
+
+        // ---- Yoga Reset -----------------------------------------------------
+        'yoga_hero' => [
+            'title' => 'Top banner',
+            'help' => 'The large photo and headline at the top of the Yoga Reset page.',
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro text', 'image' => 'Banner photo', 'button_text' => 'Button text', 'button_url' => 'Button link'],
+            'hide' => ['icon', 'price', 'features'],
+        ],
+        'yoga_stats' => [
+            'title' => 'Quick facts bar',
+            'help' => 'The white bar that overlaps the bottom of the banner. One entry per fact (for example "60 min" with the label "Per class").',
+            'fields' => ['title' => 'Big text', 'subtitle' => 'Small label', 'icon' => 'Icon'],
+            'hints' => ['icon' => 'An emoji (🧘) or an icon name: sunset, clock, lotus, cliff, calendar, leaf.'],
+            'hide' => ['description', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_intro' => [
+            'title' => 'Introduction',
+            'help' => 'The heading and intro paragraph above the three session cards.',
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro paragraph'],
+            'hide' => ['icon', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_types' => [
+            'title' => 'Session cards',
+            'help' => 'One entry per card (Sunrise Flow, Sunset Restore, Private Sessions). Replace the photo to change the card image.',
+            'fields' => ['title' => 'Card title', 'subtitle' => 'Details (separate with ·)', 'description' => 'Short description', 'image' => 'Card photo', 'icon' => 'Icon', 'button_text' => 'Button text', 'button_url' => 'Button link'],
+            'hints' => ['icon' => 'An emoji (🧘) or an icon name: lotus.', 'subtitle' => 'Shown as small tags, for example: 6:00 AM · 60 min · All levels'],
+            'hide' => ['price', 'features'],
+        ],
+        'yoga_schedule_header' => [
+            'title' => 'Daily rhythm heading',
+            'help' => 'The small label and heading above the daily timeline.',
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading'],
+            'hide' => ['description', 'icon', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_schedule' => [
+            'title' => 'Daily rhythm',
+            'help' => 'One entry per time slot in the timeline, in the order shown.',
+            'fields' => ['title' => 'Time (for example 6:00 AM)', 'subtitle' => 'Session name', 'description' => 'Short description'],
+            'hide' => ['icon', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_features_header' => [
+            'title' => 'Highlights heading',
+            'help' => 'The heading of the dark highlights strip.',
+            'fields' => ['title' => 'Heading'],
+            'hide' => ['icon', 'subtitle', 'description', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_features' => [
+            'title' => 'Highlights',
+            'help' => 'One entry per highlight in the dark strip (Cliffside Deck, Expert Teachers, and so on).',
+            'fields' => ['title' => 'Highlight title', 'description' => 'Short description', 'icon' => 'Icon'],
+            'hints' => ['icon' => 'An emoji (🌴) or an icon name: cliff, cloche, clipboard, island.'],
+            'hide' => ['subtitle', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_personal' => [
+            'title' => '"Your pace" section',
+            'help' => 'The photo and text block beside it, under the highlights strip.',
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Paragraph', 'image' => 'Photo', 'button_text' => 'Button text', 'button_url' => 'Button link'],
+            'hide' => ['icon', 'price', 'features'],
+        ],
+        'yoga_quote' => [
+            'title' => 'Guest quote',
+            'help' => 'One short guest comment shown above the closing banner. Replace the placeholder with a real guest review.',
+            'fields' => ['title' => 'Guest name', 'subtitle' => 'Where from', 'description' => 'Quote'],
+            'hide' => ['icon', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_cta' => [
             'title' => 'Closing banner',
             'help' => 'The banner at the bottom. The first entry sets the heading and background photo; every entry adds one button.',
             'fields' => ['title' => 'Heading (first entry only)', 'image' => 'Background photo (first entry only)', 'button_text' => 'Button text', 'button_url' => 'Button link'],

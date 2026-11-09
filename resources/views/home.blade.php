@@ -18,12 +18,16 @@
         'resources/css/home.css',
         'resources/css/theme.css',
         'resources/css/home-villas.css',
+        'resources/css/home-experiences.css',
+        'resources/js/home-experiences.js',
+        'resources/css/villa-gallery.css',
+        'resources/js/villa-photos.js',
         'resources/css/footer.css','resources/css/rule.css',
         'resources/js/app.js'
     ])
 </head>
 
-<body>
+<body data-no-photo-viewer>
 
 @php
 
@@ -300,7 +304,7 @@ $contactFooter = $contents
 
             <h2>{{ $villasHeader->title }}</h2>
 
-            <x-rule class="home-rule" />
+            <span class="villas-rule" aria-hidden="true"></span>
 
             <p class="section-subtitle">{{ $villasHeader->description }}</p>
 
@@ -336,11 +340,76 @@ $contactFooter = $contents
 
             <div class="villa-card">
 
-                <img
-                    src="{{ asset($homeVillaImage?->image ?: $villa->image) }}"
-                    alt="{{ $villa->title }}"
-                    class="villa-image"
-                >
+                @php
+                    $photos = $villaPhotos[$villaSlug] ?? [];
+                @endphp
+
+                @if(count($photos) > 1)
+
+                    {{-- The only clickable pictures on the Home page: the card looks the same, and clicking the photo opens the Villas page gallery --}}
+                    <button
+                        type="button"
+                        class="villa-photo-open home-villa-photo"
+                        data-vm-open="vm-home-{{ $loop->index }}"
+                        aria-haspopup="dialog"
+                        aria-label="View all {{ count($photos) }} photos of {{ $villa->title }}"
+                    >
+                        <img
+                            src="{{ asset($homeVillaImage?->image ?: $villa->image) }}"
+                            alt="{{ $villa->title }}"
+                            class="villa-image"
+                        >
+                    </button>
+
+                    <dialog class="vm" id="vm-home-{{ $loop->index }}" data-vm aria-label="{{ $villa->title }} photos">
+                        <div class="vm-inner">
+
+                            <p class="vm-title">{{ $villa->title }}</p>
+
+                            <button type="button" class="vm-close" data-vm-close aria-label="Close photos">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                            </button>
+
+                            <div class="vm-stage" tabindex="0" aria-roledescription="carousel">
+                                @foreach($photos as $photo)
+                                    <figure
+                                        class="vm-slide"
+                                        data-pos="{{ $loop->first ? '0' : ($loop->iteration === 2 ? '1' : ($loop->last ? '-1' : '2')) }}"
+                                        role="group"
+                                        aria-roledescription="slide"
+                                        aria-label="{{ $loop->iteration }} of {{ count($photos) }}"
+                                    >
+                                        <img
+                                            src="{{ asset($photo) }}"
+                                            alt="{{ $villa->title }}, photo {{ $loop->iteration }}"
+                                            loading="lazy"
+                                        >
+                                    </figure>
+                                @endforeach
+                            </div>
+
+                            <div class="vm-nav">
+                                <button type="button" data-vm-prev aria-label="Previous photo">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+                                </button>
+                                <span class="vm-count" aria-live="polite" data-vm-count>1 / {{ count($photos) }}</span>
+                                <button type="button" data-vm-next aria-label="Next photo">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                                </button>
+                            </div>
+
+                        </div>
+                    </dialog>
+
+                @else
+
+                    <img
+                        src="{{ asset($homeVillaImage?->image ?: $villa->image) }}"
+                        alt="{{ $villa->title }}"
+                        class="villa-image"
+                    >
+
+                @endif
 
                 <div class="villa-content">
 
@@ -407,7 +476,7 @@ $contactFooter = $contents
 
     </div>
 
-    <x-rule class="home-rule home-rule--wide" />
+    <div class="villas-bottom-rule" aria-hidden="true"></div>
 
 </section>
 
@@ -458,49 +527,83 @@ $contactFooter = $contents
 
 
 
-    <div class="experience-container">
+    @php
+        $experiences = $contents->get('experiences', collect())->values();
+        $expCount = $experiences->count();
+        // Seconds between automatic turns: set in the admin, 0 = off, empty = 5.
+        $expDelay = $experiencesHeader && filled($experiencesHeader->price)
+            ? max(0, (float) $experiencesHeader->price)
+            : 5;
+    @endphp
 
+    @if($expCount >= 3)
 
-        @foreach($contents->get('experiences', collect()) as $experience)
-
-            <div class="experience-card">
-
-
-                <img
-                    src="{{ asset($experience->image) }}"
-                    alt="{{ $experience->title }}"
-                >
-
-
-                <div class="experience-overlay"></div>
-
-
-                <div class="experience-content">
-
-                    <h3>
-
-                        {{ $experience->title }}
-
-                    </h3>
-
-
-                    <p>
-
-                        {{ $experience->description }}
-
-                    </p>
-
+        {{-- 3D carousel: the middle card is large, its neighbours tilt behind it --}}
+        <div
+            class="exp-carousel"
+            data-exp-carousel
+            data-autoplay="{{ (int) round($expDelay * 1000) }}"
+            aria-roledescription="carousel"
+            aria-label="Experiences"
+        >
+            <div class="exp-viewport" tabindex="0">
+                <div class="exp-track">
+                    @foreach($experiences as $experience)
+                        <div
+                            class="exp-slide"
+                            data-pos="{{ max(-3, min(3, $loop->index > $expCount / 2 ? $loop->index - $expCount : $loop->index)) }}"
+                            role="group"
+                            aria-roledescription="slide"
+                            aria-label="{{ $loop->iteration }} of {{ $expCount }}"
+                        >
+                            <div class="experience-card">
+                                <img
+                                    src="{{ asset($experience->image) }}"
+                                    alt="{{ $experience->title }}"
+                                    @if($loop->index > 2) loading="lazy" @endif
+                                >
+                                <div class="experience-overlay"></div>
+                                <div class="experience-content">
+                                    <h3>{{ $experience->title }}</h3>
+                                    <p>{{ $experience->description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-
-
             </div>
 
-        @endforeach
+            <button type="button" class="exp-arrow exp-arrow--prev" data-exp-prev aria-label="Previous experience">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg>
+            </button>
+            <button type="button" class="exp-arrow exp-arrow--next" data-exp-next aria-label="Next experience">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7"/></svg>
+            </button>
 
+            <div class="exp-dots">
+                @foreach($experiences as $experience)
+                    <button type="button" class="exp-dot" data-exp-go="{{ $loop->index }}" aria-label="Show {{ $experience->title }}"></button>
+                @endforeach
+            </div>
+        </div>
 
-    </div>
+    @else
 
+        {{-- With fewer than 3 cards a carousel makes no sense: show them side by side --}}
+        <div class="experience-container">
+            @foreach($experiences as $experience)
+                <div class="experience-card">
+                    <img src="{{ asset($experience->image) }}" alt="{{ $experience->title }}">
+                    <div class="experience-overlay"></div>
+                    <div class="experience-content">
+                        <h3>{{ $experience->title }}</h3>
+                        <p>{{ $experience->description }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
+    @endif
 
     @php
 

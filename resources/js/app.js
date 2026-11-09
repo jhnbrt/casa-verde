@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Public pages: accessible full-screen photo viewer. Gallery has its own viewer.
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.querySelector('.gal-lightbox, .gal-lb, [data-gallery-lightbox]') || document.body.classList.contains('admin')) return;
+    if (document.querySelector('.gal-lightbox, .gal-lb, [data-gallery-lightbox]') || document.body.classList.contains('admin') || document.body.hasAttribute('data-no-photo-viewer')) return;
     const excluded = 'header, footer, nav, a, button, form, .feature-icon, .villa-icon, .villa-feature-icon, .vs-check-logo, .gal-tile, .gal-photo, [data-no-lightbox], [data-gallery-remove], .navbar, .site-logo';
     const candidates = [...document.querySelectorAll('main img, section img, article img')].filter(img => {
         if (img.closest(excluded) || img.getAttribute('aria-hidden') === 'true') return false;

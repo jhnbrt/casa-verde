@@ -13,6 +13,7 @@
         'dining'      => 'dining.index',
         'long stay'   => 'longstay.index',
         'reviews'     => 'reviews.index',
+        'yoga reset'  => 'yoga.index',
         'contact'     => 'contact.index',
         'about'       => 'about.index',
     ];
@@ -20,7 +21,7 @@
 
 <header class="navbar">
 
-    <a href="{{ url('/') }}" class="logo-area" aria-label="Casa Verde Cliff Resort & Spa – home">
+    <a href="{{ url('/') }}" class="logo-area" translate="no" aria-label="Casa Verde Cliff Resort & Spa – home">
 
         @if($site)
             <img src="{{ asset($cvLogo) }}?v={{ $cvVer($cvLogo) }}" alt="" width="42" height="42">
@@ -80,6 +81,8 @@
         </a>
 
     </nav>
+
+    @include('layouts.language')
 
     <a href="{{ route('booking.index') }}" class="book-button nav-book-desktop">
         <span class="book-icon" aria-hidden="true"><img src="{{ asset('images/logo-badge.png') }}" alt="" class="cv-booking-logo"></span>

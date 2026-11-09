@@ -37,7 +37,8 @@ return [
         ['title' => 'Special Offers', 'url' => '/special-offers'],
         ['title' => 'Events', 'url' => '/events'],
         ['title' => 'Reviews', 'url' => '/reviews'],
-        ['title' => 'Contact', 'url' => '/#contact'],
+        ['title' => 'About', 'url' => '/about'],
+        ['title' => 'Contact', 'url' => '/contact'],
     ],
 
     'contact' => [

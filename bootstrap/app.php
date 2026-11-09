@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // The language menu's script reads and writes these cookies in the browser, so they stay plain.
+        $middleware->encryptCookies(except: ['cv_lang', 'cv_auto', 'googtrans']);
+
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
         ]);

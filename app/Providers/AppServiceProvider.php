@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\HomeContent;
+use App\Support\Languages;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -28,6 +29,48 @@ class AppServiceProvider extends ServiceProvider
         View::composer('layouts.footer', function ($view): void {
             $view->with('footer', $this->footerContent());
         });
+
+        // The language menu in the header.
+        View::composer('layouts.header', function ($view): void {
+            $view->with('cvLang', $this->languageMenu());
+        });
+    }
+
+    /**
+     * What the header's language menu needs: the offered languages and, for a first-time visitor
+     * only, the language picked from their country or browser (later visits remember it in a cookie).
+     *
+     * @return array<string, mixed>
+     */
+    protected function languageMenu(): array
+    {
+        try {
+            $settings = Languages::settings();
+        } catch (Throwable) {
+            return ['show' => false];
+        }
+
+        $supported = config('languages.supported');
+        $languages = [];
+
+        foreach ($settings['codes'] as $code) {
+            $languages[$code] = $supported[$code];
+        }
+
+        $show = $settings['show'] && count($languages) > 1;
+        $request = request();
+
+        $choice = (string) $request->cookie('cv_lang', '');
+        $remembered = (string) $request->cookie('cv_auto', '');
+        $needsDetection = $show && $settings['auto'] && in_array($choice, ['', 'auto'], true) && $remembered === '';
+
+        return [
+            'show' => $show,
+            'languages' => $languages,
+            'autoOn' => $settings['auto'],
+            'auto' => $needsDetection ? Languages::detect($request, $settings) : null,
+            'google' => implode(',', array_diff(array_keys($languages), ['en'])),
+        ];
     }
 
     /**

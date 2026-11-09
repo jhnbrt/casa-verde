@@ -54,6 +54,15 @@
         <span class="flex-1">Gallery photos</span>
     </a>
 
+    @php($onLanguages = request()->routeIs('admin.languages.*'))
+
+    <a href="{{ route('admin.languages.edit') }}"
+       @if ($onLanguages) aria-current="page" @endif
+       class="flex items-center gap-3 rounded-lg border-l-2 px-3 py-2 text-[0.9375rem] transition-colors {{ $onLanguages ? 'border-gold-400 bg-white/10 text-white' : 'border-transparent text-sand-200 hover:bg-white/5 hover:text-white' }}">
+        <svg class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM3.6 9h16.8M3.6 15h16.8M12 3c2.4 2.6 3.4 5.6 3.4 9s-1 6.4-3.4 9M12 3C9.6 5.6 8.6 8.6 8.6 12s1 6.4 3.4 9"/></svg>
+        Languages
+    </a>
+
     @php($onBookings = request()->routeIs('admin.bookings.*'))
     @php($pendingBookings = \App\Models\Booking::pendingCount())
 

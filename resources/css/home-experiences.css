@@ -1,0 +1,98 @@
+/* Home page, Experiences: carousel with a crisp middle card and softly blurred neighbours */
+
+.experiences-section { overflow-x: clip; }
+
+.exp-carousel {
+    --exp-w: min(76vw, 400px);
+    position: relative;
+    width: 100%;
+    max-width: 1170px;
+    margin: 0 auto 22px;
+    padding: 6px 0 4px;
+}
+
+.exp-viewport { outline-offset: 6px; touch-action: pan-y; }
+.exp-track { display: grid; justify-items: center; align-items: center; }
+
+.exp-slide {
+    grid-area: 1 / 1;
+    width: var(--exp-w);
+    cursor: pointer;
+    transition: transform .8s cubic-bezier(.22, .8, .24, 1), opacity .6s ease;
+    will-change: transform, opacity;
+}
+.exp-slide[data-pos="0"]  { z-index: 3; cursor: default; }
+.exp-slide[data-pos="-1"] { z-index: 2; transform: translateX(calc(var(--exp-w) * -1.06)) scale(.88); }
+.exp-slide[data-pos="1"]  { z-index: 2; transform: translateX(calc(var(--exp-w) * 1.06)) scale(.88); }
+/* Everything further away waits out of sight, ready to slide in */
+.exp-slide[data-pos="-2"], .exp-slide[data-pos="-3"] { z-index: 1; opacity: 0; pointer-events: none; transform: translateX(calc(var(--exp-w) * -1.5)) scale(.8); }
+.exp-slide[data-pos="2"],  .exp-slide[data-pos="3"]  { z-index: 1; opacity: 0; pointer-events: none; transform: translateX(calc(var(--exp-w) * 1.5)) scale(.8); }
+
+/* The card keeps its existing look; here it just fills the slide and dims when it is not in the middle */
+.exp-slide .experience-card {
+    height: calc(var(--exp-w) * .78);
+    transform: none;
+    transition: filter .7s ease, box-shadow .7s ease, opacity .7s ease;
+    filter: blur(3px) brightness(.6) saturate(.85);
+    opacity: .75;
+}
+.exp-slide .experience-card:hover { transform: none; }
+.exp-slide[data-pos="0"] .experience-card {
+    filter: none;
+    opacity: 1;
+    box-shadow: 0 30px 55px -28px rgba(0, 0, 0, .85), 0 0 0 1px rgba(221, 168, 102, .45);
+}
+.exp-slide .experience-content h3 { font-size: clamp(19px, 2.2vw, 24px); }
+.exp-slide .experience-content p { font-size: 13px; }
+
+/* Arrows */
+.exp-arrow {
+    position: absolute; top: 50%; z-index: 5;
+    display: grid; place-items: center;
+    width: 48px; height: 48px; padding: 0;
+    border: 1px solid rgba(221, 168, 102, .55); border-radius: 50%;
+    background: rgba(4, 31, 26, .78); color: #e9c58f;
+    cursor: pointer; transform: translateY(-50%);
+    transition: background .2s, color .2s, transform .2s;
+}
+.exp-arrow:hover { background: #dda866; color: #12332d; }
+.exp-arrow:active { transform: translateY(-50%) scale(.94); }
+.exp-arrow--prev { left: clamp(4px, 1.5vw, 20px); }
+.exp-arrow--next { right: clamp(4px, 1.5vw, 20px); }
+.exp-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Dots */
+.exp-dots { display: flex; justify-content: center; gap: 10px; margin-top: 22px; }
+.exp-dot {
+    width: 9px; height: 9px; padding: 0; border: 0; border-radius: 9px;
+    background: rgba(255, 255, 255, .35); cursor: pointer;
+    transition: width .35s ease, background .35s ease;
+}
+.exp-dot:hover { background: rgba(255, 255, 255, .6); }
+.exp-dot[aria-current="true"] { width: 28px; background: #dda866; }
+
+/* Wide screens: a large middle card with the next ones softly blurred on each side, all in view */
+@media (min-width: 1000px) {
+    /* The middle card takes about a third of the screen and the carousel spreads across almost all of it */
+    .exp-carousel { --exp-w: min(31vw, 600px); max-width: none; padding-inline: 2vw; }
+    .exp-slide .experience-card { height: calc(var(--exp-w) * .66); }
+    .exp-slide .experience-content h3 { font-size: clamp(22px, 2.1vw, 32px); }
+    .exp-slide .experience-content p { font-size: clamp(13px, 1.05vw, 16px); max-width: 80%; margin-inline: auto; }
+}
+
+/* Phones: the neighbours only peek out from behind the middle card */
+@media (max-width: 700px) {
+    .exp-carousel { --exp-w: min(68vw, 340px); }
+    .exp-slide[data-pos="-1"] { transform: translateX(calc(var(--exp-w) * -.86)) scale(.82); }
+    .exp-slide[data-pos="1"]  { transform: translateX(calc(var(--exp-w) * .86)) scale(.82); }
+    .exp-arrow { top: auto; bottom: -58px; width: 42px; height: 42px; transform: none; }
+    .exp-arrow:active { transform: scale(.94); }
+    .exp-arrow--prev { left: calc(50% - 130px); }
+    .exp-arrow--next { right: calc(50% - 130px); }
+    .exp-dots { margin-top: 16px; }
+    .exp-dot[aria-current="true"] { width: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .exp-slide, .exp-slide .experience-card, .exp-dot, .exp-arrow { transition: none; }
+}

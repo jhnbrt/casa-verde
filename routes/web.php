@@ -7,6 +7,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LongStayController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\YogaController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VillaController;
@@ -40,6 +41,7 @@ Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index'
 Route::post('/reviews', [ReviewController::class, 'store'])
     ->middleware('throttle:5,10')
     ->name('reviews.store');
+Route::get('/yoga-reset', [YogaController::class, 'index'])->name('yoga.index');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/special-offers', [OfferController::class, 'index'])->name('offers.index');
 Route::get('/about', [AboutController::class, 'index'])->name('about.index'); 

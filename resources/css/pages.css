@@ -45,7 +45,7 @@
 .cv-chip{border:1px solid #e2b98a;background:transparent;color:var(--cv-forest,#06211b);border-radius:999px;padding:6px 22px;font-family:var(--cv-serif,serif);font-size:1rem;cursor:pointer;transition:.2s}
 .cv-chip:hover,.cv-chip.is-on{background:#374b46;color:#e2b98a}
 .cv-gal{max-width:1300px;margin:auto;columns:4 240px;column-gap:16px}
-.cv-tile{position:relative;break-inside:avoid;margin-bottom:16px;border-radius:18px;overflow:hidden;cursor:zoom-in}
+.cv-tile{position:relative;break-inside:avoid;margin-bottom:16px;border-radius:18px;overflow:hidden;cursor: pointer}
 .cv-tile img{width:100%;display:block;transition:transform .5s}
 .cv-tile:hover img{transform:scale(1.05)}
 .cv-tile span{position:absolute;left:12px;bottom:10px;background:rgba(6,33,27,.75);color:#fff;padding:4px 14px;border-radius:999px;font-family:var(--cv-serif,serif)}

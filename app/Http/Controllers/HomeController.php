@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HomeContent;
+use App\Support\VillaPhotos;
 
 class HomeController extends Controller
 {
@@ -13,6 +14,8 @@ class HomeController extends Controller
             ->get()
             ->groupBy('section');
 
-        return view('home', compact('contents'));
+        $villaPhotos = VillaPhotos::for($contents->get('villas', collect()));
+
+        return view('home', compact('contents', 'villaPhotos'));
     }
 }
