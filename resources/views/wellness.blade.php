@@ -157,10 +157,10 @@
     top: -.5cqw;
     left: -.5cqw;
     z-index: 2;
-    width: 21cqw;
-    height: 21cqw;
-    max-width: 78px;
-    max-height: 78px;
+    width: 20cqw;
+    height: 20cqw;
+    max-width: 72px;
+    max-height: 72px;
     border-radius: 50%;
     display: grid;
     place-items: center;
@@ -171,14 +171,16 @@
     pointer-events: none;
 }
 
-.wellness-page .wellness-card-badge .cv-icon {
-    width: 60%;
-    height: 60%;
+.wellness-page .wellness-card-badge .cv-icon,
+.wellness-page .wellness-card-badge svg,
+.wellness-page .wellness-card-badge img {
+    width: 94% !important;
+    height: 94% !important;
     object-fit: contain;
 }
 
 .wellness-page .wellness-card-badge .cv-emoji {
-    font-size: 1.2rem;
+    font-size: clamp(1.8rem, 6.5cqw, 3.4rem);
     line-height: 1;
 }
     </style>

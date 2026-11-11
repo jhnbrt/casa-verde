@@ -24,6 +24,36 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+// Header dropdown (the pages under "Long Stay"): opens on hover/focus with a mouse,
+// and with the little arrow button for touch screens and keyboards.
+document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('[data-nav-sub]');
+
+    items.forEach((item) => {
+        const toggle = item.querySelector('[data-nav-sub-toggle]');
+        if (!toggle) return;
+
+        const setOpen = (open) => {
+            item.classList.toggle('is-open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+        };
+
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setOpen(!item.classList.contains('is-open'));
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!item.contains(e.target)) setOpen(false);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') setOpen(false);
+        });
+    });
+});
+
+
 // Header gets a soft shadow once the page is scrolled
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.navbar');

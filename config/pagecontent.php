@@ -73,12 +73,27 @@ Every meal becomes a memory.',
     'dining_page_menus' => [
         [
             'button_text' => 'EXPLORE FOOD MENU',
-            'button_url' => '#',
+            'button_url' => '#food-menu',
         ],
         [
             'button_text' => 'EXPLORE DRINKS MENU',
             'button_url' => '#',
         ],
+    ],
+
+    // The food menu "book": a cover and its pages, opened by the EXPLORE FOOD MENU button.
+    'dining_page_food_menu' => [
+        [
+            'title' => 'Food menu',
+            'image' => 'images/dining/menu/cover.jpg',
+            'button_text' => 'Click here',
+            'description' => 'Click the arrows or a page, or swipe, to turn the pages.',
+        ],
+    ],
+
+    'dining_page_food_menu_pages' => [
+        ['title' => 'Mains', 'image' => 'images/dining/menu/mains-1.jpg'],
+        ['title' => 'Mains', 'image' => 'images/dining/menu/mains-2.jpg'],
     ],
 
     'experiences_page_hero' => [

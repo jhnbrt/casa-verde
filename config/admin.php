@@ -33,6 +33,7 @@ return [
         'wellness' => ['label' => 'Wellness', 'match' => ['wellness'], 'url' => '/wellness'],
         'dining' => ['label' => 'Dining', 'match' => ['dining'], 'url' => '/dining'],
         'long_stay' => ['label' => 'Long stay', 'match' => ['long_stay'], 'url' => '/long-stay'],
+        'winter' => ['label' => 'Winterresidenz', 'match' => ['winter'], 'url' => '/winterresidenz'],
         'events' => ['label' => 'Events', 'match' => ['events'], 'url' => '/events'],
         'yoga' => ['label' => 'Yoga Reset', 'match' => ['yoga'], 'url' => '/yoga-reset'],
         'offers' => ['label' => 'Special offers', 'match' => ['offers'], 'url' => '/special-offers'],
@@ -271,8 +272,26 @@ return [
             'title' => 'Menu buttons',
             'help' => 'The buttons between the two bottom notes. Link to a PDF, a page or a full address.',
             'fields' => ['button_text' => 'Button text', 'button_url' => 'Button link'],
-            'hints' => ['button_url' => 'A page such as /gallery, a section such as /#contact, or a full address starting with https://. Use # for no link yet.'],
+            'hints' => ['button_url' => 'A page such as /gallery, a section such as /#contact, or a full address starting with https://. Use # for no link yet. Use #food-menu to open the food menu book (see "Food menu book" below).'],
             'hide' => ['title', 'subtitle', 'description', 'image', 'icon', 'price', 'features'],
+        ],
+        'dining_page_food_menu' => [
+            'title' => 'Food menu book: cover',
+            'help' => 'The cover of the menu book that opens when guests click the EXPLORE FOOD MENU button (its link must be #food-menu). Guests see the cover with a "Click here" hint; clicking it opens the book. The pages are added under "Food menu book: pages". Remove the cover image to turn the book off.',
+            'fields' => ['title' => 'Menu name', 'image' => 'Cover image', 'button_text' => 'Hint on the cover', 'description' => 'Helper line under the open book'],
+            'hints' => [
+                'title' => 'Used as the name of the book for screen readers.',
+                'image' => 'A portrait image, like the cover and menu pages (about 1414 x 2000 px). All pages should have the same shape.',
+                'button_text' => 'The text of the pulsing "Click here" hint.',
+            ],
+            'hide' => ['subtitle', 'icon', 'price', 'features', 'button_url'],
+        ],
+        'dining_page_food_menu_pages' => [
+            'title' => 'Food menu book: pages',
+            'help' => 'The pages of the food menu, one image per page, in order (use the position number to reorder). Two pages are shown side by side when the book is open. Use the same portrait shape as the cover.',
+            'fields' => ['title' => 'Page name', 'image' => 'Page image'],
+            'hints' => ['title' => 'For example Mains, Starters, Desserts. Used as the picture description.'],
+            'hide' => ['subtitle', 'description', 'icon', 'price', 'features', 'button_text', 'button_url'],
         ],
         'experiences_page_hero' => [
             'title' => 'Top banner',
@@ -328,9 +347,12 @@ return [
         'wellness_page_treatments' => [
             'title' => 'Treatments',
             'help' => 'One entry per treatment card. Replace the photo to change the card image; add an entry to add a card. The round Badge icon on the photo is separate from the picture: upload your own, or type an icon name or emoji. Leave it empty for no badge. If the photo itself already has a badge drawn on it, upload a photo without one.',
-            'fields' => ['title' => 'Treatment name', 'description' => 'Short description', 'image' => 'Photo', 'icon' => 'Badge icon on the photo'],
-            'hints' => ['icon' => 'An icon name: hands, stones, leaf, foot, spaset, lotus, meditation, cocktail... or an emoji (🌿). Or upload an image above. Clear this box to remove the badge.'],
-            'hide' => ['subtitle', 'price', 'features', 'button_text', 'button_url'],
+            'fields' => ['title' => 'Treatment name', 'description' => 'Short description', 'image' => 'Photo', 'icon' => 'Badge icon on the photo', 'price' => 'Badge size'],
+            'hints' => [
+                'icon' => 'An icon name: hands, stones, leaf, foot, spaset, lotus, meditation, cocktail... or an emoji (🌿). Or upload an image above. Clear this box to remove the badge.',
+                'price' => 'How big the round badge is, as a % of the photo width. Leave empty for 17. Smaller (for example 12) for a smaller badge, larger for a bigger one. Between 8 and 30. If the photo has a badge drawn into it, going much below 17 lets that old badge show around the new one.',
+            ],
+            'hide' => ['subtitle', 'features', 'button_text', 'button_url'],
         ],
         'wellness_page_perks' => [
             'title' => 'Spa highlights',
@@ -758,6 +780,95 @@ return [
             'hide' => ['description', 'price', 'features', 'button_text', 'button_url'],
         ],
         'gallery_sunsets' => $galleryPhotos('Photos: Sunsets'),
+
+        // ---- Winterresidenz page (/winterresidenz) -----------------------------
+        'winter' => [
+            'title' => 'Winterresidenz: Heading',
+            'help' => 'The heading at the top of the Winterresidenz page, above the tabs. Turn this entry off to hide the whole page, its menu link and its Long Stay banner.',
+            'fields' => ['title' => 'Heading', 'subtitle' => 'Small line above the heading', 'description' => 'Sentence under the heading', 'button_text' => 'Menu link text'],
+            'hints' => ['button_text' => 'The page link in the header dropdown under Long Stay. Empty uses "Winterresidenz".'],
+            'hide' => ['image', 'icon', 'price', 'features', 'button_url'],
+        ],
+        'winter_tabs' => [
+            'title' => 'Winterresidenz: Tabs',
+            'help' => 'One entry per tab, in order (the position number is the tab number). The tab button shows the Tab name; the panel shows the Heading, the Text (a blank line starts a new paragraph), an optional Photo on the right, the check-marked lines and a closing sentence. Photo cards, lists, prices, icon badges and contact lines are added in the other "Winterresidenz" lists and attach to a tab through their Tab field.',
+            'fields' => [
+                'title' => 'Tab name',
+                'subtitle' => 'Heading',
+                'description' => 'Text',
+                'image' => 'Photo (optional)',
+                'features' => 'Check-marked lines',
+                'button_text' => 'Closing sentence',
+            ],
+            'hints' => [
+                'description' => 'A blank line starts a new paragraph. On a tab with photo cards, a line with only --- splits the text: what comes before it shows above the photos, what comes after shows below them.',
+                'features' => 'One line per check mark (✓).',
+                'button_text' => 'Shown in bold gold beside the photo, or in a framed bar when the tab has no photo.',
+            ],
+            'hide' => ['icon', 'price', 'button_url'],
+        ],
+        'winter_cards' => [
+            'title' => 'Winterresidenz: Photo cards',
+            'help' => 'Photos with an optional label and sentence, shown in a row inside a tab. Set Tab to the number of the tab they belong to (for example 2) or to its name.',
+            'fields' => ['title' => 'Label (optional)', 'subtitle' => 'Tab', 'description' => 'Sentence (optional)', 'image' => 'Photo'],
+            'hints' => ['subtitle' => 'Choose the tab this belongs to. The numbers are the positions of the tabs in Winterresidenz: Tabs.'],
+            'tab_select' => true,
+            'hide' => ['icon', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'winter_lists' => [
+            'title' => 'Winterresidenz: Lists',
+            'help' => 'Checklists shown side by side inside a tab (for example "Im Aufenthalt inklusive" and "Optionale Services"). Set Tab to the number of the tab they belong to.',
+            'fields' => ['title' => 'List heading', 'subtitle' => 'Tab', 'icon' => 'Heading icon', 'features' => 'List lines', 'button_text' => 'Symbol before each line'],
+            'hints' => [
+                'subtitle' => 'Choose the tab this belongs to. The numbers are the positions of the tabs in Winterresidenz: Tabs.',
+                'icon' => 'An icon name (villa, cloche, leaf...) or upload your own image.',
+                'features' => 'One line per entry.',
+                'button_text' => 'For example ✓ or +. Empty uses ✓.',
+            ],
+            'tab_select' => true,
+            'hide' => ['description', 'image', 'price', 'button_url'],
+        ],
+        'winter_prices' => [
+            'title' => 'Winterresidenz: Prices',
+            'help' => 'Price cards inside a tab. Set Tab to the number of the tab they belong to. The amount is shown with thousands dots, for example 2.899.',
+            'fields' => ['title' => 'Name (e.g. Einzelresidenz)', 'subtitle' => 'Tab', 'price' => 'Amount', 'button_text' => 'Wording around the amount', 'description' => 'Small note under the price'],
+            'hints' => [
+                'subtitle' => 'Choose the tab this belongs to. The numbers are the positions of the tabs in Winterresidenz: Tabs.',
+                'button_text' => 'Write {price} where the amount goes, e.g. "ab {price} € pro Monat". Empty uses that wording.',
+            ],
+            'tab_select' => true,
+            'hide' => ['image', 'icon', 'features', 'button_url'],
+        ],
+        'winter_badges' => [
+            'title' => 'Winterresidenz: Icon badges',
+            'help' => 'Icons in a row under a tab. With only a Caption they are small icons with a label (for example Schnelles WLAN). With a Description too they become the framed feature strip of the first tab. Set Tab to the number of the tab they belong to.',
+            'fields' => ['title' => 'Caption', 'subtitle' => 'Tab', 'icon' => 'Icon', 'description' => 'Description (optional)'],
+            'hints' => [
+                'subtitle' => 'Choose the tab this belongs to. The numbers are the positions of the tabs in Winterresidenz: Tabs.',
+                'icon' => 'An icon name (wifi, island, coffee, laptop, lotus, shield, tropical-home, cloche, hands...) or upload your own image.',
+            ],
+            'tab_select' => true,
+            'hide' => ['image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'winter_contact' => [
+            'title' => 'Winterresidenz: Contact lines',
+            'help' => 'Contact lines at the end of a tab (WhatsApp, email, website). Set Tab to the number of the tab they belong to. An entry without an icon is shown as a small heading above the lines.',
+            'fields' => ['title' => 'Text shown', 'subtitle' => 'Tab', 'icon' => 'Icon', 'button_url' => 'Link (optional)'],
+            'hints' => [
+                'subtitle' => 'Choose the tab this belongs to. The numbers are the positions of the tabs in Winterresidenz: Tabs.',
+                'icon' => 'whatsapp, mail, phone, globe or pin. Leave empty for a heading.',
+                'button_url' => 'e.g. https://wa.me/639171364931 or mailto:you@example.com',
+            ],
+            'tab_select' => true,
+            'hide' => ['description', 'image', 'price', 'features', 'button_text'],
+        ],
+
+        'long_stay_winter' => [
+            'title' => 'Long stay: Winterresidenz banner',
+            'help' => 'The banner on the Long Stay page that leads to the Winterresidenz page. Turn it off to hide the banner.',
+            'fields' => ['title' => 'Heading', 'subtitle' => 'Small line above the heading', 'description' => 'Sentence', 'image' => 'Photo', 'button_text' => 'Button text', 'button_url' => 'Button link'],
+            'hide' => ['icon', 'price', 'features'],
+        ],
 
         // ---- Footer ---------------------------------------------------------
         'footer_cta' => [

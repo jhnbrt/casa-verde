@@ -59,3 +59,19 @@ test('the migration gives the existing treatment photos an editable badge icon',
 
     expect($this->card->fresh()->icon)->toBe('lotus');
 });
+
+
+test('the badge size comes from the admin, with limits and a default', function () {
+    $this->card->update(['icon' => 'stones']);
+
+    $this->get('/wellness')->assertSee('style="--wb: 17"', false);
+
+    $this->card->update(['price' => 12]);
+    $this->get('/wellness')->assertSee('style="--wb: 12"', false);
+
+    $this->card->update(['price' => 250]);
+    $this->get('/wellness')->assertSee('style="--wb: 30"', false);   // never huge
+
+    $this->card->update(['price' => 2]);
+    $this->get('/wellness')->assertSee('style="--wb: 8"', false);    // never tiny
+});

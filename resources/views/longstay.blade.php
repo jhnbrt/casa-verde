@@ -123,6 +123,25 @@
             </aside>
         </section>
 
+        {{-- Winterresidenz banner: leads to the German 3-5 month winter offer --}}
+        @if($page['winter'])
+            <section class="ls-winter" lang="de">
+                <img class="ls-winter__photo" src="{{ $img($page['winter']['image'], 'images/long-stay.jpg') }}" alt="" loading="lazy">
+                <div class="ls-winter__copy">
+                    @if($page['winter']['eyebrow'])
+                        <span class="ls-winter__eyebrow">{{ $page['winter']['eyebrow'] }}</span>
+                    @endif
+                    <h2>{{ $page['winter']['title'] }}</h2>
+                    @if($page['winter']['text'])
+                        <p>{{ $page['winter']['text'] }}</p>
+                    @endif
+                    @if($page['winter']['button_text'])
+                        <a href="{{ $href($page['winter']['button_url']) }}" class="ls-winter__btn">{{ $page['winter']['button_text'] }} <span aria-hidden="true">→</span></a>
+                    @endif
+                </div>
+            </section>
+        @endif
+
         {{-- Closing bar --}}
         <section class="ls-bar">
             <div class="ls-bar__brand">

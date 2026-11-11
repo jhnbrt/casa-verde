@@ -30,6 +30,7 @@ return [
         ['title' => 'Wellness', 'url' => '/wellness'],
         ['title' => 'Dining', 'url' => '/dining'],
         ['title' => 'Long Stay', 'url' => '/long-stay'],
+        ['title' => 'Winterresidenz', 'url' => '/winterresidenz'],
     ],
 
     'useful' => [

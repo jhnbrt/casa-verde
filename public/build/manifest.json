@@ -63,7 +63,7 @@
     "isEntry": true
   },
   "resources/css/footer.css": {
-    "file": "assets/footer-B_n6m__Y.css",
+    "file": "assets/footer-M9wTWcOd.css",
     "name": "footer",
     "names": [
       "footer.css"
@@ -81,7 +81,7 @@
     "isEntry": true
   },
   "resources/css/header.css": {
-    "file": "assets/header-DYw4d_Ij.css",
+    "file": "assets/header-CmwwaxhO.css",
     "name": "header",
     "names": [
       "header.css"
@@ -117,12 +117,21 @@
     "isEntry": true
   },
   "resources/css/longstay.css": {
-    "file": "assets/longstay-Cle-mRJ3.css",
+    "file": "assets/longstay-olFUzQaR.css",
     "name": "longstay",
     "names": [
       "longstay.css"
     ],
     "src": "resources/css/longstay.css",
+    "isEntry": true
+  },
+  "resources/css/menubook.css": {
+    "file": "assets/menubook-DNyD9yO8.css",
+    "name": "menubook",
+    "names": [
+      "menubook.css"
+    ],
+    "src": "resources/css/menubook.css",
     "isEntry": true
   },
   "resources/css/pages.css": {
@@ -216,7 +225,7 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-DqkVE4Cz.js",
+    "file": "assets/app-DYIDCJ2A.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -240,6 +249,12 @@
     "file": "assets/home-experiences-fHwzWlNR.js",
     "name": "home-experiences",
     "src": "resources/js/home-experiences.js",
+    "isEntry": true
+  },
+  "resources/js/menubook.js": {
+    "file": "assets/menubook-BR6YUt12.js",
+    "name": "menubook",
+    "src": "resources/js/menubook.js",
     "isEntry": true
   },
   "resources/js/reviews.js": {

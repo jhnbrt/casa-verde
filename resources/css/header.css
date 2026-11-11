@@ -176,3 +176,43 @@ body {
 .navbar .book-button .book-icon { position: relative; border: 0 !important; outline: 0 !important; box-shadow: none !important; background: transparent !important; overflow: hidden; border-radius: 50%; padding: 0 !important; flex-shrink: 0; }
 .navbar .book-button .book-icon::before, .navbar .book-button .book-icon::after { content: none !important; display: none !important; }
 .navbar .book-button .book-icon > img.cv-booking-logo { display: block !important; width: 100% !important; height: 100% !important; object-fit: cover !important; border: 0 !important; border-radius: 50%; padding: 0 !important; margin: 0 !important; box-shadow: none !important; filter: none !important; }
+
+
+/* ---- Dropdown under a menu item (Long Stay > Winterresidenz) ---- */
+.nav-links .nav-item--sub{position:relative;display:flex;align-items:center;gap:4px}
+.nav-links .nav-sub-toggle{appearance:none;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;color:#d7a468;transition:background .2s,color .2s}
+.nav-links .nav-sub-toggle span{display:block;width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .25s}
+.nav-links .nav-sub-toggle:hover,
+.nav-links .nav-item--sub:hover .nav-sub-toggle,
+.nav-links .nav-item--sub.is-open .nav-sub-toggle{color:#f1cf9c;background:rgba(215,164,104,.14)}
+.nav-links .nav-item--sub:hover .nav-sub-toggle span,
+.nav-links .nav-item--sub.is-open .nav-sub-toggle span{transform:translateY(2px) rotate(225deg)}
+.nav-links .nav-sub-toggle:focus-visible{outline:2px solid #f1cf9c;outline-offset:2px}
+
+/* The panel: solid header green, gold hairline, a small arrow pointing at the item */
+.nav-links .nav-sub{position:absolute;top:calc(100% + 14px);left:50%;min-width:236px;padding:8px;border:1px solid rgba(201,160,106,.5);border-radius:16px;background:#06211b;box-shadow:0 22px 44px rgba(0,0,0,.4);transform:translate(-50%,8px);opacity:0;visibility:hidden;transition:opacity .22s,transform .22s,visibility .22s;z-index:120}
+.nav-links .nav-sub::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.nav-links .nav-sub::after{content:"";position:absolute;top:-7px;left:50%;width:12px;height:12px;background:#06211b;border-top:1px solid rgba(201,160,106,.5);border-left:1px solid rgba(201,160,106,.5);transform:translateX(-50%) rotate(45deg)}
+
+/* The links: same font, size and capitals as the main menu */
+.nav-links .nav-sub a:not(.book-button){display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:10px;font-size:clamp(.72rem,.9vw,.85rem);font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-align:left;color:#d7a468}
+.nav-links .nav-sub a:not(.book-button)::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;border:1px solid rgba(215,164,104,.6);background:transparent}
+.nav-links .nav-sub a:not(.book-button)::after{display:none}
+.nav-links .nav-sub a:not(.book-button) + a:not(.book-button){margin-top:2px}
+.nav-links .nav-sub a:not(.book-button):hover{background:rgba(215,164,104,.13);color:#f1cf9c}
+.nav-links .nav-sub a.is-active{background:rgba(215,164,104,.08);color:#f1cf9c}
+.nav-links .nav-sub a.is-active::before{background:#f1cf9c;border-color:#f1cf9c}
+
+.nav-links .nav-item--sub:hover .nav-sub,
+.nav-links .nav-item--sub:focus-within .nav-sub,
+.nav-links .nav-item--sub.is-open .nav-sub{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+@media (max-width:1180px){
+  .nav-links .nav-item--sub{flex-wrap:wrap;width:100%;justify-content:space-between}
+  .nav-links .nav-sub-toggle{width:36px;height:36px}
+  .nav-links .nav-sub{position:static;width:100%;min-width:0;margin:0 0 6px;padding:0 0 0 14px;border:0;border-left:1px solid rgba(201,160,106,.4);border-radius:0;background:transparent;box-shadow:none;transform:none;opacity:1;visibility:visible;display:none}
+  .nav-links .nav-sub::before,.nav-links .nav-sub::after{display:none}
+  .nav-links .nav-sub a:not(.book-button){padding:13px 10px;border-radius:8px}
+  .nav-links .nav-item--sub.is-open .nav-sub{display:block;transform:none}
+  .nav-links .nav-item--sub:hover .nav-sub,.nav-links .nav-item--sub:focus-within .nav-sub{transform:none}
+}

@@ -19,6 +19,7 @@
 @endif
 
 <footer class="cvf" id="footer">
+
     <div class="cvf-grid">
 
         <div class="cvf-col cvf-brand">

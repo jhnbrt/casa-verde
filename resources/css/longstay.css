@@ -361,3 +361,26 @@
     .ls-side__wide { aspect-ratio: 3 / 1.4; }
     .ls-strip { grid-template-columns: 1fr; }
 }
+
+
+/* ---------- Winterresidenz banner (leads to /winterresidenz) ---------- */
+.ls-winter {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    align-items: stretch;
+    margin-top: clamp(26px, 3.4vw, 50px);
+    background: #04201a;
+    border-top: 1px solid rgba(201, 160, 106, .45);
+    border-bottom: 1px solid rgba(201, 160, 106, .45);
+}
+.ls-winter__photo { display: block; width: 100%; height: 100%; min-height: 260px; max-height: 380px; object-fit: cover; }
+.ls-winter__copy { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 14px; padding: clamp(24px, 4vw, 60px); }
+.ls-winter__eyebrow { font-family: var(--ls-sans); font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: #bda982; }
+.ls-winter h2 { margin: 0; font-family: var(--ls-serif); font-weight: 500; font-size: clamp(1.7rem, 3vw, 2.8rem); letter-spacing: .04em; color: #e2b98a; line-height: 1.2; }
+.ls-winter p { margin: 0; max-width: 620px; font-family: var(--ls-serif); font-size: clamp(1.05rem, 1.4vw, 1.3rem); line-height: 1.6; color: #f1e8d6; }
+.ls-winter__btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding: 12px 28px; border: 2px solid #e2b98a; border-radius: 999px; color: #e2b98a; font-family: var(--ls-sans); font-size: .9rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; transition: background .25s, color .25s; }
+.ls-winter__btn:hover { background: #e2b98a; color: #06211b; }
+@media (max-width: 800px) {
+    .ls-winter { grid-template-columns: 1fr; }
+    .ls-winter__photo { max-height: 240px; }
+}

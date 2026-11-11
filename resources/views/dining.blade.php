@@ -11,6 +11,8 @@
     @vite([
         'resources/css/header.css',
         'resources/css/dining.css',
+        'resources/css/menubook.css',
+        'resources/js/menubook.js',
         'resources/css/theme.css',
         'resources/css/footer.css','resources/css/rule.css',
         'resources/js/app.js'
@@ -187,6 +189,17 @@
         [$heroTitle, $heroLine] = $lines($hero?->title);
         $info = $pc('dining_page_info');
         $menus = $pc('dining_page_menus');
+
+        // Food menu book: opened by the EXPLORE FOOD MENU button (link #food-menu). Without a cover image it is off.
+        $foodCover = $pc('dining_page_food_menu')->first();
+        $foodBook = $foodCover && filled($foodCover->image) && file_exists(public_path($foodCover->image));
+        $foodPages = $pc('dining_page_food_menu_pages')
+            ->filter(fn ($page): bool => filled($page->image) && file_exists(public_path($page->image)))
+            ->values();
+        $opensFoodBook = fn ($menu): bool => $foodBook && (
+            trim((string) $menu->button_url) === '#food-menu'
+            || (in_array(trim((string) $menu->button_url), ['', '#'], true) && str_contains(strtolower((string) $menu->button_text), 'food'))
+        );
     @endphp
 
     <main class="dining-page">
@@ -242,7 +255,11 @@
             <div class="dining-buttons">
                 @foreach($menus as $menu)
                     @if(filled($menu->button_text))
-                        <a href="{{ $href($menu->button_url ?: '#') }}" class="menu-button">{{ $menu->button_text }}</a>
+                        @if($opensFoodBook($menu))
+                            <a href="#food-menu" class="menu-button" role="button" data-menu-book="mb-food" aria-haspopup="dialog">{{ $menu->button_text }}</a>
+                        @else
+                            <a href="{{ $href($menu->button_url ?: '#') }}" class="menu-button">{{ $menu->button_text }}</a>
+                        @endif
                     @endif
                 @endforeach
             </div>
@@ -261,6 +278,17 @@
         </section>
 
     </main>
+
+    @if($foodBook)
+        @include('partials.menu-book', [
+            'id' => 'mb-food',
+            'title' => $foodCover->title ?: 'Food menu',
+            'cover' => $foodCover->image,
+            'hint' => $foodCover->button_text ?: 'Click here',
+            'help' => $foodCover->description,
+            'pages' => $foodPages,
+        ])
+    @endif
 
     @include('layouts.footer')
 

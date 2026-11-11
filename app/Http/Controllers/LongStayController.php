@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HomeContent;
+use App\Support\WinterResidence;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -48,6 +49,7 @@ class LongStayController extends Controller
             'panels' => $this->panels($contents, $defaults['panels']),
             'gallery' => $this->gallery($contents->get('long_stay_gallery', collect()), $defaults['gallery']),
             'bar' => $this->bar($contents->get('long_stay_bar', collect())->first(), $defaults['bar']),
+            'winter' => $this->winterBanner($contents),
         ];
     }
 
@@ -186,6 +188,38 @@ class LongStayController extends Controller
             'text' => $text,
             // Left empty in the admin, the second (italic) line is only the default when the first line is too.
             'text_second' => $row ? (string) $row->subtitle : $defaults['text_second'],
+            'button_text' => $row?->button_text ?: $defaults['button_text'],
+            'button_url' => $row?->button_url ?: $defaults['button_url'],
+        ];
+    }
+
+    /**
+     * The banner that leads to the Winterresidenz page: what is saved in the admin over the
+     * defaults in config/winter.php. Null (no banner) when the banner or the page is switched off.
+     *
+     * @param  Collection<string, Collection<int, HomeContent>>  $contents
+     * @return array<string, mixed>|null
+     */
+    protected function winterBanner(Collection $contents): ?array
+    {
+        if (! WinterResidence::isVisible()) {
+            return null;
+        }
+
+        $defaults = config('winter.teaser');
+        $saved = HomeContent::where('section', 'long_stay_winter')->orderBy('sort_order')->get();
+
+        if ($saved->isNotEmpty() && $saved->where('active', true)->isEmpty()) {
+            return null;
+        }
+
+        $row = $saved->where('active', true)->first();
+
+        return [
+            'eyebrow' => $row ? (string) $row->subtitle : $defaults['eyebrow'],
+            'title' => $row?->title ?: $defaults['title'],
+            'text' => $row ? (string) $row->description : $defaults['text'],
+            'image' => $row?->image ?: $defaults['image'],
             'button_text' => $row?->button_text ?: $defaults['button_text'],
             'button_url' => $row?->button_url ?: $defaults['button_url'],
         ];

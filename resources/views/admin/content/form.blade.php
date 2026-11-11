@@ -60,7 +60,26 @@
                     @if ($show('subtitle'))
                     <div>
                         <label for="subtitle" class="field-label">{{ $label('subtitle', 'Subtitle') }}</label>
-                        <textarea id="subtitle" name="subtitle" rows="2" class="field-input">{{ old('subtitle', $item->subtitle) }}</textarea>
+                        @if (! empty($meta['tab_select']))
+                            @php
+                                // Winterresidenz: pick the tab by name instead of typing its number.
+                                $tabChoices = \App\Support\WinterResidence::tabChoices();
+                                $currentTab = trim((string) old('subtitle', $item->subtitle));
+                                $knownTab = $currentTab === '' || isset($tabChoices[(int) $currentTab]) && (string) (int) $currentTab === $currentTab
+                                    || collect($tabChoices)->contains(fn (string $name): bool => strcasecmp($name, $currentTab) === 0);
+                            @endphp
+                            <select id="subtitle" name="subtitle" class="field-input">
+                                <option value="">Choose a tab…</option>
+                                @foreach ($tabChoices as $number => $name)
+                                    <option value="{{ $number }}" @selected($currentTab === (string) $number || strcasecmp($currentTab, $name) === 0)>{{ $number }} – {{ $name }}</option>
+                                @endforeach
+                                @unless ($knownTab)
+                                    <option value="{{ $currentTab }}" selected>{{ $currentTab }} (no tab with this number)</option>
+                                @endunless
+                            </select>
+                        @else
+                            <textarea id="subtitle" name="subtitle" rows="2" class="field-input">{{ old('subtitle', $item->subtitle) }}</textarea>
+                        @endif
                         @if ($hint('subtitle'))
                             <p class="field-hint">{{ $hint('subtitle') }}</p>
                         @endif

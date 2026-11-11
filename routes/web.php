@@ -12,6 +12,7 @@ use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VillaController;
 use App\Http\Controllers\WellnessController;
+use App\Http\Controllers\WinterController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AiChatController;
 use App\Http\Controllers\BookingController;
@@ -36,6 +37,7 @@ Route::get('/experiences', [ExperienceController::class, 'index'])->name('experi
 Route::get('/wellness', [WellnessController::class, 'index'])->name('wellness.index');
 Route::get('/dining', [DiningController::class, 'index'])->name('dining.index');
 Route::get('/long-stay', [LongStayController::class, 'index'])->name('longstay.index');
+Route::get('/winterresidenz', [WinterController::class, 'index'])->name('winter.index');
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])
