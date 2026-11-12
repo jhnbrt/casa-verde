@@ -193,9 +193,7 @@
         // Food menu book: opened by the EXPLORE FOOD MENU button (link #food-menu). Without a cover image it is off.
         $foodCover = $pc('dining_page_food_menu')->first();
         $foodBook = $foodCover && filled($foodCover->image) && file_exists(public_path($foodCover->image));
-        $foodPages = $pc('dining_page_food_menu_pages')
-            ->filter(fn ($page): bool => filled($page->image) && file_exists(public_path($page->image)))
-            ->values();
+        $foodPages = $foodBook ? \App\Support\FoodMenu::pages($contents) : [];
         $opensFoodBook = fn ($menu): bool => $foodBook && (
             trim((string) $menu->button_url) === '#food-menu'
             || (in_array(trim((string) $menu->button_url), ['', '#'], true) && str_contains(strtolower((string) $menu->button_text), 'food'))

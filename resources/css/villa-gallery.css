@@ -36,7 +36,8 @@
 .villa-photo-open:focus-visible .villa-photo-count { background: rgba(6, 33, 27, .92); }
 .villa-photo-open:focus-visible { outline: 2px solid #c9a06a; outline-offset: 3px; }
 
-html.vm-lock { overflow: hidden; }
+/* Keep the viewport width unchanged when the villa gallery opens/closes.
+   The native <dialog>.showModal() handles modal interaction. */
 
 .vm {
     width: 100vw;

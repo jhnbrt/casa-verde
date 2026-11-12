@@ -60,21 +60,22 @@
                     @if ($show('subtitle'))
                     <div>
                         <label for="subtitle" class="field-label">{{ $label('subtitle', 'Subtitle') }}</label>
-                        @if (! empty($meta['tab_select']))
+                        @if (! empty($meta['select_source']))
                             @php
-                                // Winterresidenz: pick the tab by name instead of typing its number.
-                                $tabChoices = \App\Support\WinterResidence::tabChoices();
-                                $currentTab = trim((string) old('subtitle', $item->subtitle));
-                                $knownTab = $currentTab === '' || isset($tabChoices[(int) $currentTab]) && (string) (int) $currentTab === $currentTab
-                                    || collect($tabChoices)->contains(fn (string $name): bool => strcasecmp($name, $currentTab) === 0);
+                                // The link to another list (a Winterresidenz tab, a menu category) is picked by name.
+                                $choice = \App\Support\AdminChoices::for($meta['select_source']);
+                                $currentChoice = trim((string) old('subtitle', $item->subtitle));
+                                $knownChoice = $currentChoice === ''
+                                    || array_key_exists($currentChoice, $choice['options'])
+                                    || collect($choice['options'])->contains(fn (string $name): bool => strcasecmp($name, $currentChoice) === 0);
                             @endphp
                             <select id="subtitle" name="subtitle" class="field-input">
-                                <option value="">Choose a tab…</option>
-                                @foreach ($tabChoices as $number => $name)
-                                    <option value="{{ $number }}" @selected($currentTab === (string) $number || strcasecmp($currentTab, $name) === 0)>{{ $number }} – {{ $name }}</option>
+                                <option value="">{{ $choice['label'] }}</option>
+                                @foreach ($choice['options'] as $value => $name)
+                                    <option value="{{ $value }}" @selected($currentChoice === (string) $value || strcasecmp($currentChoice, $name) === 0)>{{ is_int($value) && $meta['select_source'] === 'winter_tabs' ? $value.' – ' : '' }}{{ $name }}</option>
                                 @endforeach
-                                @unless ($knownTab)
-                                    <option value="{{ $currentTab }}" selected>{{ $currentTab }} (no tab with this number)</option>
+                                @unless ($knownChoice)
+                                    <option value="{{ $currentChoice }}" selected>{{ $currentChoice }} (not in the list)</option>
                                 @endunless
                             </select>
                         @else

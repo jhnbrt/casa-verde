@@ -16,7 +16,7 @@
         'resources/js/app.js'
     ])
 </head>
-<body>
+<body data-no-photo-viewer>
     @include('layouts.header')
     @php
         $img = fn (?string $path, string $fallback = 'images/main.jpg') => asset($path && file_exists(public_path($path)) ? $path : $fallback);
@@ -84,8 +84,8 @@
                                         <p class="rv-card__place">{{ $review['place'] }}</p>
                                     @endif
                                 </div>
-                                <div class="rv-card__photo">
-                                    <img src="{{ $img($review['image']) }}" alt="" loading="{{ $loop->first ? 'eager' : 'lazy' }}">
+                                <div class="rv-card__photo" data-rv-photo>
+                                    <img src="{{ $img($review['image']) }}" alt="Photo accompanying {{ $review['name'] }} review" loading="{{ $loop->first ? 'eager' : 'lazy' }}">
                                 </div>
                             </div>
                         </article>

@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('[data-vm-open]').forEach((button) => {
         button.addEventListener('click', () => {
-            document.getElementById(button.dataset.vmOpen)?.showModal();
+            const dialog = document.getElementById(button.dataset.vmOpen);
+            if (!dialog || dialog.open) return;
+            dialog.showModal();
         });
     });
 });
@@ -74,13 +76,11 @@ function initGallery(dialog) {
     stage.addEventListener('pointercancel', () => { startX = null; });
 
     // The page behind stays still while the gallery is open; it always starts on the first photo.
-    dialog.addEventListener('close', () => document.documentElement.classList.remove('vm-lock'));
-    new MutationObserver(() => {
-        if (dialog.open) {
-            document.documentElement.classList.add('vm-lock');
-            go(0);
-        }
-    }).observe(dialog, { attributes: true, attributeFilter: ['open'] });
+    // Native modal dialogs already prevent interaction with the page behind them.
+    // Avoid changing <html> overflow: it can alter viewport width and break the header.
+    dialog.addEventListener('close', () => {
+        go(0);
+    });
 
     render();
 }

@@ -86,14 +86,164 @@ Every meal becomes a memory.',
         [
             'title' => 'Food menu',
             'image' => 'images/dining/menu/cover.jpg',
-            'button_text' => 'Click here',
+            'subtitle' => 'Casa Verde Cliff Resort & Spa',
+            'button_text' => 'Open Menu',
             'description' => 'Click the arrows or a page, or swipe, to turn the pages.',
         ],
     ],
 
+    // Menu categories: each one is the heading of its pages (two dishes per page, new pages are added as dishes are).
+    // "subtitle" = dishes per page (1 to 4, empty = 2), "description" = small label above the heading (optional).
+    'dining_page_food_menu_categories' => [
+        ['title' => 'Mains', 'subtitle' => '2'],
+        ['title' => 'Pizza', 'subtitle' => '2'],
+        ['title' => 'Pasta', 'subtitle' => '2'],
+        ['title' => 'Kids', 'subtitle' => '2'],
+        ['title' => 'Burgers and Sandwiches', 'subtitle' => '2'],
+        ['title' => 'Filipino', 'subtitle' => '2'],
+    ],
+
+    // Dishes of the book. "subtitle" is the category (its name here; the admin stores the category itself).
+    // "features" are the dietary icons: seafood, pork, chili, chicken, beef, nuts, cheese.
+    'dining_page_food_menu_dishes' => [
+        [
+            'title' => 'Salmon Steak', 'subtitle' => 'Mains', 'price' => 695, 'features' => ['seafood'],
+            'description' => 'Perfectly pan-grilled salmon steak topped with lemon garlic butter sauce, served with roasted pumpkin for a light yet flavorful finish.',
+            'image' => 'images/dining/menu/dishes/salmon-steak.jpg',
+        ],
+        [
+            'title' => 'Beef Goulash', 'subtitle' => 'Mains', 'price' => 745, 'features' => ['beef'],
+            'description' => 'Slow-cooked tender beef in a rich red wine sauce, served with buttered boiled potatoes and French bread for a hearty, comforting classic.',
+            'image' => 'images/dining/menu/dishes/beef-goulash.jpg',
+        ],
+        [
+            'title' => 'Chicken Curry', 'subtitle' => 'Mains', 'price' => 595, 'features' => ['chicken', 'chili'],
+            'description' => 'Tender chicken simmered in coconut milk with ginger and fish sauce, with chunky potatoes, carrots, and bell peppers for a rich, comforting curry.',
+            'image' => 'images/dining/menu/dishes/chicken-curry.jpg',
+        ],
+        [
+            'title' => 'Chicken Parmy Katsu Style', 'subtitle' => 'Mains', 'price' => 660, 'features' => ['chicken'],
+            'description' => 'Breaded fried chicken served with buttered mixed vegetables and Asian-style egg fried rice.',
+            'image' => 'images/dining/menu/dishes/chicken-parmy-katsu.jpg',
+        ],
+        [
+            'title' => 'Chicken Schnitzel Cordon Bleu', 'subtitle' => 'Mains', 'price' => 695, 'features' => ['chicken'],
+            'description' => 'Crispy breaded chicken breast, golden-fried and topped with red schnitzel sauce, served with buttered vegetables and creamy mashed potatoes.',
+            'image' => 'images/dining/menu/dishes/chicken-schnitzel-cordon-bleu.jpg',
+        ],
+        [
+            'title' => 'Buttered Garlic Shrimp', 'subtitle' => 'Mains', 'price' => 695, 'features' => ['seafood'],
+            'description' => 'Succulent shrimp sautéed in rich garlic butter, served with buttered mixed vegetables and homemade fried potatoes for a hearty, satisfying plate.',
+            'image' => 'images/dining/menu/dishes/buttered-garlic-shrimp.jpg',
+        ],
+        [
+            'title' => 'Quatroformaggi', 'subtitle' => 'Pizza', 'price' => 980, 'features' => ['cheese'],
+            'description' => 'A rich Italian pie featuring a combination of four distinct cheeses, offering a balanced blend of creamy and nutty flavors.',
+            'image' => 'images/dining/menu/dishes/quatroformaggi.jpg',
+        ],
+        [
+            'title' => 'Meat Lovers', 'subtitle' => 'Pizza', 'price' => 980, 'features' => ['cheese', 'pork', 'beef'],
+            'description' => 'Hearty pizza loaded with savory beef, sausage, bacon, ham, and ground beef over rich marinara sauce and melted mozzarella cheese. Bold, satisfying, and crafted for true meat enthusiasts.',
+            'image' => 'images/dining/menu/dishes/meat-lovers.jpg',
+        ],
+        [
+            'title' => 'Prosciutto de Parma', 'subtitle' => 'Pizza', 'price' => 850, 'features' => ['pork', 'cheese'],
+            'description' => 'Traditional pizza base with authentic marinara sauce and melted mozzarella, finished with delicate slices of prosciutto, a drizzle of extra virgin olive oil, and pesto. Elegant, aromatic, and distinctly Italian.',
+            'image' => 'images/dining/menu/dishes/prosciutto-de-parma.jpg',
+        ],
+        [
+            'title' => 'Hawaiian', 'subtitle' => 'Pizza', 'price' => 850, 'features' => ['pork', 'cheese'],
+            'description' => 'Pizza dough layered with authentic Italian marinara sauce and mozzarella cheese, topped with sliced ham, sweet pineapple chunks, bell peppers, onions, and finished with a drizzle of olive oil. A perfect balance of savory and sweet.',
+            'image' => 'images/dining/menu/dishes/hawaiian.jpg',
+        ],
+        [
+            'title' => 'Vegetarian', 'subtitle' => 'Pizza', 'price' => 750, 'features' => ['cheese'],
+            'description' => 'Freshly baked pizza topped with marinara sauce, melted mozzarella, and a vibrant medley of bell peppers, onions, mushrooms, and olives. Light, flavorful, and full of garden freshness.',
+            'image' => 'images/dining/menu/dishes/vegetarian.jpg',
+        ],
+        [
+            'title' => 'Margherita', 'subtitle' => 'Pizza', 'price' => 650, 'features' => ['cheese'],
+            'description' => 'Traditionally created in Naples, Italy, it offers a balance of tangy, bright tomato flavor combined with creamy mozzarella and aromatic basil.',
+            'image' => 'images/dining/menu/dishes/margherita.jpg',
+        ],
+        [
+            'title' => 'Seafood Linguini', 'subtitle' => 'Pasta', 'price' => 555, 'features' => ['seafood'],
+            'description' => 'Linguini pasta tossed with fresh salmon and peeled shrimp in a creamy white wine sauce, infused with garlic and onions, finished with a touch of truffle oil and grated Parmesan cheese. Served with warm bread.',
+            'image' => 'images/dining/menu/dishes/seafood-linguini.jpg',
+        ],
+        [
+            'title' => 'Carbonara', 'subtitle' => 'Pasta', 'price' => 450, 'features' => ['pork', 'cheese'],
+            'description' => 'Perfectly cooked pasta enveloped in a velvety blend of cream, Parmesan, and egg, layered with smoky bacon and tender ham, finished with cracked black pepper. Luxurious yet balanced.',
+            'image' => 'images/dining/menu/dishes/carbonara.jpg',
+        ],
+        [
+            'title' => 'Agli Olio', 'subtitle' => 'Pasta', 'price' => 400, 'features' => ['chili', 'cheese'],
+            'description' => 'Aldente spaghetti tossed in fragrant olive oil with sautéed garlic and chili flakes, finished with Parmesan cheese and parsley. Served with warm bread.',
+            'image' => 'images/dining/menu/dishes/agli-olio.jpg',
+        ],
+        [
+            'title' => 'Fried Chicken Nibblers', 'subtitle' => 'Kids', 'price' => 365, 'features' => ['chicken', 'cheese'],
+            'description' => '',
+            'image' => 'images/dining/menu/dishes/fried-chicken-nibblers.jpg',
+        ],
+        [
+            'title' => 'Mac & Cheese', 'subtitle' => 'Kids', 'price' => 350, 'features' => ['cheese'],
+            'description' => '',
+            'image' => 'images/dining/menu/dishes/mac-and-cheese.jpg',
+        ],
+        [
+            'title' => 'Casa Verde Monster Burger', 'subtitle' => 'Burgers and Sandwiches', 'price' => 695, 'features' => ['beef'],
+            'description' => 'A juicy beef patty layered with melted cheddar, fresh lettuce, tomato, cucumber, and pickles in a soft black bun, served with crispy French fries and ketchup.',
+            'image' => 'images/dining/menu/dishes/casa-verde-monster-burger.jpg',
+        ],
+        [
+            'title' => 'Crazy Devil Chicken Burger', 'subtitle' => 'Burgers and Sandwiches', 'price' => 550, 'features' => ['chicken'],
+            'description' => 'Crispy chicken breast layered with melted cheddar, fresh lettuce, tomato, and cucumber in a toasted bun, served with golden French fries and ketchup for a bold, satisfying bite.',
+            'image' => 'images/dining/menu/dishes/crazy-devil-chicken-burger.jpg',
+        ],
+        [
+            'title' => 'Sunset Clubhouse Sandwich', 'subtitle' => 'Burgers and Sandwiches', 'price' => 550, 'features' => ['pork'],
+            'description' => 'A classic triple-layer club sandwich stacked with crispy bacon, ham, egg, fresh lettuce, tomato, and cucumber, spread with creamy mayo and served with golden French fries.',
+            'image' => 'images/dining/menu/dishes/sunset-clubhouse-sandwich.jpg',
+        ],
+        [
+            'title' => 'Chopsuey', 'subtitle' => 'Filipino', 'price' => 375, 'features' => [],
+            'description' => 'Fresh mixed vegetables, carrots, sayote, bell peppers, and cabbage, stir-fried in garlic and savory oyster sauce for a light yet flavorful classic chop suey.',
+            'image' => 'images/dining/menu/dishes/chopsuey.jpg',
+        ],
+        [
+            'title' => 'Stir Fried Noodles', 'subtitle' => 'Filipino', 'price' => 565, 'features' => ['chicken', 'seafood'],
+            'description' => 'A hearty combination of canton and sotanghon noodles stir-fried with chicken, shrimp, and squid balls, tossed with fresh vegetables in a rich, savory sauce, locally known as Bam-E.',
+            'image' => 'images/dining/menu/dishes/stir-fried-noodles.jpg',
+        ],
+        [
+            'title' => 'Beef Pochero', 'subtitle' => 'Filipino', 'price' => 599, 'features' => ['beef'],
+            'description' => 'Slow-simmered beef shank with sweet corn, potatoes, chili finger, string beans, cabbage, and onions, a hearty and comforting Cebuano-style pochero rich in flavor.',
+            'image' => 'images/dining/menu/dishes/beef-pochero.jpg',
+        ],
+        [
+            'title' => 'Spring Fried Chicken', 'subtitle' => 'Filipino', 'price' => 660, 'features' => ['chicken'],
+            'description' => 'Crispy golden fried chicken marinated in calamansi and garlic, deep-fried to juicy perfection. Served with our rich, homemade brown gravy for that classic Filipino comfort flavor.',
+            'image' => 'images/dining/menu/dishes/spring-fried-chicken.jpg',
+        ],
+    ],
+
+    // Dietary icons: "title" is the name used in a dish's icon list, "subtitle" the label under the icon,
+    // "image" an optional uploaded icon (without one the built-in drawing is used).
+    'dining_page_food_menu_icons' => [
+        ['title' => 'seafood', 'subtitle' => 'Seafood'],
+        ['title' => 'pork', 'subtitle' => 'Pork'],
+        ['title' => 'chili', 'subtitle' => 'Chili'],
+        ['title' => 'chicken', 'subtitle' => 'Chicken'],
+        ['title' => 'beef', 'subtitle' => 'Beef'],
+        ['title' => 'nuts', 'subtitle' => 'Nuts'],
+        ['title' => 'cheese', 'subtitle' => 'Cheese'],
+    ],
+
+    // Optional extra pages that are a single picture (for example a printed page); shown after the dishes.
+    // "subtitle" = the category after which the page appears (empty: at the very end of the book).
     'dining_page_food_menu_pages' => [
-        ['title' => 'Mains', 'image' => 'images/dining/menu/mains-1.jpg'],
-        ['title' => 'Mains', 'image' => 'images/dining/menu/mains-2.jpg'],
+        ['title' => 'Menu: Appetizer, Soup and Salad', 'subtitle' => '', 'image' => 'images/dining/menu/pages/menu-appetizer-soup-salad.jpg'],
     ],
 
     'experiences_page_hero' => [

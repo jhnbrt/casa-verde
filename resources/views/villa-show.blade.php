@@ -83,9 +83,6 @@
                     <strong>PHP {{ number_format($villa->price) }}</strong>
                     <span class="vs-per">
                         {{ $L(9) }}
-                        @if($usd)
-                            / {{ $L(10) }} {{ $usd }}
-                        @endif
                     </span>
                 </p>
             @endif

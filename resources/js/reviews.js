@@ -66,7 +66,8 @@ function initCarousel(reduceMotion) {
     avatars.forEach((avatar, index) => avatar.addEventListener('click', () => { takeOver(); go(index); }));
 
     // Clicking a side card brings it to the middle.
-    slides.forEach((slide, index) => slide.addEventListener('click', () => {
+    slides.forEach((slide, index) => slide.addEventListener('click', (event) => {
+        if (event.target.closest('[data-rv-photo]')) return;
         if (offsetOf(index) !== 0) { takeOver(); go(index); }
     }));
 

@@ -1,0 +1,1 @@
+<svg class="mbp-ornament" viewBox="0 0 120 16" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M2 8h8m100 0h8"/><path d="M12 8c4-6 10-6 14 0-4 6-10 6-14 0Zm4 0c2-3 5-3 7 0m81 0c-4-6-10-6-14 0 4 6 10 6 14 0Zm-4 0c-2-3-5-3-7 0"/><path d="M30 8h24m12 0h24"/><circle cx="60" cy="8" r="3" fill="currentColor"/></svg>

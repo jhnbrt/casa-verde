@@ -431,9 +431,6 @@ $contactFooter = $contents
                     @if($villa->price)
                         <p class="villa-price">
                             From PHP {{ number_format($villa->price) }}
-                            @if($villaUsd)
-                                | approx. USD {{ $villaUsd }}
-                            @endif
                             per night
                         </p>
                     @endif

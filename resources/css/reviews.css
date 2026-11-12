@@ -233,3 +233,6 @@
     .rv-form__row { grid-template-columns: 1fr; }
     .rv-rate label .rv-star { width: 34px; height: 34px; }
 }
+
+/* Review images are decorative and do not open a photo viewer. */
+.rv-card__photo { cursor: default; }

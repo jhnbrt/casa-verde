@@ -18,6 +18,22 @@ use App\Http\Controllers\AiChatController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/currency-rates', function () {
+    $currencies = ['PHP', 'USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY', 'SGD', 'KRW', 'CNY', 'HKD', 'AED', 'INR', 'NZD'];
+    $rates = \Illuminate\Support\Facades\Cache::remember('casa_currency_rates_v1', now()->addHours(12), function () use ($currencies) {
+        try {
+            $response = \Illuminate\Support\Facades\Http::timeout(6)->get('https://api.frankfurter.dev/v1/latest', ['base' => 'PHP']);
+            if (! $response->successful()) return null;
+            $data = $response->json('rates');
+            if (! is_array($data) || ! isset($data['USD'])) return null;
+            return array_intersect_key($data, array_flip($currencies)) + ['PHP' => 1];
+        } catch (\Throwable $e) {
+            return null;
+        }
+    });
+    return response()->json(['base' => 'PHP', 'rates' => $rates ?: ['PHP' => 1], 'available' => (bool) $rates]);
+})->middleware('throttle:30,1')->name('currency.rates');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('/ai-chat', [AiChatController::class, 'reply'])
