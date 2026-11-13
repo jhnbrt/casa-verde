@@ -38,6 +38,7 @@ return [
         'yoga' => ['label' => 'Yoga Reset', 'match' => ['yoga'], 'url' => '/yoga-reset'],
         'offers' => ['label' => 'Special offers', 'match' => ['offers'], 'url' => '/special-offers'],
         'reviews' => ['label' => 'Reviews', 'match' => ['reviews'], 'url' => '/reviews'],
+        'journal' => ['label' => 'Journal', 'match' => ['journal'], 'url' => '/blog'],
         'booking' => ['label' => 'Booking', 'match' => ['booking'], 'url' => '/book'],
         'assistant' => ['label' => 'Chat & offers', 'match' => ['ai_chat', 'chat_faq', 'offer_popup'], 'url' => '/'],
         'gallery' => ['label' => 'Gallery', 'match' => ['gallery'], 'url' => '/gallery'],
@@ -660,6 +661,37 @@ return [
             'help' => 'The banner at the bottom. The first entry sets the heading and background photo; every entry adds one button.',
             'fields' => ['title' => 'Heading (first entry only)', 'image' => 'Background photo (first entry only)', 'button_text' => 'Button text', 'button_url' => 'Button link'],
             'hide' => ['subtitle', 'description', 'icon', 'price', 'features'],
+        ],
+
+        // ---- Journal (articles) -----------------------------------------------
+        'journal_header' => [
+            'title' => 'Page heading and wording',
+            'help' => 'The heading and tagline at the top of the Journal page, and the small wording around the articles. Leave a field empty to keep the standard wording.',
+            'fields' => ['title' => 'Heading', 'description' => 'Tagline under the heading', 'button_text' => 'Link text on each article card', 'subtitle' => 'Heading of the other articles at the bottom of an article'],
+            'hints' => [
+                'button_text' => 'Standard: Read Article',
+                'subtitle' => 'Standard: More Stories',
+            ],
+            'hide' => ['image', 'icon', 'price', 'features', 'button_url'],
+        ],
+        'journal_articles' => [
+            'title' => 'Articles',
+            'help' => 'One entry per article, in the order shown on the Journal page (use the position number to move one up or down; newest first is usual). Each article gets its own page. Switch an entry off to hide it without deleting it. Add more photos to an article under "Journal: article photos".',
+            'fields' => ['title' => 'Article title', 'subtitle' => 'Date (for example August 06, 2026)', 'image' => 'Main photo', 'button_text' => 'Short text on the Journal page (optional)', 'description' => 'Article text'],
+            'hints' => [
+                'description' => 'Write the whole article here. Leave an empty line between paragraphs. Formatting: start a line with ## for a heading ### for a smaller heading or #### for an even smaller one (for example: ## Getting there); start lines with - for a bullet list; put **two stars** around words to make them bold.',
+                'image' => 'A landscape photo (about 1600 x 1000 px). It is the picture on the article card and at the top of the article.',
+                'button_text' => 'The couple of lines shown on the card. Leave empty to use the first lines of the article text.',
+            ],
+            'hide' => ['icon', 'price', 'features', 'button_url'],
+        ],
+        'journal_photos' => [
+            'title' => 'Article photos',
+            'help' => 'Extra photos shown in a gallery under an article. Add one entry per photo, choose the article it belongs to, and upload the photo. Photos appear in the order of the position number.',
+            'fields' => ['title' => 'Caption (optional)', 'subtitle' => 'Article', 'image' => 'Photo'],
+            'hints' => ['image' => 'A landscape photo (about 1600 x 1000 px).'],
+            'select_source' => 'journal_articles',
+            'hide' => ['description', 'icon', 'price', 'features', 'button_text', 'button_url'],
         ],
 
         // ---- Reviews --------------------------------------------------------

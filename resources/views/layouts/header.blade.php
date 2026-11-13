@@ -18,6 +18,32 @@
         'about'       => 'about.index',
     ];
 
+    // Menu items that share one dropdown. Each stays its own row in the admin (Site-wide > Navigation: rename,
+    // reorder, switch on or off); the dropdown appears where the first of them is, and with fewer than two
+    // switched-on items they are shown as plain links.
+    $navGroup = ['label' => 'DISCOVER', 'slugs' => ['reviews', 'journal']];
+
+    $resolveNav = function ($nav) use ($routeFor) {
+        $slug = strtolower(trim($nav->title));
+
+        if (isset($routeFor[$slug])) {
+            return [
+                route($routeFor[$slug]),
+                request()->routeIs($routeFor[$slug], str_replace('.index', '.*', $routeFor[$slug])),
+            ];
+        }
+
+        // Section anchors (#about, #contact...) live on the home page, so they must work from every other page too.
+        $href = str_starts_with((string) $nav->button_url, '#') ? url('/') . $nav->button_url : (string) $nav->button_url;
+        $path = trim((string) parse_url($href, PHP_URL_PATH), '/');
+
+        return [$href, $path !== '' && request()->is($path, $path.'/*')];
+    };
+
+    $navRows = $contents->get('navigation', collect())->values();
+    $groupRows = $navRows->filter(fn ($nav) => in_array(strtolower(trim($nav->title)), $navGroup['slugs'], true))->values();
+    $groupFirst = $groupRows->count() >= 2 ? $groupRows->first()->id : null;
+
     // Pages that open from a dropdown under a menu item (the item itself still has its own page).
     $subNav = [];
 
@@ -59,22 +85,34 @@
 
     <nav id="primary-nav" class="nav-links" aria-label="Main">
 
-        @foreach($contents->get('navigation', collect()) as $nav)
+        @foreach($navRows as $nav)
+
+            @if($groupFirst !== null && in_array(strtolower(trim($nav->title)), $navGroup['slugs'], true))
+                @if($nav->id === $groupFirst)
+                    @php
+                        $groupItems = $groupRows->map(function ($row) use ($resolveNav) {
+                            [$gHref, $gActive] = $resolveNav($row);
+
+                            return ['title' => $row->title, 'href' => $gHref, 'active' => $gActive];
+                        });
+                        $groupActive = $groupItems->contains('active', true);
+                    @endphp
+                    <div class="nav-item nav-item--sub" data-nav-sub>
+                        <a href="{{ $groupItems->first()['href'] }}" @class(['is-active' => $groupActive]) @if($groupActive) aria-current="page" @endif>{{ \Illuminate\Support\Str::upper($navGroup['label']) }}</a>
+                        <button type="button" class="nav-sub-toggle" aria-expanded="false" aria-controls="nav-sub-discover" aria-label="Show {{ $navGroup['label'] }} pages" data-nav-sub-toggle><span aria-hidden="true"></span></button>
+                        <div class="nav-sub" id="nav-sub-discover">
+                            @foreach($groupItems as $sub)
+                                <a href="{{ $sub['href'] }}" @class(['is-active' => $sub['active']]) @if($sub['active']) aria-current="page" @endif>{{ $sub['title'] }}</a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+                @continue
+            @endif
 
             @php
                 $slug = strtolower(trim($nav->title));
-
-                if (isset($routeFor[$slug])) {
-                    $href   = route($routeFor[$slug]);
-                    $active = request()->routeIs($routeFor[$slug], str_replace('.index', '.*', $routeFor[$slug]));
-                } else {
-                    // Section anchors (#about, #contact...) live on the home page,
-                    // so they must work from every other page too.
-                    $href   = str_starts_with((string) $nav->button_url, '#')
-                        ? url('/') . $nav->button_url
-                        : $nav->button_url;
-                    $active = false;
-                }
+                [$href, $active] = $resolveNav($nav);
             @endphp
 
             @if(isset($subNav[$slug]))

@@ -6,6 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\LongStayController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\JournalController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\YogaController;
 use App\Http\Controllers\ExperienceController;
@@ -56,6 +57,8 @@ Route::get('/long-stay', [LongStayController::class, 'index'])->name('longstay.i
 Route::get('/winterresidenz', [WinterController::class, 'index'])->name('winter.index');
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::get('/blog', [JournalController::class, 'index'])->name('journal.index');
+Route::get('/blog/{slug}', [JournalController::class, 'show'])->where('slug', '[A-Za-z0-9\-_]+')->name('journal.show');
 Route::post('/reviews', [ReviewController::class, 'store'])
     ->middleware('throttle:5,10')
     ->name('reviews.store');

@@ -19,6 +19,7 @@ class AdminChoices
         return match ($source) {
             'winter_tabs' => ['label' => 'Choose a tab…', 'options' => WinterResidence::tabChoices()],
             'menu_categories' => ['label' => 'Choose a category…', 'options' => static::menuCategories()],
+            'journal_articles' => ['label' => 'Choose an article…', 'options' => static::journalArticles()],
             default => ['label' => 'Choose…', 'options' => []],
         };
     }
@@ -40,6 +41,22 @@ class AdminChoices
             return collect(config('pagecontent.dining_page_food_menu_categories', []))
                 ->mapWithKeys(fn (array $row): array => [(string) $row['title'] => (string) $row['title']])
                 ->all();
+        }
+
+        return $rows->mapWithKeys(fn (HomeContent $row): array => [$row->id => (string) $row->title])->all();
+    }
+
+    /**
+     * Journal articles as "id => title", for linking a photo to its article.
+     *
+     * @return array<int, string>
+     */
+    protected static function journalArticles(): array
+    {
+        try {
+            $rows = HomeContent::where('section', 'journal_articles')->orderBy('sort_order')->get();
+        } catch (Throwable) {
+            $rows = collect();
         }
 
         return $rows->mapWithKeys(fn (HomeContent $row): array => [$row->id => (string) $row->title])->all();
