@@ -27,18 +27,24 @@ class FoodMenu
     ];
 
     /**
-     * The pages in reading order. Each page is either
-     * ['type' => 'dishes', 'heading' => string, 'dishes' => [...]] or ['type' => 'image', 'image' => path, 'title' => string].
+     * The pages in reading order. Each page is
+     * ['type' => 'dishes', 'kicker' => string, 'heading' => string, 'dishes' => [...], 'legend' => [...], 'brand' => [...]].
+     *
+     * The book follows the admin: every category (in its saved order) becomes the heading of its pages, and
+     * the dishes that belong to it fill those pages, so a new dish or a new category simply adds pages.
+     * A category's "subtitle" is how many dishes fit on a page (1 to 4, empty = 2), its "description" is the
+     * small label above the heading.
+     *
+     * The printed menu below is only a safety net: a dish is never shown twice, and a dish whose saved
+     * category link is missing or stale (the category was deleted or switched off) lands in its printed
+     * category instead of disappearing.
      *
      * @param  Collection<string, Collection<int, HomeContent>>  $contents  active rows grouped by section
      * @return array<int, array<string, mixed>>
      */
     public static function pages(Collection $contents): array
     {
-        // The approved printed-menu references are the source of truth for this book.
-        // A title can only appear once, in its correct category, regardless of stale
-        // category links, old uploaded full-page images, or duplicate database rows.
-        $approved = [
+        $printed = [
             'Mains' => ['Chicken Parmy Katsu Style', 'Chicken Schnitzel Cordon Bleu', 'Buttered Garlic Shrimp', 'Salmon Steak', 'Beef Goulash', 'Chicken Curry'],
             'Filipino' => ['Chopsuey', 'Stir Fried Noodles', 'Beef Pochero', 'Spring Fried Chicken'],
             'Kids' => ['Fried Chicken Nibblers', 'Mac & Cheese'],
@@ -50,14 +56,43 @@ class FoodMenu
             'Appetizer' => ['Fish Ceviche', 'Crispy Calamari', 'French Fries', 'Gambas Al Ajillo', 'Spring Roll'],
         ];
 
-        $dishes = HomeContent::pageRows($contents, 'dining_page_food_menu_dishes')
-            ->filter(fn (HomeContent $row): bool => trim((string) $row->title) !== '');
-        $byName = [];
-        foreach ($dishes as $dish) {
+        $printedHeading = [];
+        foreach ($printed as $heading => $names) {
+            foreach ($names as $name) {
+                $printedHeading[static::menuTitleKey($name)] = $heading;
+            }
+        }
+
+        $categories = HomeContent::pageRows($contents, 'dining_page_food_menu_categories')
+            ->filter(fn (HomeContent $row): bool => trim((string) $row->title) !== '')
+            ->values();
+
+        // Keep the first active admin row of a dish name; never render duplicated dish records.
+        $dishes = [];
+        foreach (HomeContent::pageRows($contents, 'dining_page_food_menu_dishes') as $dish) {
+            if (trim((string) $dish->title) === '') {
+                continue;
+            }
+
             $key = static::menuTitleKey((string) $dish->title);
-            // Keep the first active admin row; never render duplicated dish records.
-            if (! isset($byName[$key])) {
-                $byName[$key] = $dish;
+
+            if (! isset($dishes[$key])) {
+                $dishes[$key] = $dish;
+            }
+        }
+
+        // Which category each dish belongs to: its saved link first, else its printed category.
+        $byCategory = [];
+        foreach ($dishes as $key => $dish) {
+            $index = $categories->search(fn (HomeContent $category): bool => static::belongsTo($dish, $category));
+
+            if ($index === false && isset($printedHeading[$key])) {
+                $heading = $printedHeading[$key];
+                $index = $categories->search(fn (HomeContent $category): bool => strcasecmp(trim((string) $category->title), $heading) === 0);
+            }
+
+            if ($index !== false) {
+                $byCategory[$index][] = $dish;
             }
         }
 
@@ -69,18 +104,16 @@ class FoodMenu
         ];
 
         $pages = [];
-        foreach ($approved as $heading => $names) {
-            $group = collect($names)
-                ->map(fn (string $name) => $byName[static::menuTitleKey($name)] ?? null)
-                ->filter()
-                ->values();
+        foreach ($categories as $index => $category) {
+            $perPage = (int) trim((string) $category->subtitle);
+            $perPage = $perPage >= 1 && $perPage <= 4 ? $perPage : self::PER_PAGE;
 
-            foreach ($group->chunk(self::PER_PAGE) as $chunk) {
+            foreach (array_chunk($byCategory[$index] ?? [], $perPage) as $chunk) {
                 $pages[] = [
                     'type' => 'dishes',
-                    'kicker' => '',
-                    'heading' => $heading,
-                    'dishes' => $chunk->map(fn (HomeContent $dish): array => static::dish($dish, $icons))->values()->all(),
+                    'kicker' => trim((string) $category->description),
+                    'heading' => trim((string) $category->title),
+                    'dishes' => array_map(fn (HomeContent $dish): array => static::dish($dish, $icons), $chunk),
                     'legend' => array_values($icons),
                     'brand' => $brand,
                 ];

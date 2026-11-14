@@ -46,6 +46,11 @@ test('the long stay page has a banner that leads to the winterresidenz page', fu
 });
 
 test('the content loads into the admin without overwriting edits', function () {
+    // the migrations already seed these sections; start from a clean slate
+    HomeContent::whereIn('section', [
+        'winter', 'winter_tabs', 'winter_badges', 'winter_prices', 'long_stay_winter',
+    ])->delete();
+
     HomeContent::create(['section' => 'winter', 'title' => 'Mein Winter', 'sort_order' => 1, 'active' => true]);
 
     app(WinterResidenceSeeder::class)->run();

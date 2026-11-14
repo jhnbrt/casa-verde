@@ -18,7 +18,7 @@ return [
         'eyebrow' => 'Yoga Reset at Casa Verde',
         'title' => 'Breathe. Stretch. Reset.',
         'text' => 'Guided yoga on the cliff edge, with the sea below and the morning sky above.',
-        'image' => 'images/experiences/hero.jpg',
+        'image' => null,
         'button_text' => 'Book your reset',
         'button_url' => '/#contact',
     ],
@@ -41,7 +41,7 @@ return [
             'title' => 'Sunrise Flow',
             'eyebrow' => '6:00 AM · 60 min · All levels',
             'text' => 'Wake up softly with an energising flow as the sun rises over the water.',
-            'image' => 'images/wellness4.jpg',
+            'image' => null,
             'icon' => 'lotus',
             'button_text' => 'Discover more',
             'button_url' => '/#contact',
@@ -50,7 +50,7 @@ return [
             'title' => 'Sunset Restore',
             'eyebrow' => '5:00 PM · 60 min · Gentle',
             'text' => 'Slow, restorative poses and breathwork to close the day in stillness.',
-            'image' => 'images/exp1.jpg',
+            'image' => null,
             'icon' => 'lotus',
             'button_text' => 'Discover more',
             'button_url' => '/#contact',
@@ -59,7 +59,7 @@ return [
             'title' => 'Private Sessions',
             'eyebrow' => 'By appointment · 60 min · Any level',
             'text' => 'One-to-one or small-group classes shaped around your pace and goals.',
-            'image' => 'images/dining3.jpg',
+            'image' => null,
             'icon' => 'lotus',
             'button_text' => 'Discover more',
             'button_url' => '/#contact',
@@ -91,7 +91,7 @@ return [
         'eyebrow' => 'Your pace',
         'title' => 'Practice that fits your stay.',
         'text' => 'Drop in for a single class or build a full reset into your visit. Our team will help you choose the sessions that suit you best.',
-        'image' => 'images/dining3.jpg',
+        'image' => null,
         'button_text' => 'Start your reset',
         'button_url' => '/#contact',
     ],
@@ -104,11 +104,29 @@ return [
 
     'cta' => [
         'title' => 'Ready for your Yoga Reset?',
-        'image' => 'images/experiences/hero.jpg',
+        'image' => null,
         'buttons' => [
             ['text' => 'Book your stay', 'url' => '/book'],
             ['text' => 'Contact our team', 'url' => '/#contact'],
         ],
+    ],
+
+    // Shown in the "Good to know" section. Edited in the admin under Yoga Reset > Questions and answers.
+    'faq' => [
+        'eyebrow' => 'Good to know',
+        'title' => 'Questions, answered.',
+        'items' => [
+            ['title' => 'Do I need yoga experience?', 'text' => 'No. Our sessions welcome every level, from first-timers to daily practitioners.'],
+            ['title' => 'What should I bring?', 'text' => 'Mats and props are provided. Bring water and wear comfortable clothes you can move in.'],
+            ['title' => 'How do I reserve a class?', 'text' => 'Use the booking button on this page or message our team, and we will confirm your session.'],
+            ['title' => 'Where do the classes take place?', 'text' => 'On our open-air cliffside deck, with the sea in front of you.'],
+        ],
+    ],
+
+    // The teachers section only appears once at least one teacher is added in the admin.
+    'teachers' => [
+        'eyebrow' => 'Your guides',
+        'title' => 'Meet your teachers.',
     ],
 
 ];

@@ -11,7 +11,7 @@
   select.value = currency;
   let rates = {PHP:1};
   const fmt = (n, code) => new Intl.NumberFormat('en-US',{style:'currency',currency:code,minimumFractionDigits:code==='JPY'||code==='KRW'?0:2,maximumFractionDigits:code==='JPY'||code==='KRW'?0:2}).format(n);
-  const candidates = '.villa-price,.vs-price strong,.bk-price strong,.bk-price s,.bk-summary [data-bk-total],.bk-summary [data-bk-line-amount],.bk-summary [data-bk-save],[data-bk-total],[data-bk-line-amount],[data-bk-save],.mbp-price,.wr-amount strong';
+  const candidates = '.villa-price,.vs-price strong,.bk-price strong,.bk-price s,.bk-summary [data-bk-total],.bk-summary [data-bk-line-amount],.bk-summary [data-bk-save],[data-bk-total],[data-bk-line-amount],[data-bk-save],.mbp-price,.wr-amount strong,.yg-price';
   const pesoPattern = /(?:PHP\s*|₱\s*)([\d,]+(?:\.\d+)?)/gi;
   const amountPattern = /^\s*([\d,]+(?:\.\d+)?)\s*$/;
   function convertText(text, el) {

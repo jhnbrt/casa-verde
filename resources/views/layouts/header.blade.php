@@ -160,6 +160,43 @@
     </a>
 
 </header>
+<script>window.cvFitNav && window.cvFitNav();</script>
+<style>
+/* A short, even fade between pages (browsers without cross-page transitions just load the page as usual).
+   The header is deliberately NOT given its own transition layer: an open dropdown makes that layer a different
+   size from the one on the next page, and the header visibly jumped. */
+@view-transition { navigation: auto; }
+::view-transition-group(root) { animation-duration: .2s; }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+/* The moment a menu link is clicked, any open dropdown closes at once, so it cannot hang open (or reopen under
+   the mouse) while the next page loads. */
+.navbar.is-leaving .nav-sub { opacity: 0 !important; visibility: hidden !important; pointer-events: none; transition: none !important; }
+</style>
+<script>
+(function () {
+    var bar = document.querySelector('.navbar');
+    if (!bar) return;
+
+    var timer = null;
+
+    bar.addEventListener('click', function (e) {
+        var link = e.target.closest ? e.target.closest('a[href]') : null;
+
+        // Only a click that really opens another page: not a new tab, not a link to a place on this same page.
+        if (!link || e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (link.target && link.target !== '_self') return;
+        if (link.origin !== location.origin || (link.pathname === location.pathname && link.search === location.search)) return;
+
+        bar.classList.add('is-leaving');
+        clearTimeout(timer);
+        timer = setTimeout(function () { bar.classList.remove('is-leaving'); }, 1500);   // in case the visit is cancelled
+    });
+
+    // Coming back with the browser's Back button shows the page as it was left: open the dropdowns again.
+    window.addEventListener('pageshow', function () { bar.classList.remove('is-leaving'); });
+})();
+</script>
 <div id="cv-currency-control" class="cv-currency-control" aria-label="Display currency">
   <label for="cv-currency-select">Currency</label>
   <select id="cv-currency-select" aria-label="Choose display currency">

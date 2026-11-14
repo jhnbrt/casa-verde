@@ -595,7 +595,7 @@ return [
         // ---- Yoga Reset -----------------------------------------------------
         'yoga_hero' => [
             'title' => 'Top banner',
-            'help' => 'The large photo and headline at the top of the Yoga Reset page.',
+            'help' => 'The headline at the top of the Yoga Reset page. The photo is optional: a wide photo at least 900 px across (1600 px is ideal) appears beside the headline, a smaller one is hidden to keep the page sharp.',
             'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Intro text', 'image' => 'Banner photo', 'button_text' => 'Button text', 'button_url' => 'Button link'],
             'hide' => ['icon', 'price', 'features'],
         ],
@@ -614,10 +614,10 @@ return [
         ],
         'yoga_types' => [
             'title' => 'Session cards',
-            'help' => 'One entry per card (Sunrise Flow, Sunset Restore, Private Sessions). Replace the photo to change the card image.',
-            'fields' => ['title' => 'Card title', 'subtitle' => 'Details (separate with ·)', 'description' => 'Short description', 'image' => 'Card photo', 'icon' => 'Icon', 'button_text' => 'Button text', 'button_url' => 'Button link'],
-            'hints' => ['icon' => 'An emoji (🧘) or an icon name: lotus.', 'subtitle' => 'Shown as small tags, for example: 6:00 AM · 60 min · All levels'],
-            'hide' => ['price', 'features'],
+            'help' => 'One entry per class card (Sunrise Flow, Sunset Restore, Private Sessions). Add or remove cards freely; the page adapts. A photo is optional: photos narrower than 480 px are hidden to keep the page sharp.',
+            'fields' => ['title' => 'Card title', 'subtitle' => 'Details (separate with ·)', 'description' => 'Short description', 'image' => 'Card photo', 'icon' => 'Icon', 'button_text' => 'Button text', 'button_url' => 'Button link', 'price' => 'Price per person in ₱ (optional)'],
+            'hints' => ['icon' => 'An emoji (🧘) or an icon name: lotus.', 'subtitle' => 'Shown as small tags, for example: 6:00 AM · 60 min · All levels', 'price' => 'Leave empty to hide the price. It is shown in the visitor\'s chosen currency.'],
+            'hide' => ['features'],
         ],
         'yoga_schedule_header' => [
             'title' => 'Daily rhythm heading',
@@ -644,21 +644,45 @@ return [
             'hints' => ['icon' => 'An emoji (🌴) or an icon name: cliff, cloche, clipboard, island.'],
             'hide' => ['subtitle', 'image', 'price', 'features', 'button_text', 'button_url'],
         ],
+        'yoga_teachers_header' => [
+            'title' => 'Teachers heading',
+            'help' => 'The small label and heading above the teachers. The whole section stays hidden until you add at least one teacher below.',
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading'],
+            'hide' => ['description', 'icon', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_teachers' => [
+            'title' => 'Teachers',
+            'help' => 'One entry per teacher. Add real teachers only; nothing is shown until you do. A square photo at least 240 px wide works best; without one, the teacher\'s initial is shown.',
+            'fields' => ['title' => 'Name', 'subtitle' => 'Role (for example Lead teacher)', 'description' => 'Short bio', 'image' => 'Photo'],
+            'hide' => ['icon', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_faq_header' => [
+            'title' => 'Questions heading',
+            'help' => 'The small label and heading above the questions and answers.',
+            'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading'],
+            'hide' => ['description', 'icon', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
+        'yoga_faq' => [
+            'title' => 'Questions and answers',
+            'help' => 'One entry per question, in the order shown. Each opens and closes on the page.',
+            'fields' => ['title' => 'Question', 'description' => 'Answer'],
+            'hide' => ['subtitle', 'icon', 'image', 'price', 'features', 'button_text', 'button_url'],
+        ],
         'yoga_personal' => [
             'title' => '"Your pace" section',
-            'help' => 'The photo and text block beside it, under the highlights strip.',
+            'help' => 'The text block (with an optional photo, at least 640 px wide) after the highlights strip.',
             'fields' => ['subtitle' => 'Small label above the heading', 'title' => 'Heading', 'description' => 'Paragraph', 'image' => 'Photo', 'button_text' => 'Button text', 'button_url' => 'Button link'],
             'hide' => ['icon', 'price', 'features'],
         ],
         'yoga_quote' => [
             'title' => 'Guest quote',
-            'help' => 'One short guest comment shown above the closing banner. Replace the placeholder with a real guest review.',
+            'help' => 'One short guest comment shown above the closing banner. It stays hidden until you replace the placeholder name "Guest name" with a real guest and a real review.',
             'fields' => ['title' => 'Guest name', 'subtitle' => 'Where from', 'description' => 'Quote'],
             'hide' => ['icon', 'image', 'price', 'features', 'button_text', 'button_url'],
         ],
         'yoga_cta' => [
             'title' => 'Closing banner',
-            'help' => 'The banner at the bottom. The first entry sets the heading and background photo; every entry adds one button.',
+            'help' => 'The banner at the bottom. The first entry sets the heading and an optional background photo (at least 900 px wide); every entry adds one button.',
             'fields' => ['title' => 'Heading (first entry only)', 'image' => 'Background photo (first entry only)', 'button_text' => 'Button text', 'button_url' => 'Button link'],
             'hide' => ['subtitle', 'description', 'icon', 'price', 'features'],
         ],

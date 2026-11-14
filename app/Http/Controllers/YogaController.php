@@ -64,6 +64,28 @@ class YogaController extends Controller
                     : $defaults['features']['items'],
             ],
             'personal' => $this->single($contents, 'yoga_personal', $defaults['personal']),
+            'faq' => [
+                'eyebrow' => $contents->get('yoga_faq_header', collect())->first()?->subtitle
+                    ?: $defaults['faq']['eyebrow'],
+                'title' => $contents->get('yoga_faq_header', collect())->first()?->title
+                    ?: $defaults['faq']['title'],
+                'items' => $contents->get('yoga_faq', collect())
+                    ->filter(fn (HomeContent $row): bool => filled($row->title))
+                    ->map(fn (HomeContent $row): array => $this->fromRow($row, []))
+                    ->values()
+                    ->all(),
+            ],
+            'teachers' => [
+                'eyebrow' => $contents->get('yoga_teachers_header', collect())->first()?->subtitle
+                    ?: $defaults['teachers']['eyebrow'],
+                'title' => $contents->get('yoga_teachers_header', collect())->first()?->title
+                    ?: $defaults['teachers']['title'],
+                'items' => $contents->get('yoga_teachers', collect())
+                    ->filter(fn (HomeContent $row): bool => filled($row->title))
+                    ->map(fn (HomeContent $row): array => $this->fromRow($row, []))
+                    ->values()
+                    ->all(),
+            ],
             'cta' => $ctaRows->isEmpty() ? $defaults['cta'] : [
                 'title' => $ctaRows->first()->title ?: $defaults['cta']['title'],
                 'image' => $ctaRows->first()->image ?: $defaults['cta']['image'],
@@ -105,6 +127,7 @@ class YogaController extends Controller
             'text' => $row->description ?: ($defaults['text'] ?? null),
             'image' => $row->image ?: ($defaults['image'] ?? null),
             'icon' => $row->icon ?: ($defaults['icon'] ?? null),
+            'price' => $row->price ?? ($defaults['price'] ?? null),
             'button_text' => $row->button_text ?: ($defaults['button_text'] ?? null),
             'button_url' => $row->button_url ?: ($defaults['button_url'] ?? '/#contact'),
         ];

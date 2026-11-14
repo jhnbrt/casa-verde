@@ -157,10 +157,10 @@
     top: -.5cqw;
     left: -.5cqw;
     z-index: 2;
-    width: 20cqw;
-    height: 20cqw;
-    max-width: 72px;
-    max-height: 72px;
+    width: calc(var(--wb, 17) * 1.1765cqw);
+    height: calc(var(--wb, 17) * 1.1765cqw);
+    max-width: 120px;
+    max-height: 120px;
     border-radius: 50%;
     display: grid;
     place-items: center;
@@ -224,7 +224,13 @@
                     <img src="{{ $img($treatment->image, 'images/wellness2.jpg') }}" alt="{{ $treatment->title }}">
 
                     @if(filled($treatment->icon))
-                        <span class="wellness-card-badge" aria-hidden="true">
+                        @php
+                            // "Badge size" from the admin: 17 when empty, never below 8 or above 30
+                            $badgeSize = is_numeric($treatment->price) && (float) $treatment->price > 0
+                                ? max(8, min(30, (int) round((float) $treatment->price)))
+                                : 17;
+                        @endphp
+                        <span class="wellness-card-badge" style="--wb: {{ $badgeSize }}" aria-hidden="true">
                             <x-icon :name="$treatment->icon" :size="26" />
                         </span>
                     @endif

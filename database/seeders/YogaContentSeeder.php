@@ -88,6 +88,23 @@ class YogaContentSeeder extends Seeder
             'description' => $yoga['quote']['text'],
         ]);
 
+        $this->seed('yoga_faq_header', 1, [
+            'subtitle' => $yoga['faq']['eyebrow'],
+            'title' => $yoga['faq']['title'],
+        ]);
+
+        foreach ($yoga['faq']['items'] as $index => $item) {
+            $this->seed('yoga_faq', $index + 1, [
+                'title' => $item['title'],
+                'description' => $item['text'],
+            ]);
+        }
+
+        $this->seed('yoga_teachers_header', 1, [
+            'subtitle' => $yoga['teachers']['eyebrow'],
+            'title' => $yoga['teachers']['title'],
+        ]);
+
         foreach ($yoga['cta']['buttons'] as $index => $button) {
             $this->seed('yoga_cta', $index + 1, [
                 'title' => $index === 0 ? $yoga['cta']['title'] : null,

@@ -190,7 +190,16 @@
                 if (!bar || !nav || window.innerWidth <= 1180) return;   // tablets and phones keep their own menu
 
                 var overflows = function () {
-                    return nav.scrollWidth > nav.clientWidth + 1 || bar.scrollWidth > bar.clientWidth + 1;
+                    // Measure the menu items themselves: the dropdown panels (hidden until hovered) stick out of the
+                    // menu and used to make a menu that fits look too wide, which shrank its text for no reason.
+                    var edge = nav.getBoundingClientRect().right;
+                    var last = null;
+
+                    for (var i = nav.children.length - 1; i >= 0; i--) {
+                        if (nav.children[i].offsetParent !== null) { last = nav.children[i]; break; }
+                    }
+
+                    return (last !== null && last.getBoundingClientRect().right > edge + 1) || bar.scrollWidth > bar.clientWidth + 1;
                 };
 
                 if (!overflows()) return;   // fits as designed
@@ -265,10 +274,18 @@
                 }, 200);
             }
 
+            // The header calls this right after it is written, so the menu is already the right size on the first
+            // paint (no jump a moment after the page opens).
+            window.cvFitNav = function () {
+                try { fitNav(); } catch (e) { /* never let fitting break the page */ }
+            };
+
             window.addEventListener('resize', fitSoon);
             window.addEventListener('load', fitSoon);
             document.addEventListener('DOMContentLoaded', function () {
-                if ('MutationObserver' in window) {
+                // Only a translated page changes its text after loading; watching the whole page in English
+                // made the header re-measure itself on every carousel or chat update.
+                if (target !== 'en' && 'MutationObserver' in window) {
                     // the translation arrives as a burst of text changes
                     new MutationObserver(fitSoon).observe(document.body, { childList: true, subtree: true, characterData: true });
                 }
